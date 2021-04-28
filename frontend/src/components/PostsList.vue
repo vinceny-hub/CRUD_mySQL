@@ -14,67 +14,67 @@
       </div>
     </div>
     <div class="col-md-6">
-      <h4>Tutorials List</h4>
+      <h4>Posts List</h4>
       <ul class="list-group">
         <li class="list-group-item"
           :class="{ active: index == currentIndex }"
-          v-for="(tutorial, index) in tutorials"
+          v-for="(post, index) in posts"
           :key="index"
-          @click="setActiveTutorial(tutorial, index)"
+          @click="setActivePost(post, index)"
         >
-          {{ tutorial.title }}
+          {{ post.title }}
         </li>
       </ul>
 
-      <button class="m-3 btn btn-sm btn-danger" @click="removeAllTutorials">
+      <button class="m-3 btn btn-sm btn-danger" @click="removeAllPosts">
         Remove All
       </button>
     </div>
     <div class="col-md-6">
-      <div v-if="currentTutorial">
-        <h4>Tutorial</h4>
+      <div v-if="currentPost">
+        <h4>Post</h4>
         <div>
-          <label><strong>Title:</strong></label> {{ currentTutorial.title }}
+          <label><strong>Title:</strong></label> {{ currentPost.title }}
         </div>
         <div>
-          <label><strong>Description:</strong></label> {{ currentTutorial.description }}
+          <label><strong>Description:</strong></label> {{ currentPost.description }}
         </div>
         <div>
-          <label><strong>Status:</strong></label> {{ currentTutorial.published ? "Published" : "Pending" }}
+          <label><strong>Status:</strong></label> {{ currentPost.published ? "Published" : "Pending" }}
         </div>
 
         <a class="badge badge-warning"
-          :href="'/tutorials/' + currentTutorial.id"
+          :href="'/posts/' + currentPost.id"
         >
           Edit
         </a>
       </div>
       <div v-else>
         <br />
-        <p>Please click on a Tutorial...</p>
+        <p>Please click on a Post...</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import TutorialDataService from "../services/TutorialDataService";
+import PostDataService from "../services/PostDataService";
 
 export default {
-  name: "tutorials-list",
+  name: "posts-list",
   data() {
     return {
-      tutorials: [],
-      currentTutorial: null,
+      posts: [],
+      currentPost: null,
       currentIndex: -1,
       title: ""
     };
   },
   methods: {
-    retrieveTutorials() {
-      TutorialDataService.getAll()
+    retrievePosts() {
+      PostDataService.getAll()
         .then(response => {
-          this.tutorials = response.data;
+          this.posts = response.data;
           console.log(response.data);
         })
         .catch(e => {
@@ -83,18 +83,18 @@ export default {
     },
 
     refreshList() {
-      this.retrieveTutorials();
-      this.currentTutorial = null;
+      this.retrievePosts();
+      this.currentPost = null;
       this.currentIndex = -1;
     },
 
-    setActiveTutorial(tutorial, index) {
-      this.currentTutorial = tutorial;
+    setActivePost(post, index) {
+      this.currentPost = post;
       this.currentIndex = index;
     },
 
-    removeAllTutorials() {
-      TutorialDataService.deleteAll()
+    removeAllPosts() {
+      PostDataService.deleteAll()
         .then(response => {
           console.log(response.data);
           this.refreshList();
@@ -105,9 +105,9 @@ export default {
     },
     
     searchTitle() {
-      TutorialDataService.findByTitle(this.title)
+      PostDataService.findByTitle(this.title)
         .then(response => {
-          this.tutorials = response.data;
+          this.posts = response.data;
           console.log(response.data);
         })
         .catch(e => {
@@ -116,7 +116,7 @@ export default {
     }
   },
   mounted() {
-    this.retrieveTutorials();
+    this.retrievePosts();
   }
 };
 </script>

@@ -4,7 +4,7 @@
       <router-link to="/" class="navbar-brand">Groupomania</router-link>
       <div class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link to="/tutorials" class="nav-link">Home</router-link>
+          <router-link to="/posts" class="nav-link">Home</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/add" class="nav-link">New post</router-link>

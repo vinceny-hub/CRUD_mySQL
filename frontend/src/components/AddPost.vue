@@ -8,8 +8,9 @@
           class="form-control"
           id="title"
           required
-          v-model="tutorial.title"
+          v-model="post.title"
           name="title"
+          maxlength="30"
         />
       </div>
 
@@ -19,29 +20,31 @@
           class="form-control"
           id="description"
           required
-          v-model="tutorial.description"
+          v-model="post.description"
           name="description"
+          rows="5"
+          maxlength="155"
         />
       </div>
 
-      <button @click="saveTutorial" class="btn btn-success">Submit</button>
+      <button @click="savePost" class="btn btn-success">Submit</button>
     </div>
 
     <div v-else>
       <h4>You submitted successfully!</h4>
-      <button class="btn btn-success" @click="newTutorial">Add</button>
+      <button class="btn btn-success" @click="newPost">Add</button>
     </div>
   </div>
 </template>
 
 <script>
-import TutorialDataService from "../services/TutorialDataService";
+import PostDataService from "../services/PostDataService";
 
 export default {
-  name: "add-tutorial",
+  name: "add-post",
   data() {
     return {
-      tutorial: {
+      post: {
         id: null,
         title: "",
         description: "",
@@ -51,15 +54,15 @@ export default {
     };
   },
   methods: {
-    saveTutorial() {
+    savePost() {
       var data = {
-        title: this.tutorial.title,
-        description: this.tutorial.description
+        title: this.post.title,
+        description: this.post.description
       };
 
-      TutorialDataService.create(data)
+      PostDataService.create(data)
         .then(response => {
-          this.tutorial.id = response.data.id;
+          this.post.id = response.data.id;
           console.log(response.data);
           this.submitted = true;
         })
@@ -68,9 +71,9 @@ export default {
         });
     },
     
-    newTutorial() {
+    newPost() {
       this.submitted = false;
-      this.tutorial = {};
+      this.post = {};
     }
   }
 };
