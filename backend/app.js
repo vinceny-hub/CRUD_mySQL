@@ -101,13 +101,46 @@ app.use('/images', express.static(path.join(__dirname,'images')))
 // app.use('/auth', userRoutes)
 // app.use('/', userRoutes)
 //export vers server.js
-const db = require("./app/models");
+
+const db = require("./app/models/index");
 db.sequelize.sync();
+
+const dblogin = require("./app/modelsUser/indexlogin");
+const Role = dblogin.role;
+
+dblogin.sequelize.sync({force: true}).then(() => {
+  console.log('Drop and Resync Db');
+  initial();
+});
+
+function initial() {
+  Role.create({
+    id: 1,
+    name: "user"
+  });
+ 
+  Role.create({
+    id: 2,
+    name: "moderator"
+  });
+ 
+  Role.create({
+    id: 3,
+    name: "admin"
+  });
+}
+
+// ****
+
+
 
 // simple route
 // app.get("/", (req, res) => {
 //   res.json({ message: "Welcome to bezkoder application." });
 // });
+
+require('./app/routes/auth.routes')(app);
+require('./app/routes/user.routes')(app);
 
 require("./app/routes/post.routes")(app);
 // require("./app/routes/post.users")(app);
