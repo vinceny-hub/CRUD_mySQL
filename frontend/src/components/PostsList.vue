@@ -23,10 +23,11 @@
           @click="setActivePost(post, index)"
         >
           {{ post.title }}
+        <span class="list-group-item"> {{ post.description }} </span>
         </li>
       </ul>
 
-      <button class="m-3 btn btn-sm btn-danger" @click="removeAllPosts">
+      <button  v-if="showAdminBoard" class="m-3 btn btn-sm btn-danger" @click="removeAllPosts">
         Remove All
       </button>
     </div>
@@ -117,7 +118,35 @@ export default {
   },
   mounted() {
     this.retrievePosts();
-  }
+  },
+ computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+    showAdminBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes('ROLE_ADMIN');
+      }
+
+      return false;
+    },
+    showModeratorBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes('ROLE_MODERATOR');
+      }
+
+      return false;
+    }
+  },
+  // methods: {
+  //   logOut() {
+  //     this.$store.dispatch('auth/logout');
+  //     this.$router.push('/login');
+  //   }
+  // }
+
+
+
 };
 </script>
 

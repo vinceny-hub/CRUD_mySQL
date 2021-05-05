@@ -1,9 +1,9 @@
-const dblogin = require("../modelsUser/indexlogin");
+const db = require("../models/index");
 const config = require("../config/auth.config");
-const User = dblogin.user;
-const Role = dblogin.role;
+const User = db.user;
+const Role = db.role;
 
-const Op = dblogin.Sequelize.Op;
+const Op = db.Sequelize.Op;
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");

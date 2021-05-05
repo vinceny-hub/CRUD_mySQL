@@ -105,13 +105,14 @@ app.use('/images', express.static(path.join(__dirname,'images')))
 const db = require("./app/models/index");
 db.sequelize.sync();
 
-const dblogin = require("./app/modelsUser/indexlogin");
-const Role = dblogin.role;
+// const dblogin = require("./app/modelsUser/index");
+const Role = db.role;
 
-dblogin.sequelize.sync({force: true}).then(() => {
-  console.log('Drop and Resync Db');
-  initial();
-});
+// db.sequelize.sync({force: true}).then(() => {
+//   console.log('Drop and Resync Db');
+//   initial();
+// });
+initial();
 
 function initial() {
   Role.create({
@@ -132,7 +133,7 @@ function initial() {
 
 // ****
 
-
+const postRoutes = require("./app/routes/post.routes");
 
 // simple route
 // app.get("/", (req, res) => {
@@ -142,10 +143,8 @@ function initial() {
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 
-require("./app/routes/post.routes")(app);
+// require("./app/routes/post.routes")(app);
+app.use('/api/posts', postRoutes);
 // require("./app/routes/post.users")(app);
 module.exports = app
-
-
-
 

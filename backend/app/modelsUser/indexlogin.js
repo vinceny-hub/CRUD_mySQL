@@ -1,4 +1,4 @@
-const config = require("../config/dblogin.config.js");
+const config = require("../config/db.config.js");
 
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(
@@ -19,25 +19,25 @@ const sequelize = new Sequelize(
   }
 );
 
-const dblogin = {};
+const db = {};
 
-dblogin.Sequelize = Sequelize;
-dblogin.sequelize = sequelize;
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
 
-dblogin.user = require("../modelsUser/user.model.js")(sequelize, Sequelize);
-dblogin.role = require("../modelsUser/role.model.js")(sequelize, Sequelize);
+db.user = require("../modelsUser/user.model.js")(sequelize, Sequelize);
+db.role = require("../modelsUser/role.model.js")(sequelize, Sequelize);
 
-dblogin.role.belongsToMany(dblogin.user, {
+db.role.belongsToMany(db.user, {
   through: "user_roles",
   foreignKey: "roleId",
   otherKey: "userId"
 });
-dblogin.user.belongsToMany(dblogin.role, {
+db.user.belongsToMany(db.role, {
   through: "user_roles",
   foreignKey: "userId",
   otherKey: "roleId"
 });
 
-dblogin.ROLES = ["user", "admin", "moderator"];
+db.ROLES = ["user", "admin", "moderator"];
 
-module.exports = dblogin;
+module.exports = db;
