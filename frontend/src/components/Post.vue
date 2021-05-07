@@ -14,6 +14,12 @@
           v-model="currentPost.description"
         />
       </div>
+      <div class="form-group">
+        <label for="">ID</label>
+        <input type="text" class="form-control" id=""
+          v-model="currentPost.user_Id"
+        />
+      </div>
 
       <div class="form-group">
         <label><strong>Status:</strong></label>
@@ -33,7 +39,7 @@
       Publish
     </button>
 
-    <button class="badge badge-danger mr-2"
+    <button  v-if="dataUser.id == currentPost.user_Id" class="badge badge-danger mr-2"
       @click="deletePost"
     >
       Delete
@@ -81,6 +87,7 @@ export default {
         id: this.currentPost.id,
         title: this.currentPost.title,
         description: this.currentPost.description,
+         user_Id: this.currentPost.user_Id,
         published: status
       };
 
@@ -120,7 +127,13 @@ export default {
   mounted() {
     this.message = '';
     this.getPost(this.$route.params.id);
-  }
+  },
+   computed: {
+    dataUser(){  return JSON.parse(localStorage.getItem("user"))
+    // currentUser() {
+    //   return this.$store.state.auth.user;
+   }
+   },
 };
 </script>
 

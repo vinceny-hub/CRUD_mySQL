@@ -1,9 +1,14 @@
+
 const db = require("../models/index");
 const config = require("../config/auth.config");
+// const token = require("../config/auth.config")
 const User = db.user;
 const Role = db.role;
 
 const Op = db.Sequelize.Op;
+// const token = req.headers.authorization.split(' ')[1]; 
+// const decodedToken = jwt.verify(token, config.secret);         // Décodage du token
+// user_Id = req.userId;
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
@@ -13,7 +18,9 @@ exports.signup = (req, res) => {
   User.create({
     username: req.body.username,
     email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8)
+    password: bcrypt.hashSync(req.body.password, 8),
+            // Décodage du token
+    user_Id: bcrypt.hashSync(req.body.username,1),
   })
     .then(user => {
       if (req.body.roles) {

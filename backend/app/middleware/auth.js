@@ -10,13 +10,15 @@ module.exports = (req, res, next) => {
     console.log(token)                   // Extraction du token du header authorization
     const decodedToken = jwt.verify(token, config.secret);         // Décodage du token
     const userId = decodedToken.userId;
+    console.log(decodedToken.userId)
     if (req.body.userId && req.body.userId !== userId) {
       throw 'Invalid user ID';
+      
     } else {
       next();
     }
   } catch {
-    res.status(405).json({
+    res.status(408).json({
       error: new Error('Erreur d\'authentification')
     });
   }

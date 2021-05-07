@@ -21,8 +21,25 @@
           id="description"
           required
           v-model="post.description"
+        
+
           name="description"
           rows="5"
+          maxlength="155"
+        />
+      </div>
+         <div class="form-group">
+        <label for="user_Id">ID</label>
+        <textarea
+          class="form-control"
+          id="user_Id"
+          required
+          v-model="post.user_Id"
+          
+        
+
+          
+          rows="1"
           maxlength="155"
         />
       </div>
@@ -34,12 +51,16 @@
       <h4>You submitted successfully!</h4>
       <button class="btn btn-success" @click="newPost">Add</button>
     </div>
+   
   </div>
 </template>
 
 <script>
-import PostDataService from "../services/PostDataService";
 
+import PostDataService from "../services/PostDataService";
+// import currentUser from "../views/Profile"
+
+// console.log(user_Id)
 export default {
   name: "add-post",
   data() {
@@ -48,21 +69,42 @@ export default {
         id: null,
         title: "",
         description: "",
+        user_Id: "",
         published: false
       },
       submitted: false
     };
+    
   },
+  // props:{
+  //   user_Id : Array
+  // },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
+  },
+
+ 
   methods: {
+   
     savePost() {
+      let dataUser = JSON.parse(localStorage.getItem("user"))
+      console.log(dataUser)
+      // this.user = response.data1;
       var data = {
+       
         title: this.post.title,
-        description: this.post.description
+        description: this.post.description,
+        user_Id : dataUser.id,
+        
       };
+    
 
       PostDataService.create(data)
         .then(response => {
           this.post.id = response.data.id;
+          // this.user_Id = 
           console.log(response.data);
           this.submitted = true;
         })
@@ -70,6 +112,8 @@ export default {
           console.log(e);
         });
     },
+
+  
     
     newPost() {
       this.submitted = false;

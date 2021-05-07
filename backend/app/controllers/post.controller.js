@@ -1,4 +1,6 @@
 const db = require("../models");
+require('../middleware/auth')
+// const userId = decodedToken.userId;
 const Post = db.posts;
 const Op = db.Sequelize.Op;
 
@@ -26,13 +28,14 @@ exports.create = (req, res) => {
       });
       return;
     }
-  
+    // const userID = res.locals.userID;
     // Create a Post
     const post = {
-      // user_id: req.body.user.id,
+      
       // post_id: req.body.post.id,
       title: req.body.title,
       description: req.body.description,
+      user_Id: req.body.user_Id,
       published: req.body.published ? req.body.published : false
     };
   
