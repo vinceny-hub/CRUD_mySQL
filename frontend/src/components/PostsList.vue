@@ -269,7 +269,7 @@
         <div class="row h-100 justify-content-center align-items-center">
            <div class="col-md-6 gedf-main">
         
-                <div class="card gedf-card d-flex ">
+                <div class="card gedf-card d-flex " v-if="!submitted">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
@@ -323,7 +323,21 @@
                             </div>
                         </div>
                     </div>
+                         <div>
+                 <div
+            v-if="errors"
+            class="alert alert-danger"
+            role="alert"
+          >cannot be empty!</div>
+        </div>
+                    
                 </div>
+           
+                 <div v-else>
+      <h4>You submitted successfully!</h4>
+      <button class="btn btn-success" @click="newPost">Add</button>
+    </div>
+                
            <!-- </div>
         </div>
       </div> -->
@@ -384,10 +398,11 @@
         <br />
         <p>Please click on a Post...</p>
       </div>
-    </div> --> 
+    </div> -->
   </div> 
            </div>
         </div>
+        
       </div>
   <!-- eslint-enable no-mixed-spaces-and-tabs -->
         
@@ -426,6 +441,13 @@ export default {
   methods: {
    
     savePost() {
+       if (!this.post.description) {
+       error => {
+           
+              this.message =
+                (error.response && error.response.data)
+      }}else{ 
+     
       let dataUser = JSON.parse(localStorage.getItem("user"))
       console.log(dataUser)
       // this.user = response.data1;
@@ -435,7 +457,8 @@ export default {
         description: this.post.description,
         user_Id : dataUser.id,
         
-      };
+      }}
+       
     
 
       PostDataService.create(data)
