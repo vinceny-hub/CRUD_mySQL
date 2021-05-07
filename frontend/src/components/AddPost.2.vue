@@ -286,15 +286,12 @@
                             <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
                                 <div class="form-group">
                                     <label class="sr-only" for="message">post</label>
-                                    <textarea 
-                                    id="description"
-                                     required
-                                    v-model="post.description" class="form-control" rows="3" placeholder="What are you thinking?"></textarea>
+                                    <textarea required
+                                    v-model="post.description" class="form-control" id="message" rows="3" placeholder="What are you thinking?"></textarea>
                                 </div>
 
                             </div>
-                            
-                            <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                            <!-- <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
                                 <div class="form-group">
                                     <div class="custom-file">
                                         <input  type="file" class="custom-file-input" id="customFile">
@@ -302,14 +299,12 @@
                                     </div>
                                 </div>
                                 <div class="py-4"></div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="btn-toolbar justify-content-between">
                             <div class="btn-group">
-                                <button @click="savePost" type="submit" class="btn btn-primary">share</button>
+                                <button @click="newPost" type="submit" class="btn btn-primary">share</button>
                             </div>
-    
-                            
                             <div class="btn-group">
                                 <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">

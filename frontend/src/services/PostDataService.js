@@ -25,8 +25,8 @@ class PostDataService {
     return http.delete(`/posts`);
   }
 
-  findByTitle(title) {
-    return http.get(`/posts?title=${title}`);
+  findByTitle(description) {
+    return http.get(`/posts?description=${description}`);
   }
 }
 

@@ -22,7 +22,7 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.title) {
+    if (!req.body.description) {
       res.status(400).send({
         message: "Content can not be empty!"
       });
@@ -33,7 +33,7 @@ exports.create = (req, res) => {
     const post = {
       
       // post_id: req.body.post.id,
-      title: req.body.title,
+      // title: req.body.title,
       description: req.body.description,
       user_Id: req.body.user_Id,
       published: req.body.published ? req.body.published : false
@@ -53,8 +53,8 @@ exports.create = (req, res) => {
   };
 
   exports.findAll = (req, res) => {
-    const title = req.query.title;
-    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+    const description = req.query.description;
+    var condition = description ? { description: { [Op.like]: `%${description}%` } } : null;
   
     Post.findAll({ where: condition })
       .then(data => {
