@@ -364,13 +364,72 @@
         <li class="list-group-item"
           :class="{ active: index == currentIndex }"
           v-for="(post, index) in posts"
+        
           :key="index"
-          @click="setActivePost(post, index)"
+        
+      @click="setActivePost(post, index)"
+      
         >
+         <!-- :class="{ active: index == currentIndex }"
+           @click="setActivePost(post, index)" -->
        
-         <span class="list-group-item"> {{ post.description }} </span> 
+          <span> {{ post.description }} </span>
+           <!-- <div class="col-md-6" > -->
+             
+      <div v-if="currentPost">
+         <input type="text" class="form-control" id=""
+          v-model="post.user_Id"
+        /> 
+         <input type="text" class="form-control" id=""
+          v-model="post.description"
+        /> 
+      
+        <!-- <h4></h4> -->
+         <!-- <div> --> 
+              <button v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2"
+      @click="deletePost"
+    >
+      Delete
+    </button>
+     <button v-if="currentUser.id == post.user_Id" class="badge badge-success mr-2"
+      @click="updatePost"
+    >
+      Update
+    </button>
+      </div>
         </li>
-      </ul> 
+       </ul>
+      <!--    <label><strong>Title:</strong></label> {{ currentPost.title }}
+        </div> -->
+       <!-- <div >
+          <label><strong>Description:</strong></label> {{ post.description }}
+        </div>  -->
+      
+
+
+     <!-- <div>
+          <label><strong>Status:</strong></label> {{ currentPost.published ? "Published" : "Pending" }}
+        </div> -->
+<!-- 
+        <a class="badge badge-warning"
+          :href="'/posts/' + currentPost.id"
+        > 
+           Edit
+        </a> 
+         <button  v-if="dataUser.id == currentPost.user_Id" class="badge badge-danger mr-2"
+      @click="deletePost"
+    >
+      Delete
+    </button> -->
+      </div>
+      <!-- <div v-else>
+        <br />
+        <p>Please click on a Post...</p>
+       </div> -->
+     </div> 
+  </div>  
+        <!-- </li>
+      </ul>  -->
 
        <button  v-if="showAdminBoard" class="m-3 btn btn-sm btn-danger" @click="removeAllPosts">
         Remove All
@@ -388,15 +447,15 @@
       
 
 
-     <div>
+     <!-- <div>
           <label><strong>Status:</strong></label> {{ currentPost.published ? "Published" : "Pending" }}
-        </div>
+        </div> -->
 
-        <a class="badge badge-warning"
+        <!-- <a class="badge badge-warning"
           :href="'/posts/' + currentPost.id"
         > 
            Edit
-        </a>
+        </a> -->
       </div>
       <!-- <div v-else>
         <br />
@@ -405,10 +464,10 @@
     </div> 
   </div> 
             </div>
-        </div>
+         <!-- </div> -->
         
-      </div>
-      </div>
+      <!-- </div>
+      </div> --> 
   <!-- eslint-enable no-mixed-spaces-and-tabs -->
         
      
@@ -424,7 +483,8 @@ export default {
     return {
       posts:[],
         currentPost: null,
-        currentIndex: -1,
+        currentIndex: -1,         
+        message: '',
       post: {
         id: null,
         // title: "",
@@ -440,6 +500,10 @@ export default {
   //   user_Id : Array
   // },
   computed: {
+
+    dataUser(){  return JSON.parse(localStorage.getItem("user"))
+    },
+
     currentUser() {
       return this.$store.state.auth.user;
     },
@@ -461,6 +525,28 @@ export default {
 
  
   methods: {
+
+        updatePost() {
+      PostDataService.update(this.currentPost.id, this.currentPost)
+        .then(response => {
+          console.log(response.data);
+          // this.$router.push({ name: "posts" });
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+
+      deletePost() {
+      PostDataService.delete(this.currentPost.id)
+        .then(response => {
+          console.log(response.data);
+          // this.$router.push({ name: "posts" });
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
 
         retrievePosts() {
       PostDataService.getAll()
@@ -562,6 +648,7 @@ export default {
           console.log(e);
         });
     },
+    
     mounted() {
     this.retrievePosts();
   }
