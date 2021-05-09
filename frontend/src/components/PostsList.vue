@@ -306,12 +306,13 @@
                         </div>
                         <div class="btn-toolbar justify-content-between">
                             <div class="btn-group">
-                                <button @click="savePost" type="submit" class="btn btn-primary">share</button>
+                                <button @click="savePost" type="submit" class="btn btn-primary">Share</button>
                             </div>
     
                             
                             <div class="btn-group">
-                                <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                              <button @click="savePost" type="submit" class="btn btn-primary">Comment</button>
+                                <!-- <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
                                     <i class="fa fa-globe"></i>
                                 </button>
@@ -319,7 +320,7 @@
                                     <a class="dropdown-item" href="#"><i class="fa fa-globe"></i> Public</a>
                                     <a class="dropdown-item" href="#"><i class="fa fa-users"></i> Friends</a>
                                     <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Just me</a>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -359,50 +360,54 @@
     </div>
     <div class="col-md-6">
       <h4>Posts List</h4>
-      <!-- <ul class="list-group">
+       <ul class="list-group">
         <li class="list-group-item"
           :class="{ active: index == currentIndex }"
           v-for="(post, index) in posts"
           :key="index"
           @click="setActivePost(post, index)"
         >
-          {{ post.title }}
-        <span class="list-group-item"> {{ post.description }} </span>
+       
+         <span class="list-group-item"> {{ post.description }} </span> 
         </li>
-      </ul> -->
+      </ul> 
 
-      <!-- <button  v-if="showAdminBoard" class="m-3 btn btn-sm btn-danger" @click="removeAllPosts">
+       <button  v-if="showAdminBoard" class="m-3 btn btn-sm btn-danger" @click="removeAllPosts">
         Remove All
-      </button> -->
+      </button> 
     </div>
-     <!-- <div class="col-md-6">
+      <div class="col-md-6">
       <div v-if="currentPost">
         <h4>Post</h4>
          <div>
-          <label><strong>Title:</strong></label> {{ currentPost.title }}
+      <!--    <label><strong>Title:</strong></label> {{ currentPost.title }}
         </div> -->
-        <!-- <div>
-          <label><strong>Description:</strong></label> {{ currentPost.description }}
-        </div>
-        <div>
+       <!-- <div >
+          <label><strong>Description:</strong></label> {{ post.description }}
+        </div>  -->
+      
+
+
+     <div>
           <label><strong>Status:</strong></label> {{ currentPost.published ? "Published" : "Pending" }}
         </div>
 
         <a class="badge badge-warning"
           :href="'/posts/' + currentPost.id"
-        > -->
-          <!-- Edit
+        > 
+           Edit
         </a>
       </div>
-      <div v-else>
+      <!-- <div v-else>
         <br />
         <p>Please click on a Post...</p>
-      </div>
-    </div> -->
+      </div> -->
+    </div> 
   </div> 
-           </div>
+            </div>
         </div>
         
+      </div>
       </div>
   <!-- eslint-enable no-mixed-spaces-and-tabs -->
         
@@ -417,6 +422,9 @@ export default {
   name: "post-list",
   data() {
     return {
+      posts:[],
+        currentPost: null,
+        currentIndex: -1,
       post: {
         id: null,
         // title: "",
@@ -434,11 +442,69 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
+    },
+        showAdminBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes('ROLE_ADMIN');
+      }
+
+      return false;
+    },
+    showModeratorBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes('ROLE_MODERATOR');
+      }
+
+      return false;
     }
   },
 
  
   methods: {
+
+        retrievePosts() {
+      PostDataService.getAll()
+        .then(response => {
+          this.posts = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+
+      refreshList() {
+      this.retrievePosts();
+      this.currentPost = null;
+      this.currentIndex = -1;
+    },
+
+    setActivePost(post, index) {
+      this.currentPost = post;
+      this.currentIndex = index;
+    },
+
+        removeAllPosts() {
+      PostDataService.deleteAll()
+        .then(response => {
+          console.log(response.data);
+          this.refreshList();
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    
+    searchTitle() {
+      PostDataService.findByTitle(this.title)
+        .then(response => {
+          this.posts = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
    
     savePost() {
        if (!this.post.description) {
@@ -478,9 +544,30 @@ export default {
     newPost() {
       this.submitted = false;
       this.post = {};
+    },
+
+      logOut() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
     }
+  },
+
+   retrievePosts() {
+      PostDataService.getAll()
+        .then(response => {
+          this.posts = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    mounted() {
+    this.retrievePosts();
   }
-};
+  
+  
+}
 //   name: "posts-list",
 //   data() {
 //     return {
@@ -535,9 +622,9 @@ export default {
 //         });
 //     }
 //   },
-//   mounted() {
-//     this.retrievePosts();
-//   },
+  // mounted() {
+  //   this.retrievePosts();
+  // }
 //  computed: {
 //     currentUser() {
 //       return this.$store.state.auth.user;
