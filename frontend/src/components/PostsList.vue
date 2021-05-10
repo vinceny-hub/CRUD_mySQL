@@ -360,6 +360,7 @@
     </div>
     <div class="col-md-6">
       <h4>Posts</h4>
+    
        <ul class="list-group">
         <li 
         
@@ -368,37 +369,63 @@
           :key="index"
         
            @click="setActivePost(post)" class="list-group-item"
-      
+            :class="{ active: index== currentIndex }"
         >
-      <span   :class="{ active: index == currentIndex }"
-           @click="setActivePost(post, index)">
+      <div v-if="currentPost"></div>
+        <!-- :class="{ active: index == currentIndex }" -->
+      <div  v-if="!editing">         
        
-           {{ post.description }} </span>
-           <!-- <div class="col-md-6" > -->
+           {{ post.description }} </div>
+     <!-- <div v-if="currentPost"> -->
+             <input v-else type="text" class="form-control" id=""
+          v-model="post.description"
+        /> 
+    
+            <!-- <div class="col-md-6" > -->
              
-      <!-- <div v-if="currentPost"> -->
+       <!-- <div v-if="currentPost"   :key="index">  -->
          <input type="text" class="form-control" id=""
           v-model="post.user_Id"
         /> 
-         <input type="text" class="form-control" id=""
-          v-model="post.description"
-        /> 
-      
+       
+       
+
+               <button v-if="currentUser.id == post.user_Id"     class="badge badge-warning"  @click="editPost(index, post)"
+    >
+     {{editing?'Update':'Edit'}}
+    </button>
+     
         <!-- <h4></h4> -->
-         <!-- <div> --> 
-              <button v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2"
+         <!-- <div> -->
+     
+              <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2"
       @click="deletePost(index)"
     >
       Delete
     </button>
-     <button v-if="currentUser.id == post.user_Id" class="badge badge-success mr-2"
+
+          <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-success mr-2"
+      @click="cancel(index)"
+    >
+      Cancel
+    </button>
+     <!-- <button v-if="currentUser.id == post.user_Id" class="badge badge-success mr-2"
       @click="updatePost"
     >
       Update
+    </button> -->
+      <button class="badge badge-primary mr-2"
+      @click="updatePost"
+    >
+      Comment
     </button>
-      <!-- </div> -->
+ <!-- </div> -->
+     <!-- </div> -->
+            <!-- </div> -->
+  <!--    </div> -->
         </li>
        </ul>
+     
       <!--    <label><strong>Title:</strong></label> {{ currentPost.title }}
         </div> -->
        <!-- <div >
@@ -492,7 +519,9 @@ export default {
         user_Id: "",
         published: false
       },
-      submitted: false
+      submitted: false,
+      selectedIndex: null,
+      editing: false
     };
     
   },
@@ -529,6 +558,23 @@ export default {
 
  
   methods: {
+
+    cancel(){
+       this.editing = this.editing == false
+    },
+
+    editPost(){
+    this.editing = this.editing == true?false:true
+    if(this.editing== false){
+    this.updatePost()
+    }  
+      
+    console.log(this.editing)
+  
+
+    },
+
+     
 
       updatePost() {
       PostDataService.update(this.currentPost.id, this.currentPost)
@@ -580,6 +626,7 @@ export default {
     setActivePost(post, index) {
       this.currentPost = post;
       this.currentIndex = index;
+      
       console.log(post.description)
     },
 
