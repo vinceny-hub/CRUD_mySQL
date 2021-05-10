@@ -325,11 +325,12 @@
                         </div>
                     </div>
                          <div>
-                 <div
-            v-if="errors"
+                  <div
+            v-if="!emptyError"></div>
+                         <!-- <div v-else
             class="alert alert-danger"
             role="alert"
-          >cannot be empty!</div>
+          >cannot be empty!</div> -->
         </div>
                     
                 </div>
@@ -521,7 +522,8 @@ export default {
       },
       submitted: false,
       selectedIndex: null,
-      editing: false
+      editing: false,
+      emptyError: false
     };
     
   },
@@ -579,13 +581,18 @@ export default {
       updatePost() {
       PostDataService.update(this.currentPost.id, this.currentPost)
         .then(response => {
+           
           console.log(response.data);
+          
+        
           // this.posts.push(data)
           // this.$router.push({ name: "posts" });
         })
         .catch(e => {
           console.log(e);
         });
+      
+     
     },
 
       deletePost() {
@@ -654,6 +661,9 @@ export default {
    
     savePost() {
        if (!this.post.description) {
+          // this.emptyError = this.emptyError == true?false:true
+          this.emptyError = alert('Cannot be empty')
+          
        error => {
            
               this.message =
