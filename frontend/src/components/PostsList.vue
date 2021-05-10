@@ -310,8 +310,8 @@
                             </div>
     
                             
-                            <div class="btn-group">
-                              <button @click="savePost" type="submit" class="btn btn-primary">Comment</button>
+                            <!-- <div class="btn-group"> -->
+                              <!-- <button @click="savePost" type="submit" class="btn btn-primary">Comment</button> -->
                                 <!-- <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
                                     <i class="fa fa-globe"></i>
@@ -321,7 +321,7 @@
                                     <a class="dropdown-item" href="#"><i class="fa fa-users"></i> Friends</a>
                                     <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Just me</a>
                                 </div> -->
-                            </div>
+                            <!-- </div> -->
                         </div>
                     </div>
                          <div>
@@ -334,10 +334,10 @@
                     
                 </div>
            
-                 <div v-else>
+                 <!-- <div v-else>
       <h4>You submitted successfully!</h4>
       <button class="btn btn-success" @click="newPost">Add</button>
-    </div>
+    </div> -->
                 
            <!-- </div>
         </div>
@@ -359,24 +359,24 @@
       </div>
     </div>
     <div class="col-md-6">
-      <h4>Posts List</h4>
+      <h4>Posts</h4>
        <ul class="list-group">
-        <li class="list-group-item"
-          :class="{ active: index == currentIndex }"
-          v-for="(post, index) in posts"
+        <li 
+        
+          v-for="(post, index) in posts.slice().reverse()"
         
           :key="index"
         
-      @click="setActivePost(post, index)"
+           @click="setActivePost(post)" class="list-group-item"
       
         >
-         <!-- :class="{ active: index == currentIndex }"
-           @click="setActivePost(post, index)" -->
+      <span   :class="{ active: index == currentIndex }"
+           @click="setActivePost(post, index)">
        
-          <span> {{ post.description }} </span>
+           {{ post.description }} </span>
            <!-- <div class="col-md-6" > -->
              
-      <div v-if="currentPost">
+      <!-- <div v-if="currentPost"> -->
          <input type="text" class="form-control" id=""
           v-model="post.user_Id"
         /> 
@@ -387,7 +387,7 @@
         <!-- <h4></h4> -->
          <!-- <div> --> 
               <button v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2"
-      @click="deletePost"
+      @click="deletePost(index)"
     >
       Delete
     </button>
@@ -396,7 +396,7 @@
     >
       Update
     </button>
-      </div>
+      <!-- </div> -->
         </li>
        </ul>
       <!--    <label><strong>Title:</strong></label> {{ currentPost.title }}
@@ -501,6 +501,10 @@ export default {
   // },
   computed: {
 
+  //     orderPost: function () {
+  //   return _.orderBy(this.post, 'date')
+  // },
+
     dataUser(){  return JSON.parse(localStorage.getItem("user"))
     },
 
@@ -526,10 +530,11 @@ export default {
  
   methods: {
 
-        updatePost() {
+      updatePost() {
       PostDataService.update(this.currentPost.id, this.currentPost)
         .then(response => {
           console.log(response.data);
+          // this.posts.push(data)
           // this.$router.push({ name: "posts" });
         })
         .catch(e => {
@@ -538,14 +543,20 @@ export default {
     },
 
       deletePost() {
+     
+    
       PostDataService.delete(this.currentPost.id)
         .then(response => {
           console.log(response.data);
+          this.retrievePosts();
           // this.$router.push({ name: "posts" });
         })
         .catch(e => {
           console.log(e);
         });
+       
+        // this.posts.splice(index,1)
+        
     },
 
         retrievePosts() {
@@ -554,6 +565,7 @@ export default {
           this.posts = response.data;
           console.log(response.data);
         })
+        
         .catch(e => {
           console.log(e);
         });
@@ -568,6 +580,7 @@ export default {
     setActivePost(post, index) {
       this.currentPost = post;
       this.currentIndex = index;
+      console.log(post.description)
     },
 
         removeAllPosts() {
@@ -619,6 +632,9 @@ export default {
           // this.user_Id = 
           console.log(response.data);
           this.submitted = true;
+          this.posts.push(data)
+           this.retrievePosts();
+          this.newPost()
         })
         .catch(e => {
           console.log(e);
@@ -643,6 +659,7 @@ export default {
         .then(response => {
           this.posts = response.data;
           console.log(response.data);
+        
         })
         .catch(e => {
           console.log(e);
