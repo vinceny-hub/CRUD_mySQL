@@ -1,16 +1,13 @@
 <template>
   <div v-if="currentPost" class="edit-form">
     <h4>Post</h4>
-    <form>
+    <!-- <form> -->
+      
       <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" id="title"
-          v-model="currentPost.title"
-        />
-      </div>
-      <div class="form-group">
-        <label for="description">Description</label>
-        <input type="text" class="form-control" id="description"
+        <!-- <label for="description">Description</label> -->
+       <div v-if="!editing" class="form-group list-group-item"> {{ currentPost.description }} </div> 
+       
+        <input v-else type="text" class="form-control" id="description"
           v-model="currentPost.description"
         />
       </div>
@@ -21,13 +18,13 @@
         />
       </div>
 
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label><strong>Status:</strong></label>
         {{ currentPost.published ? "Published" : "Pending" }}
       </div>
-    </form>
+    </form> -->
 
-    <button class="badge badge-primary mr-2"
+    <!-- <button class="badge badge-primary mr-2"
       v-if="currentPost.published"
       @click="updatePublished(false)"
     >
@@ -37,19 +34,18 @@
       @click="updatePublished(true)"
     >
       Publish
-    </button>
-
-    <button  v-if="dataUser.id == currentPost.user_Id" class="badge badge-danger mr-2"
-      @click="deletePost"
-    >
-      Delete
-    </button>
-
-    <button type="submit" class="badge badge-success"
+    </button> -->
+     <!-- <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2" @click="deletePost(index)"> Delete </button> -->
+    <button  v-if="dataUser.id == currentPost.user_Id" class="badge badge-warning" @click="editPost(index, currentPost)"> {{editing?'Update':'Edit'}} </button> 
+    <button v-show="editing" v-if="dataUser.id == currentPost.user_Id" class="badge badge-success mr-2" @click="cancel(index)"> Cancel </button>
+    <button  v-show="editing" v-if="dataUser.id == currentPost.user_Id" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
+    <button v-show="!editing" class="btn btn-primary"> Comment </button>
+   
+    <!-- <button type="submit" class="badge badge-success"
       @click="updatePost"
     >
       Update
-    </button>
+    </button> -->
     <p>{{ message }}</p>
   </div>
 
@@ -67,10 +63,29 @@ export default {
   data() {
     return {
       currentPost: null,
-      message: ''
+      message: '',
+      editing: false,
     };
   },
   methods: {
+     cancel(){
+       this.editing = this.editing == false
+    },
+
+    editPost(){
+    
+    this.editing = this.editing == true?false:true
+    
+    if(this.editing== false){
+    this.updatePost()
+    }  
+    
+    console.log(this.editing)
+    
+
+  
+
+    },
     getPost(id) {
       PostDataService.get(id)
         .then(response => {
@@ -82,24 +97,24 @@ export default {
         });
     },
 
-    updatePublished(status) {
-      var data = {
-        id: this.currentPost.id,
-        title: this.currentPost.title,
-        description: this.currentPost.description,
-         user_Id: this.currentPost.user_Id,
-        published: status
-      };
+    // updatePublished(status) {
+    //   var data = {
+    //     id: this.currentPost.id,
+    //     title: this.currentPost.title,
+    //     description: this.currentPost.description,
+    //      user_Id: this.currentPost.user_Id,
+    //     published: status
+    //   };
 
-      PostDataService.update(this.currentPost.id, data)
-        .then(response => {
-          this.currentPost.published = status;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
+    //   PostDataService.update(this.currentPost.id, data)
+    //     .then(response => {
+    //       this.currentPost.published = status;
+    //       console.log(response.data);
+    //     })
+    //     .catch(e => {
+    //       console.log(e);
+    //     });
+    // },
 
     updatePost() {
       PostDataService.update(this.currentPost.id, this.currentPost)

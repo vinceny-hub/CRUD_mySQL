@@ -1,7 +1,7 @@
-<template>
-<!-- eslint-disable no-mixed-spaces-and-tabs -->
 
-   <!-- <div class="container-fluid gedf-wrapper">
+<!--eslint-disable no-mixed-spaces-and-tabs 
+<template>
+    <div class="container-fluid gedf-wrapper">
         <div class="row">
             <div class="col-md-3">
                 <div class="card">
@@ -260,247 +260,101 @@
                     </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
 
-      <!--- \\\\\\\Post-->
+       \\\\\\\Post-->
       
-      <div class="container-fluid">
-        <div class="row h-100 justify-content-center align-items-center">
-           <div class="col-md-6 gedf-main">
-        
-                <div class="card gedf-card d-flex " v-if="!submitted">
-                    <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Make
-                                    a publication</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images">Images</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-                                <div class="form-group">
-                                    <label class="sr-only" for="message">post</label>
-                                    <textarea 
-                                    id="description"
-                                     required
-                                    v-model="post.description" class="form-control" rows="3" placeholder="What are you thinking?"></textarea>
-                                </div>
-
-                            </div>
-                            
-                            <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
-                                <div class="form-group">
-                                    <div class="custom-file">
-                                        <input  type="file" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Upload image</label>
-                                    </div>
-                                </div>
-                                <div class="py-4"></div>
-                            </div>
-                        </div>
-                        <div class="btn-toolbar justify-content-between">
-                            <div class="btn-group">
-                                <button @click="savePost" type="submit" class="btn btn-primary">Share</button>
-                            </div>
-    
-                            
-                            <!-- <div class="btn-group"> -->
-                              <!-- <button @click="savePost" type="submit" class="btn btn-primary">Comment</button> -->
-                                <!-- <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    <i class="fa fa-globe"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
-                                    <a class="dropdown-item" href="#"><i class="fa fa-globe"></i> Public</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-users"></i> Friends</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Just me</a>
-                                </div> -->
-                            <!-- </div> -->
-                        </div>
-                    </div>
-                         <div>
-                  <div
-            v-if="!emptyError"></div>
-                         <!-- <div v-else
-            class="alert alert-danger"
-            role="alert"
-          >cannot be empty!</div> -->
-        </div>
-                    
+<template>
+  <div class="container-fluid">
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="col-md-6 gedf-main">
+        <div class="card gedf-card d-flex " v-if="!submitted">
+          <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Make a publication</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images">Images</a>
+              </li>
+            </ul>
+          </div>
+          <div class="card-body">
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                <div class="form-group">
+                  <label class="sr-only" for="message">post</label>
+                    <textarea 
+                    id="description"
+                    required
+                    v-model="post.description" class="form-control" rows="3" placeholder="What are you thinking?"></textarea>
                 </div>
-           
-                 <!-- <div v-else>
-      <h4>You submitted successfully!</h4>
-      <button class="btn btn-success" @click="newPost">Add</button>
-    </div> -->
-                
-           <!-- </div>
-        </div>
-      </div> -->
-           
-            
-   <div class="list row">
-    <div class="col-md-8">
-      <div class="input-group mb-3">
-        <!-- <input type="text" class="form-control" placeholder="Search by title"
-          v-model="title"/> -->
-        <div class="input-group-append">
-          <!-- <button class="btn btn-outline-secondary" type="button"
-            @click="searchTitle"
-          >
-            Search
-          </button> -->
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <h4>Posts</h4>
-    
-       <ul class="list-group">
-        <li 
-        
-          v-for="(post, index) in posts.slice().reverse()"
-        
-          :key="index"
-        
-           @click="setActivePost(post)" class="list-group-item"
-            :class="{ active: index== currentIndex }"
-        >
-      <div v-if="currentPost"></div>
-        <!-- :class="{ active: index == currentIndex }" -->
-      <div  v-if="!editing">         
-       
-           {{ post.description }} </div>
-     <!-- <div v-if="currentPost"> -->
-             <input v-else type="text" class="form-control" id=""
-          v-model="post.description"
-        /> 
-    
-            <!-- <div class="col-md-6" > -->
-             
-       <!-- <div v-if="currentPost"   :key="index">  -->
-         <input type="text" class="form-control" id=""
-          v-model="post.user_Id"
-        /> 
-       
-       
-
-               <button v-if="currentUser.id == post.user_Id"     class="badge badge-warning"  @click="editPost(index, post)"
-    >
-     {{editing?'Update':'Edit'}}
-    </button>
-     
-        <!-- <h4></h4> -->
-         <!-- <div> -->
-     
-              <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2"
-      @click="deletePost(index)"
-    >
-      Delete
-    </button>
-
-          <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-success mr-2"
-      @click="cancel(index)"
-    >
-      Cancel
-    </button>
-     <!-- <button v-if="currentUser.id == post.user_Id" class="badge badge-success mr-2"
-      @click="updatePost"
-    >
-      Update
-    </button> -->
-      <button class="badge badge-primary mr-2"
-      @click="updatePost"
-    >
-      Comment
-    </button>
- <!-- </div> -->
-     <!-- </div> -->
-            <!-- </div> -->
-  <!--    </div> -->
-        </li>
-       </ul>
-     
-      <!--    <label><strong>Title:</strong></label> {{ currentPost.title }}
-        </div> -->
-       <!-- <div >
-          <label><strong>Description:</strong></label> {{ post.description }}
-        </div>  -->
-      
-
-
-     <!-- <div>
-          <label><strong>Status:</strong></label> {{ currentPost.published ? "Published" : "Pending" }}
-        </div> -->
-<!-- 
-        <a class="badge badge-warning"
-          :href="'/posts/' + currentPost.id"
-        > 
-           Edit
-        </a> 
-         <button  v-if="dataUser.id == currentPost.user_Id" class="badge badge-danger mr-2"
-      @click="deletePost"
-    >
-      Delete
-    </button> -->
-      </div>
-      <!-- <div v-else>
-        <br />
-        <p>Please click on a Post...</p>
-       </div> -->
-     </div> 
-  </div>  
-        <!-- </li>
-      </ul>  -->
-
-       <button  v-if="showAdminBoard" class="m-3 btn btn-sm btn-danger" @click="removeAllPosts">
-        Remove All
-      </button> 
-    </div>
-      <div class="col-md-6">
-      <div v-if="currentPost">
-        <h4>Post</h4>
-         <div>
-      <!--    <label><strong>Title:</strong></label> {{ currentPost.title }}
-        </div> -->
-       <!-- <div >
-          <label><strong>Description:</strong></label> {{ post.description }}
-        </div>  -->
-      
-
-
-     <!-- <div>
-          <label><strong>Status:</strong></label> {{ currentPost.published ? "Published" : "Pending" }}
-        </div> -->
-
-        <!-- <a class="badge badge-warning"
-          :href="'/posts/' + currentPost.id"
-        > 
-           Edit
-        </a> -->
-      </div>
-      <!-- <div v-else>
-        <br />
-        <p>Please click on a Post...</p>
-      </div> -->
-    </div> 
-  </div> 
+              </div>
+              <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                <div class="form-group">
+                    <div class="custom-file">
+                        <input  type="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Upload image</label>
+                    </div>
+                </div>
+                <div class="py-4"></div>
+              </div>
             </div>
-         <!-- </div> -->
-        
-      <!-- </div>
-      </div> --> 
-  <!-- eslint-enable no-mixed-spaces-and-tabs -->
+            <div class="btn-toolbar justify-content-between">
+              <div class="btn-group">
+                  <button @click="savePost" type="submit" class="btn btn-primary">Share</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div v-if="!emptyError"></div>
+          </div>
+        </div>
+        <div class="list row">
+          <div class="col-md-6">
+            <h4>Posts</h4>
+            <ul class="list-group">
+               
+                <li class="list-group-item"
+                @dblclick="editPost(index, post)"
+                v-for="(post, index) in posts.slice().reverse()"
+                :key="post.id"
+                @click="setActivePost(post)"
+                :class="{ active: post == currentPost}"
+               
+              > <div> {{ post.description }} </div> 
+             
+              
+                <!-- <div v-if="!editing"> {{ post.description }} </div>    -->
+                 
+                <!-- <input v-else type="text" class="form-control" id="" v-model="post.description"/>  -->
+             
+                <input type="text" class="form-control" id="" v-model="post.user_Id"/><br>
+                <a :href="'/posts/' + post.id"><button class="btn btn-primary"> Comment </button></a>
+              </li>
+            </ul>
+                <!-- <a v-if="currentUser.id == post.user_Id" class="badge badge-warning" @click="editPost(index, post)"> {{editing?'Update':'Edit'}} </a> -->
+                <!-- <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2" @click="deletePost(index)"> Delete </button>
+                <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-success mr-2" @click="cancel(index)"> Cancel </button> -->
+               
+             
+          </div>
+        </div>
+        <button v-if="showAdminBoard" class="m-3 btn btn-sm btn-danger" @click="removeAllPosts"> Remove All </button> 
+      </div>
+    </div>
+  </div>
+</template>
+       
+                    
+              
+ 
+       
         
      
     
-</template>
+
 
 <script>
 import PostDataService from "../services/PostDataService";
@@ -566,12 +420,16 @@ export default {
     },
 
     editPost(){
+    
     this.editing = this.editing == true?false:true
+    
     if(this.editing== false){
     this.updatePost()
     }  
-      
+    
     console.log(this.editing)
+    
+
   
 
     },
@@ -631,10 +489,13 @@ export default {
     },
 
     setActivePost(post, index) {
+      // this.post.id == post.id
       this.currentPost = post;
       this.currentIndex = index;
       
-      console.log(post.description)
+      console.log(post.id)
+   
+      
     },
 
         removeAllPosts() {
