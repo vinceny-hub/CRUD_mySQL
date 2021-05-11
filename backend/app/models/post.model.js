@@ -3,6 +3,9 @@ module.exports = (sequelize, Sequelize) => {
     user_Id:{
       type: Sequelize.STRING
     },
+    username:{
+      type: Sequelize.STRING
+    },
     // post_id:{
     //   type: Sequelize.STRING
     // },

@@ -285,6 +285,7 @@
               <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
                 <div class="form-group">
                   <label class="sr-only" for="message">post</label>
+                  <!-- <input v-show="!editing" type="text" class="form-control" id="" v-model="username"/>  -->
                     <textarea 
                     id="description"
                     required
@@ -324,6 +325,7 @@
                 :class="{ active: post == currentPost}"
                
               > <div> {{ post.description }} </div> 
+              <div> Posted by {{ post.username }} </div> 
              
               
                 <!-- <div v-if="!editing"> {{ post.description }} </div>    -->
@@ -368,10 +370,13 @@ export default {
         currentIndex: -1,         
         message: '',
       post: {
+      
+       
         id: null,
         // title: "",
         description: "",
         user_Id: "",
+        username: "",
         published: false
       },
       submitted: false,
@@ -395,6 +400,7 @@ export default {
 
     currentUser() {
       return this.$store.state.auth.user;
+     
     },
         showAdminBoard() {
       if (this.currentUser && this.currentUser.roles) {
@@ -539,15 +545,19 @@ export default {
         // title: this.post.title,
         description: this.post.description,
         user_Id : dataUser.id,
+        username : dataUser.username,
+        
+      
         
       }}
-       
+     
     
 
       PostDataService.create(data)
         .then(response => {
           this.post.id = response.data.id;
           // this.user_Id = 
+          this.username
           console.log(response.data);
           this.submitted = true;
           this.posts.push(data)

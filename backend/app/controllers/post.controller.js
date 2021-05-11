@@ -36,6 +36,7 @@ exports.create = (req, res) => {
       // title: req.body.title,
       description: req.body.description,
       user_Id: req.body.user_Id,
+      username:  req.body.username,
       published: req.body.published ? req.body.published : false
     };
   
