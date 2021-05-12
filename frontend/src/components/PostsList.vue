@@ -326,7 +326,7 @@
                
               > <div> {{ post.description }} </div> 
               <div> Posted by {{ post.username }} </div> 
-             
+              <div > commented by {{ currentComment }} </div> 
               
                 <!-- <div v-if="!editing"> {{ post.description }} </div>    -->
                  
@@ -360,6 +360,7 @@
 
 <script>
 import PostDataService from "../services/PostDataService";
+import PostCommentService from "../services/PostCommentService";
 
 export default {
   name: "post-list",
@@ -379,8 +380,8 @@ export default {
         username: "",
         published: false
       },
-
-      // comments:[],
+      currentComment:"",
+      comments:[],
       
       //   id:null,
       //  content:"",
@@ -449,6 +450,17 @@ export default {
 
   
 
+    },
+
+        getComment() {
+      PostCommentService.getAll()
+        .then(response => {
+          this.currentComment = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
 
      
@@ -606,6 +618,9 @@ export default {
     },
     
     mounted() {
+          this.message = '';
+    this.getComment()
+    // (this.$route.params.id);
     this.retrievePosts();
   }
   

@@ -2,11 +2,11 @@ import http from "../http-common";
 
 class PostCommentService {
   getAll() {
-    return http.get("/posts");
+    return http.get("/comment");
   }
 
   get(id) {
-    return http.get(`/posts/${id}`);
+    return http.get(`/comment/${id}`);
   }
 
   create(data) {
@@ -14,15 +14,15 @@ class PostCommentService {
   }
 
   update(id, data) {
-    return http.put(`/posts/${id}`, data);
+    return http.put(`/comment/${id}`, data);
   }
 
   delete(id) {
-    return http.delete(`/posts/${id}`);
+    return http.delete(`/comment/${id}`);
   }
 
   deleteAll() {
-    return http.delete(`/posts`);
+    return http.delete(`/comment`);
   }
 
   findByTitle(description) {
