@@ -103,16 +103,16 @@ app.use('/images', express.static(path.join(__dirname,'images')))
 //export vers server.js
 
 const db = require("./app/models/index");
-db.sequelize.sync();
+// db.sequelize.sync();
 
 // const dblogin = require("./app/modelsUser/index");
 const Role = db.role;
 
-// db.sequelize.sync({force: true}).then(() => {
-//   console.log('Drop and Resync Db');
-//   initial();
-// });
-initial();
+db.sequelize.sync({force: true}).then(() => {
+  console.log('Drop and Resync Db');
+  initial();
+});
+// initial();
 
 function initial() {
   Role.create({
@@ -134,6 +134,7 @@ function initial() {
 // ****
 
 const postRoutes = require("./app/routes/post.routes");
+const commentRoutes = require("./app/routes/comment.routes")
 
 // simple route
 // app.get("/", (req, res) => {
@@ -145,6 +146,7 @@ require('./app/routes/user.routes')(app);
 
 // require("./app/routes/post.routes")(app);
 app.use('/api/posts', postRoutes);
+app.use('/api/comment', commentRoutes);
 // require("./app/routes/post.users")(app);
 module.exports = app
 

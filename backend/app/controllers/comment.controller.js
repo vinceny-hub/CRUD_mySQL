@@ -1,47 +1,32 @@
 const db = require("../models/");
 require('../middleware/auth')
 // const userId = decodedToken.userId;
-const Post = db.posts;
+const Comment = db.comments;
 const Op = db.Sequelize.Op;
-
-// exports.create = (req, res, next) => {
-//   const newComment = new Comment ({
-//     user_id: req.body.user_id,
-//     message_id: req.body.message_id,
-//     comment: req.body.commentInput,
-//     createdAt: Utils.getSqlDate(),
-//     updatedAt: Utils.getSqlDate(),
-//   });
-
-//   Comment.create(newComment, (err, data) => {
-//     if(err) {
-//         return res.status(400).json({ message: "From Back Impossible de créer le commentaire" });
-//     }
-
 
 
 exports.create = (req, res) => {
     // Validate request
-    // if (!req.body.description) {
-    //   res.status(400).send({
-    //     message: "Content can not be empty!"
-    //   });
-    //   return;
-    // }
+    if (!req.body.description) {
+      res.status(425).send({
+        message: "Content can not be empty!"
+      });
+      return;
+    }
     // const userID = res.locals.userID;
     // Create a Post
-    const post = {
+    const comment = {
       
       // post_id: req.body.post.id,
       // title: req.body.title,
       description: req.body.description,
       user_Id: req.body.user_Id,
       username:  req.body.username,
-      published: req.body.published ? req.body.published : false
+    //   published: req.body.published ? req.body.published : false
     };
   
     // Save Post in the database
-    Post.create(post)
+    Comment.create(comment)
       .then(data => {
         res.send(data);
       })
@@ -57,7 +42,7 @@ exports.create = (req, res) => {
     const description = req.query.description;
     var condition = description ? { description: { [Op.like]: `%${description}%` } } : null;
   
-    Post.findAll({ where: condition })
+    Comment.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })
@@ -72,7 +57,7 @@ exports.create = (req, res) => {
   exports.findOne = (req, res) => {
     const id = req.params.id;
   
-    Post.findByPk(id)
+    Comment.findByPk(id)
       .then(data => {
         res.send(data);
       })
@@ -86,7 +71,7 @@ exports.create = (req, res) => {
   exports.update = (req, res) => {
     const id = req.params.id;
   
-    Post.update(req.body, {
+    Commment.update(req.body, {
       where: { id: id }
     })
       .then(num => {
@@ -110,7 +95,7 @@ exports.create = (req, res) => {
   exports.delete = (req, res) => {
     const id = req.params.id;
   
-    Post.destroy({
+    Comment.destroy({
       where: { id: id }
     })
       .then(num => {
@@ -132,7 +117,7 @@ exports.create = (req, res) => {
   };
 
   exports.deleteAll = (req, res) => {
-    Post.destroy({
+    Comment.destroy({
       where: {},
       truncate: false
     })
@@ -148,7 +133,7 @@ exports.create = (req, res) => {
   };
 
   exports.findAllPublished = (req, res) => {
-    Post.findAll({ where: { published: true } })
+    Comment.findAll({ where: { published: true } })
       .then(data => {
         res.send(data);
       })

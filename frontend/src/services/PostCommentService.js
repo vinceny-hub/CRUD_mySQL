@@ -1,6 +1,6 @@
 import http from "../http-common";
 
-class PostDataService {
+class PostCommentService {
   getAll() {
     return http.get("/posts");
   }
@@ -10,7 +10,7 @@ class PostDataService {
   }
 
   create(data) {
-    return http.post("/posts", data);
+    return http.post("/comment", data);
   }
 
   update(id, data) {
@@ -30,6 +30,4 @@ class PostDataService {
   }
 }
 
-export default new PostDataService();
-
-
+export default new PostCommentService();

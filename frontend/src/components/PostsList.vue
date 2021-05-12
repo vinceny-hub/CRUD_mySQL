@@ -371,7 +371,7 @@ export default {
         message: '',
       post: {
       
-       
+        
         id: null,
         // title: "",
         description: "",
@@ -379,6 +379,17 @@ export default {
         username: "",
         published: false
       },
+
+      // comments:[],
+      
+      //   id:null,
+      //  content:"",
+      //   user_Id:"",
+        // username:""
+
+      
+      
+
       submitted: false,
       selectedIndex: null,
       editing: false,

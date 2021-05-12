@@ -6,10 +6,7 @@
       <div class="form-group">
         <!-- <label for="description">Description</label> -->
        <div v-if="!editing" class="form-group list-group-item"> {{ currentPost.description }} </div> 
-       
-        <input v-else type="text" class="form-control" id="description"
-          v-model="currentPost.description"
-        />
+          <input v-else type="text" class="form-control" id="description" v-model="currentPost.description"/>
       </div>
       <div class="form-group">
         <label for="">ID</label>
@@ -36,10 +33,12 @@
       Publish
     </button> -->
      <!-- <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2" @click="deletePost(index)"> Delete </button> -->
-    <button  v-if="dataUser.id == currentPost.user_Id" class="badge badge-warning" @click="editPost(index, currentPost)"> {{editing?'Update':'Edit'}} </button> 
-    <button v-show="editing" v-if="dataUser.id == currentPost.user_Id" class="badge badge-success mr-2" @click="cancel(index)"> Cancel </button>
-    <button  v-show="editing" v-if="dataUser.id == currentPost.user_Id" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
-    <button v-show="!editing" class="btn btn-primary"> Comment </button>
+    <button v-if="dataUser.id == currentPost.user_Id" class="btn btn-success" @click="editPost(index, currentPost)"> {{editing? 'Update':'Modify'}} </button>
+    <button v-show="editing" v-if="dataUser.id == currentPost.user_Id" class="btn btn-secondary mr-2" @click="cancel(index)"> Cancel </button>
+    <button v-show="editing" v-if="dataUser.id == currentPost.user_Id" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
+     <div>   <input  type="text" v-model="comments.description"> {{comments.description}} </div>
+    <button  @click="saveComment" class="btn btn-primary"> Comment </button>
+
    
     <!-- <button type="submit" class="badge badge-success"
       @click="updatePost"
@@ -56,36 +55,94 @@
 </template>
 
 <script>
+import PostCommentService from "../services/PostCommentService";
 import PostDataService from "../services/PostDataService";
 
 export default {
   name: "post",
   data() {
     return {
+
+         comments:[],
+        currentComment: null,
+        currentIndex: -1,         
+        message: '',
+      comment: {
+      
+        
+        id: null,
+        post_Id: "",
+        // title: "",
+        description: "",
+        user_Id: "",
+        username: "",
+        published: false
+      },
+       
+      
+    
       currentPost: null,
-      message: '',
+    
       editing: false,
+      
     };
   },
   methods: {
-     cancel(){
-       this.editing = this.editing == false
-    },
 
-    editPost(){
+    saveComment() {
+      //  if (!this.comment.description) {
+      //     // this.emptyError = this.emptyError == true?false:true
+      //     this.emptyError = alert('Cannot be empty')
+          
+      //  error => {
+           
+      //         this.message =
+      //           (error.response && error.response.data)
+      // }}else{ 
+     
+      let dataUser = JSON.parse(localStorage.getItem("user"))
+      console.log(dataUser)
+      // this.user = response.data1;
+      var data = {
+       
+        // title: this.post.title,
+        description: this.comments.description,
+        user_Id : dataUser.id,
+        username : dataUser.username,
+        
+      
+        
+      }
+      // }
+     
     
-    this.editing = this.editing == true?false:true
+
+      PostCommentService.create(data)
+        .then(response => {
+          this.comment.id = response.data.id;
+          // this.user_Id = 
+          // this.username
+          console.log(response.data);
+          this.submitted = true;
+          // this.comments.push(data)
+          //  this.retrieveComments();
+          // this.newComment()
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+  //       content(){
     
-    if(this.editing== false){
-    this.updatePost()
-    }  
+  // this.comment = this.comment == true?false:true
     
-    console.log(this.editing)
+  //   console.log(this.comment)
     
 
   
 
-    },
+  //   },
+
     getPost(id) {
       PostDataService.get(id)
         .then(response => {
@@ -115,6 +172,25 @@ export default {
     //       console.log(e);
     //     });
     // },
+
+    cancel(){
+       this.editing = this.editing == false
+    },
+
+     editPost(){
+    
+    this.editing = this.editing == true?false:true
+    
+    if(this.editing== false){
+    this.updatePost()
+    }  
+    
+    console.log(this.editing)
+    
+
+  
+
+    },
 
     updatePost() {
       PostDataService.update(this.currentPost.id, this.currentPost)
