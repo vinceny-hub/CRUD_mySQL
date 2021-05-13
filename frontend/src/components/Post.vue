@@ -33,8 +33,8 @@
       Publish
     </button> -->
      <!-- <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2" @click="deletePost(index)"> Delete </button> -->
-    <button v-if="dataUser.id == currentPost.user_Id" class="btn btn-success" @click="editPost(index, currentPost)"> {{editing? 'Update':'Modify'}} </button>
-    <button v-show="editing" v-if="dataUser.id == currentPost.user_Id" class="btn btn-secondary mr-2" @click="cancel(index)"> Cancel </button>
+    <button v-if="dataUser.id == currentPost.user_Id" class="btn btn-success" @click="editPost(currentPost)"> {{editing? 'Update':'Modify'}} </button>
+    <button v-show="editing" v-if="dataUser.id == currentPost.user_Id" class="btn btn-secondary mr-2" @click="cancel()"> Cancel </button>
     <button v-show="editing" v-if="dataUser.id == currentPost.user_Id" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
      <div>   <input  type="text" v-model="comments.description"> {{comments.description}} </div>
     <button  @click="saveComment" class="btn btn-primary"> Comment </button>
@@ -71,7 +71,7 @@ export default {
       
         
         id: null,
-        post_Id: "",
+        post_id: "",
         // title: "",
         description: "",
         user_Id: "",
@@ -109,6 +109,7 @@ export default {
         description: this.comments.description,
         user_Id : dataUser.id,
         username : dataUser.username,
+        post_id : this.currentPost.id
         
       
         

@@ -326,7 +326,7 @@
                
               > <div> {{ post.description }} </div> 
               <div> Posted by {{ post.username }} </div> 
-              <div > commented by {{ currentComment }} </div> 
+              <div v-for="comment in comments" :key="comment.id"> <div v-if="post.id == comment.post_id"> commented by {{ comment.username }} <div> {{ comment.description }} </div></div></div> 
               
                 <!-- <div v-if="!editing"> {{ post.description }} </div>    -->
                  
@@ -382,7 +382,16 @@ export default {
       },
       currentComment:"",
       comments:[],
+      comment: {
       
+        
+        id: null,
+        // title: "",
+        description: "",
+        user_Id: "",
+        username: "",
+        published: false
+      },
       //   id:null,
       //  content:"",
       //   user_Id:"",
@@ -455,8 +464,10 @@ export default {
         getComment() {
       PostCommentService.getAll()
         .then(response => {
-          this.currentComment = response.data;
+          
+          this.comments = response.data;
           console.log(response.data);
+            console.log(this.comments);
         })
         .catch(e => {
           console.log(e);

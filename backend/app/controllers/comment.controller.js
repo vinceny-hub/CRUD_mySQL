@@ -17,7 +17,7 @@ exports.create = (req, res) => {
     // Create a Post
     const comment = {
       
-      // post_id: req.body.post.id,
+      post_id: req.body.post_id,
       // title: req.body.title,
       description: req.body.description,
       user_Id: req.body.user_Id,
