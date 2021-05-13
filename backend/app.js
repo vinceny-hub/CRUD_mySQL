@@ -103,16 +103,16 @@ app.use('/images', express.static(path.join(__dirname,'images')))
 //export vers server.js
 
 const db = require("./app/models/index");
-// db.sequelize.sync();
+ db.sequelize.sync();
 
 // const dblogin = require("./app/modelsUser/index");
 const Role = db.role;
 
-db.sequelize.sync({force: true}).then(() => {
-  console.log('Drop and Resync Db');
-  initial();
-});
-// initial();
+// db.sequelize.sync({force: true}).then(() => {
+//   console.log('Drop and Resync Db');
+//   initial();
+// });
+initial();
 
 function initial() {
   Role.create({

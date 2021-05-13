@@ -93,10 +93,11 @@ exports.create = (req, res) => {
   };
 
   exports.delete = (req, res) => {
-    const id = req.params.id;
-  
+    const post_id = req.params.id;
+    // comment.findOne({ where: { post_id : req.params.id } })
+    console.log(post_id)
     Comment.destroy({
-      where: { id: id }
+      where: {post_id : post_id}
     })
       .then(num => {
         if (num == 1) {

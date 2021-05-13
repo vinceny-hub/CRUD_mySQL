@@ -37,7 +37,12 @@
     <button v-show="editing" v-if="dataUser.id == currentPost.user_Id" class="btn btn-secondary mr-2" @click="cancel()"> Cancel </button>
     <button v-show="editing" v-if="dataUser.id == currentPost.user_Id" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
      <div>   <input  type="text" v-model="comments.description"> {{comments.description}} </div>
-    <button  @click="saveComment" class="btn btn-primary"> Comment </button>
+     <button  @click="saveComment" class="btn btn-primary"> Comment </button>
+    <div v-for="comment in comments" :key="comment.id">  <div v-if="currentPost.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} </div> </div>
+    
+   
+    
+     <div v-if="currentPost.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} </div> 
 
    
     <!-- <button type="submit" class="badge badge-success"
@@ -109,7 +114,8 @@ export default {
         description: this.comments.description,
         user_Id : dataUser.id,
         username : dataUser.username,
-        post_id : this.currentPost.id
+        post_id : this.currentPost.id,
+        id: this.comments.id,
         
       
         
@@ -143,6 +149,17 @@ export default {
   
 
   //   },
+     getComment() {
+      PostCommentService.getAll()
+        .then(response => {
+          this.comments = response.data;
+          console.log(response.data);
+        
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
 
     getPost(id) {
       PostDataService.get(id)
@@ -206,7 +223,10 @@ export default {
     },
 
     deletePost() {
+      PostCommentService.delete(this.currentPost.id)
       PostDataService.delete(this.currentPost.id)
+     
+      
         .then(response => {
           console.log(response.data);
           this.$router.push({ name: "posts" });
@@ -219,6 +239,7 @@ export default {
   mounted() {
     this.message = '';
     this.getPost(this.$route.params.id);
+    this.getComment();
   },
    computed: {
     dataUser(){  return JSON.parse(localStorage.getItem("user"))
