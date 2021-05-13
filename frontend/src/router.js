@@ -96,7 +96,7 @@ export const router = new Router({
                         component: () => import("./components/PostsList.vue")
                       },
                       {
-                        path: "/comment",
+                        path: "/comments/:id",
                         // alias: "posts",
                         name: "comment",
                         component: () => import("./components/Comment.vue")

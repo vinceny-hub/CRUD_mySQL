@@ -71,7 +71,7 @@ exports.create = (req, res) => {
   exports.update = (req, res) => {
     const id = req.params.id;
   
-    Commment.update(req.body, {
+    Comment.update(req.body, {
       where: { id: id }
     })
       .then(num => {
@@ -81,7 +81,7 @@ exports.create = (req, res) => {
           });
         } else {
           res.send({
-            message: `Cannot update Post with id=${id}. Maybe Post was not found or req.body is empty!`
+            message: `Cannot update Comment with id=${id}. Maybe Comment was not found or req.body is empty!`
           });
         }
       })
@@ -129,6 +129,31 @@ exports.create = (req, res) => {
         res.status(500).send({
           message:
             err.message || "Some error occurred while removing all posts."
+        });
+      });
+  };
+
+  exports.deletePostComment = (req, res) => {
+    const id = req.params.id;
+    // comment.findOne({ where: { post_id : req.params.id } })
+    console.log(id)
+    Comment.destroy({
+      where: { id : id}
+    })
+      .then(num => {
+        if (num == 1) {
+          res.send({
+            message: "Post was deleted successfully!"
+          });
+        } else {
+          res.send({
+            message: `Cannot delete Post with id=${id}. Maybe Post was not found!`
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Could not delete Post with id=" + id
         });
       });
   };
