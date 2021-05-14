@@ -135,6 +135,7 @@ function initial() {
 
 const postRoutes = require("./app/routes/post.routes");
 const commentRoutes = require("./app/routes/comment.routes")
+const commentPostRoutes = require("./app/routes/commentPost.routes")
 
 // simple route
 // app.get("/", (req, res) => {
@@ -147,6 +148,7 @@ require('./app/routes/user.routes')(app);
 // require("./app/routes/post.routes")(app);
 app.use('/api/posts', postRoutes);
 app.use('/api/comment', commentRoutes);
+app.use('/api/comments', commentPostRoutes);
 // require("./app/routes/post.users")(app);
 module.exports = app
 

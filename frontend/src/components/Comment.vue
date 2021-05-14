@@ -48,7 +48,7 @@
     
    
     
-     <div v-if="currentComment.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} </div> 
+     <div v-if="currentComment.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} {{ currentComment.id }} </div> 
 
    
     <!-- <button type="submit" class="badge badge-success"
@@ -68,6 +68,7 @@
 <script>
 import PostCommentService from "../services/PostCommentService";
 // import PostDataService from "../services/PostDataService";
+import CommentPostService from "../services/CommentPostService";
 
 export default {
   name: "post",
@@ -229,7 +230,8 @@ export default {
     },
 
     deleteComment() {
-      PostCommentService.deletePostComment(this.currentComment.id)
+      CommentPostService.deletePostComment(this.currentComment.id)
+
     //   PostDataService.delete(this.currentComment.id)
      
       

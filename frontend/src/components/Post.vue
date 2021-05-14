@@ -236,6 +236,7 @@ export default {
         });
     }
   },
+  
   mounted() {
     this.message = '';
     this.getPost(this.$route.params.id);

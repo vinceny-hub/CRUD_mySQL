@@ -21,6 +21,10 @@ class PostCommentService {
     return http.delete(`/comment/${id}`);
   }
 
+  deleteComment(id) {
+    return http.delete(`/comment/${id}`);
+  }
+
   deletePostComment(id) {
     return http.delete(`/comment/${id}`);
   }

@@ -20,9 +20,6 @@ const comments = require("../controllers/comment.controller");
   // Update a Post with id
   router.put("/:id", auth, comments.update);
 
-   // Delete all Posts
-   router.delete("/:id", auth, comments.deletePostComment);
-
   // Delete a Post with id
   router.delete("/:id", auth, comments.delete);
 
@@ -30,7 +27,7 @@ const comments = require("../controllers/comment.controller");
   router.delete("/", auth, comments.deleteAll);
 
   // Delete all Posts
-  router.delete("/:id", auth, comments.deletePostComment);
+  // router.delete("/:id", auth, comments.deletePostComment);
 
   // app.use('/api/posts', router);
 // };

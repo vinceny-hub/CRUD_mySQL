@@ -106,13 +106,13 @@ exports.create = (req, res) => {
           });
         } else {
           res.send({
-            message: `Cannot delete Post with id=${id}. Maybe Post was not found!`
+            message: `Cannot delete Com with post=${post_id}. Maybe Com was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Post with id=" + id
+          message: "Could not delete Com with id=" + post_id
         });
       });
   };
@@ -133,30 +133,30 @@ exports.create = (req, res) => {
       });
   };
 
-  exports.deletePostComment = (req, res) => {
-    const id = req.params.id;
-    // comment.findOne({ where: { post_id : req.params.id } })
-    console.log(id)
-    Comment.destroy({
-      where: { id : id}
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "Post was deleted successfully!"
-          });
-        } else {
-          res.send({
-            message: `Cannot delete Post with id=${id}. Maybe Post was not found!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Could not delete Post with id=" + id
-        });
-      });
-  };
+  // exports.deletePostComment = (req, res) => {
+  //   const id = req.params.id;
+  //   // comment.findOne({ where: { post_id : req.params.id } })
+  //   console.log(id)
+  //   Comment.destroy({
+  //     where: { id : id}
+  //   })
+  //     .then(num => {
+  //       if (num == 1) {
+  //         res.send({
+  //           message: "Post was deleted successfully!"
+  //         });
+  //       } else {
+  //         res.send({
+  //           message: `Cannot delete Post with id=${id}. Maybe Post was not found!`
+  //         });
+  //       }
+  //     })
+  //     .catch(err => {
+  //       res.status(500).send({
+  //         message: "Could not delete Post1 with id=" + id
+  //       });
+  //     });
+  // };
 
   exports.findAllPublished = (req, res) => {
     Comment.findAll({ where: { published: true } })
