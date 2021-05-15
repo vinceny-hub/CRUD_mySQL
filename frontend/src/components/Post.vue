@@ -38,11 +38,13 @@
     <button v-show="editing" v-if="dataUser.id == currentPost.user_Id" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
      <div>   <input  type="text" v-model="comments.description"> {{comments.description}} </div>
      <button  @click="saveComment" class="btn btn-primary"> Comment </button>
-    <div v-for="comment in comments" :key="comment.id">  <div v-if="currentPost.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} </div> </div>
+    <div v-for="comment in comments" :key="comment.id">  <div v-if="currentPost.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} </div> 
+    <a :href="'/comments/' + comment.id"><button v-if="dataUser.id == comment.user_Id" class="btn btn-success"> Modify </button></a>
+    </div>
     
    
     
-     <div v-if="currentPost.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} </div> 
+      <!-- <div v-if="currentPost.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} </div>   -->
 
    
     <!-- <button type="submit" class="badge badge-success"
@@ -134,6 +136,8 @@ export default {
           // this.comments.push(data)
           //  this.retrieveComments();
           // this.newComment()
+          this.message = 'The post was updated successfully!';
+          this.$router.push({ name: "posts" });
         })
         .catch(e => {
           console.log(e);
