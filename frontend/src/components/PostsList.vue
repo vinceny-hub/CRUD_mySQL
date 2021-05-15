@@ -312,27 +312,33 @@
             <div v-if="!emptyError"></div>
           </div>
         </div>
-        <div class="list row">
-          <div class="col-md-6">
-            <h4>Posts</h4>
+        <!-- <div class="container"> -->
+    <!-- <div class="row"> -->
+        <div class="col-16">
+          <h4>Posts</h4>
+            <div class="card card-white post">
+                <div class="post-heading">
+            
             <ul class="list-group">
-               
+                <!-- @click="setActivePost(post)"
+                :class="{ active: post == currentPost}" -->
                 <li class="list-group-item"
                 @dblclick="editPost(index, post)"
                 v-for="(post, index) in posts.slice().reverse()"
                 :key="post.id"
-                @click="setActivePost(post)"
-                :class="{ active: post == currentPost}"
                
-              > <div> {{ post.description }} </div> 
-              <div> Posted by {{ post.username }} </div> 
-              <div v-for="comment in comments" :key="comment.id"> <div v-if="post.id == comment.post_id"> commented by {{ comment.username }} <div> {{ comment.description }} </div></div></div> 
+               
+              > 
+              <h4> {{ post.username }} </h4> 
+              <div> {{ post.description }} </div> 
+              
+              <div v-for="comment in comments" :key="comment.id"> <div class="comment" v-if="post.id == comment.post_id">  <h5> {{ comment.username }} </h5> <div> {{ comment.description }} </div></div></div> 
               
                 <!-- <div v-if="!editing"> {{ post.description }} </div>    -->
                  
                 <!-- <input v-else type="text" class="form-control" id="" v-model="post.description"/>  -->
              
-                <input type="text" class="form-control" id="" v-model="post.user_Id"/><br>
+                <!-- <input type="text" class="form-control" id="" v-model="post.user_Id"/><br> -->
                 <a :href="'/posts/' + post.id"><button class="btn btn-primary"> Comment </button></a>
               </li>
             </ul>
@@ -346,7 +352,37 @@
         <button v-if="showAdminBoard" class="m-3 btn btn-sm btn-danger" @click="removeAllPosts"> Remove All </button> 
       </div>
     </div>
+        </div>
+      <!-- </div> -->
+    <!-- </div> -->
+    <div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="card card-white post">
+                <div class="post-heading">
+                    <div class="float-left image">
+                        <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
+                    </div>
+                    <div class="float-left meta">
+                        <div class="title h5">
+                            <a href="#"><b>Ryan Haywood</b></a>
+                            made a post.
+                        </div>
+                        <h6 class="text-muted time">1 minute ago</h6>
+                    </div>
+                </div> 
+                <div class="post-description"> 
+                    <p>Bootdey is a gallery of free snippets resources templates and utilities for bootstrap css hmtl js framework. Codes for developers and web designers</p>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
   </div>
+
+  
 </template>
        
                     
@@ -578,7 +614,7 @@ export default {
        
         // title: this.post.title,
         description: this.post.description,
-        user_Id : dataUser.id,
+        user_Id : dataUser.user_Id,
         username : dataUser.username,
         
       
@@ -732,4 +768,12 @@ export default {
   margin: auto;
 } */
 
+
+.comment {
+    overflow: hidden;
+    padding: 0 0 1em;
+    border-bottom: 1px solid #ddd;
+    margin: 0 0 1em;
+    *zoom: 1;
+}
 </style>

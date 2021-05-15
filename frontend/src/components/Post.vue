@@ -33,13 +33,13 @@
       Publish
     </button> -->
      <!-- <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2" @click="deletePost(index)"> Delete </button> -->
-    <button v-if="dataUser.id == currentPost.user_Id" class="btn btn-success" @click="editPost(currentPost)"> {{editing? 'Update':'Modify'}} </button>
-    <button v-show="editing" v-if="dataUser.id == currentPost.user_Id" class="btn btn-secondary mr-2" @click="cancel()"> Cancel </button>
-    <button v-show="editing" v-if="dataUser.id == currentPost.user_Id" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
+    <button v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-success" @click="editPost(currentPost)"> {{editing? 'Update':'Modify'}} </button>
+    <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-secondary mr-2" @click="cancel()"> Cancel </button>
+    <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
      <div>   <input  type="text" v-model="comments.description"> {{comments.description}} </div>
      <button  @click="saveComment" class="btn btn-primary"> Comment </button>
-    <div v-for="comment in comments" :key="comment.id">  <div v-if="currentPost.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} </div> 
-    <a :href="'/comments/' + comment.id"><button v-if="dataUser.id == comment.user_Id" class="btn btn-success"> Modify </button></a>
+    <div v-for="comment in comments" :key="comment.id">  <div v-if="currentPost.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} 
+    <a :href="'/comments/' + comment.id"><button v-if="dataUser.user_Id == comment.user_Id" class="btn btn-success"> Modify </button></a></div>
     </div>
     
    
@@ -114,7 +114,7 @@ export default {
        
         // title: this.post.title,
         description: this.comments.description,
-        user_Id : dataUser.id,
+        user_Id : dataUser.user_Id,
         username : dataUser.username,
         post_id : this.currentPost.id,
         id: this.comments.id,
