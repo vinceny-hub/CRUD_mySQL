@@ -314,32 +314,51 @@
         </div>
         <!-- <div class="container"> -->
     <!-- <div class="row"> -->
-        <div class="col-16">
+        <div class="">
           <h4>Posts</h4>
-            <div class="card card-white post">
+            <div class="">
                 <div class="post-heading">
             
             <ul class="list-group">
                 <!-- @click="setActivePost(post)"
                 :class="{ active: post == currentPost}" -->
-                <li class="list-group-item"
+                <li class="card rounded card-white postBox"
                 @dblclick="editPost(index, post)"
                 v-for="(post, index) in posts.slice().reverse()"
                 :key="post.id"
                
                
               > 
-              <h4> {{ post.username }} </h4> 
-              <div> {{ post.description }} </div> 
-              
-              <div v-for="comment in comments" :key="comment.id"> <div class="comment" v-if="post.id == comment.post_id">  <h5> {{ comment.username }} </h5> <div> {{ comment.description }} </div></div></div> 
-              
+              <div class="card-body">
+                  <div class="float meta ">
+                        <div class="title h5">
+                            <a href="#"><b> {{ post.username }} </b></a>
+                            made a post.
+                        </div>
+                        <h6 class="text-muted time">1 minute ago</h6>
+                    </div>
+            
+              <div class="card aPost rounded card-white"> <h5><strong>{{ post.description }}</strong></h5></div> 
+              <div class="">
+                <div class="post-heading">
+                   <div class="float meta">
+                        <div class="title h5">
+              <div  v-for="comment in comments" :key="comment.id"> <div class="comment card rounded card-white" v-if="post.id == comment.post_id"> 
+                        
+                    
+                        <div class="list-group-item"> <a href="#"><b> {{ comment.username }} </b></a> <span> made a comment </span>  <h6 class="text-muted time">1 minute ago</h6> <div>{{ comment.description }} </div></div>    </div></div></div> 
+
+                        </div>
+              </div>
+              </div>
                 <!-- <div v-if="!editing"> {{ post.description }} </div>    -->
                  
                 <!-- <input v-else type="text" class="form-control" id="" v-model="post.description"/>  -->
              
                 <!-- <input type="text" class="form-control" id="" v-model="post.user_Id"/><br> -->
                 <a :href="'/posts/' + post.id"><button class="btn btn-primary"> Comment </button></a>
+              </div>
+             
               </li>
             </ul>
                 <!-- <a v-if="currentUser.id == post.user_Id" class="badge badge-warning" @click="editPost(index, post)"> {{editing?'Update':'Edit'}} </a> -->
@@ -355,7 +374,7 @@
         </div>
       <!-- </div> -->
     <!-- </div> -->
-    <div class="container">
+    <!-- <div class="container">
     <div class="row">
         <div class="col-8">
             <div class="card card-white post">
@@ -379,7 +398,7 @@
         </div>
         
     </div>
-</div>
+</div> -->
   </div>
 
   
@@ -770,10 +789,43 @@ export default {
 
 
 .comment {
+    width: 80%;
     overflow: hidden;
-    padding: 0 0 1em;
-    border-bottom: 1px solid #ddd;
-    margin: 0 0 1em;
-    *zoom: 1;
+    border: 0.1vw solid grey;
+     margin-bottom: 30px;
+      margin-left: 100px;
+    /* margin: 0 0 1em; */
+    /* *zoom: 1; */
+} 
+
+.aPost {
+    width: 100%;
+    min-height: px;
+    overflow: hidden;
+    border: 0.1vw solid white;
+     margin-bottom: 30px;
+      /* margin-left: 100px; */
+    /* margin: 0 0 1em; */
+    /* *zoom: 1; */
+} 
+
+.postBox {
+   
+    /* overflow: hidden; */
+    border: 0.1vw solid grey;
+     margin-bottom: 30px;
+      /* margin-left: 100px; */
+    /* margin: 0 0 1em; */
+    /* *zoom: 1; */
+} 
+.list-group{
+  border:white;
+}
+.list-group-item{
+    border:white;
+}
+li{
+   border:white
+
 }
 </style>
