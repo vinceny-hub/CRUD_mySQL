@@ -1,19 +1,66 @@
 <template>
-  <div v-if="currentPost" class="edit-form">
-    <h4>Post</h4>
+ <div class="container-fluid">
+    <div class="row h-100 justify-content-center align-items-center">
+    
+     
+      <div class="col-md-6 gedf-main card">
+     
+    
     <!-- <form> -->
-      
-      <div class="form-group">
+      <!-- <div class="card-body">
+                  <div class="float meta ">
+                        <div class="title h5">
+                            <a href="#"><b> {{ post.username }} </b></a>
+                            made a post.
+                        </div>
+                        <h6 class="text-muted time">1 minute ago</h6>
+                    </div>
+            
+              <div class="card aPost rounded card-white"> <h5><strong>{{ post.description }}</strong></h5></div> 
+              <div class="">
+                <div class="post-heading">
+                   <div class="float meta">
+                        <div class="title h5">
+              <div  v-for="comment in comments" :key="comment.id"> <div class="comment card rounded card-white" v-if="post.id == comment.post_id"> 
+                        
+                    
+                        <div class="list-group-item"> <a href="#"><b> {{ comment.username }} </b></a> <span> made a comment </span>  <h6 class="text-muted time">1 minute ago</h6> <div>{{ comment.description }} </div></div>    </div></div></div> 
+
+                        </div>
+              </div>
+              </div>
+                 <div v-if="!editing"> {{ post.description }} </div>    -->
+                 
+                <!-- <input v-else type="text" class="form-control" id="" v-model="post.description"/>  -->
+             
+                <!-- <input type="text" class="form-control" id="" v-model="post.user_Id"/><br> -->
+                <!-- <a :href="'/posts/' + post.id"><button class="btn btn-primary"> Comment </button></a> -->
+              <!-- </div> -->
+       <div v-if="currentPost" class="card-body">
+          <h4>Post</h4>
+            <div class="">
+                <div class="post-heading">
+            
+            <div   class="list-group">
+      <!-- <div  v-if="currentPost" class="card-body">
+        <h4>Post</h4>
+         <div class="borderBox">
+           <div class="">
+         <div class="title h5"> -->
+                             <div class="float meta ">
+                        <div class="title h5">
+                            <a href="#"><b> {{ currentPost.username }} </b></a>
+                            made a post.
+                        </div>
+                        <h6 class="text-muted time">1 minute ago</h6>
+                    </div>
+                        </div>
         <!-- <label for="description">Description</label> -->
-       <div v-if="!editing" class="form-group list-group-item"> {{ currentPost.description }} </div> 
-          <input v-else type="text" class="form-control" id="description" v-model="currentPost.description"/>
-      </div>
-      <div class="form-group">
-        <label for="">ID</label>
-        <input type="text" class="form-control" id=""
-          v-model="currentPost.user_Id"
-        />
-      </div>
+       <div v-if="!editing"> <h5><strong>{{ currentPost.description }}</strong></h5> </div> 
+          <textarea v-else type="text"  rows='5' class="form-control" id="description" v-model="currentPost.description"/>
+         </div>
+         
+    
 
       <!-- <div class="form-group">
         <label><strong>Status:</strong></label>
@@ -33,14 +80,42 @@
       Publish
     </button> -->
      <!-- <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2" @click="deletePost(index)"> Delete </button> -->
-    <button v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-success" @click="editPost(currentPost)"> {{editing? 'Update':'Modify'}} </button>
-    <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-secondary mr-2" @click="cancel()"> Cancel </button>
+     
+    <a href="#commentArea"> <button v-show="!editing"  class="btn btn-primary float-right  marginRightButton "> Comment </button></a>
+    <button v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-success float-right marginBottomButton" @click="editPost(currentPost)"> {{editing? 'Update':'Edit'}} </button>
+     <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Cancel </button>
+   
+    <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-secondary mr-2 float-right" @click="cancel()"> Cancel </button>
     <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
-     <div>   <input  type="text" v-model="comments.description"> {{comments.description}} </div>
-     <button  @click="saveComment" class="btn btn-primary"> Comment </button>
-    <div v-for="comment in comments" :key="comment.id">  <div v-if="currentPost.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} 
-    <a :href="'/comments/' + comment.id"><button v-if="dataUser.user_Id == comment.user_Id" class="btn btn-success"> Modify </button></a></div>
+    
+
+     
+
+
+       <div class="post-heading">
+                   <div class="float meta">
+                        <div class="title h5">
+     <div class="" v-show="!editing">
+
+
+
+    <!-- <a href="#"><b> {{ comment.username }} </b></a> <span> made a comment </span>  <h6 class="text-muted time">1 minute ago</h6> <div>{{ comment.description }} </div> -->
+    
+
+
+    
+    <div v-for="comment in comments" :key="comment.id">  
+      <div v-if="currentPost.id == comment.post_id" class="comment card rounded card-white"> <div class="list-group-item">
+        <a href="#"><b> {{ comment.username }} </b></a> <span> made a comment </span>  <h6 class="text-muted time">1 minute ago</h6> <div>{{ comment.description }} </div>
+    <a :href="'/comments/' + comment.id"><button v-if="dataUser.user_Id == comment.user_Id" class="btn btn-success float-right"> Edit </button></a></div></div>
     </div>
+     
+      <div class="comment">   <textarea placeholder="What are you thinking?" id="commentArea" class="textBox" type="text" autofocus v-model="comments.description">  </textarea></div>
+      
+     <button  @click="saveComment" class="btn btn-primary float-right"> Share </button>
+       <button class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Cancel </button>
+                        </div>
+                   </div></div></div>
     
    
     
@@ -53,12 +128,18 @@
       Update
     </button> -->
     <p>{{ message }}</p>
+         </div>
   </div>
 
   <div v-else>
     <br />
     <p>Please click on a Post...</p>
   </div>
+  </div>
+</div>
+ </div>
+
+  
 </template>
 
 <script>
@@ -214,6 +295,11 @@ export default {
 
     },
 
+    cancelled(){
+       this.$router.push({ name: "posts" });
+
+    },
+
     updatePost() {
       PostDataService.update(this.currentPost.id, this.currentPost)
         .then(response => {
@@ -253,6 +339,8 @@ export default {
    }
    },
 };
+
+
 </script>
 
 <style>
@@ -260,4 +348,66 @@ export default {
   max-width: 300px;
   margin: auto;
 }
+
+.comment {
+    width: 80%;
+    overflow: hidden;
+    border: 0.1vw solid grey;
+     margin-bottom: 30px;
+      margin-left: 100px;
+    /* margin: 0 0 1em; */
+    /* *zoom: 1; */
+} 
+
+.aPost {
+    width: 100%;
+    min-height: px;
+    overflow: hidden;
+    border: 0.1vw solid white;
+     margin-bottom: 30px;
+      /* margin-left: 100px; */
+    /* margin: 0 0 1em; */
+    /* *zoom: 1; */
+} 
+
+.postBox {
+   
+    /* overflow: hidden; */
+    border: 0.1vw solid grey;
+     margin-bottom: 30px;
+      /* margin-left: 100px; */
+    /* margin: 0 0 1em; */
+    /* *zoom: 1; */
+} 
+.list-group{
+  border:white;
+}
+.list-group-item{
+    border:white;
+}
+li{
+   border:white
+
+}
+/* .borderBox{
+  border: 0.1vw solid grey;
+  border-radius: 1%;
+} */
+
+.textBox{
+   width: 100%;
+}
+.gedf-main{
+  margin-top: 15px;
+   margin-bottom: 15px;
+}
+.marginBottomButton{
+  margin-bottom: 30px;
+   margin-right: 15px;
+}
+.marginRightButton{
+ 
+  margin-bottom: 30px;
+}
+
 </style>

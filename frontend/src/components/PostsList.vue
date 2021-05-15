@@ -289,7 +289,7 @@
                     <textarea 
                     id="description"
                     required
-                    v-model="post.description" class="form-control" rows="3" placeholder="What are you thinking?"></textarea>
+                    v-model="post.description" autofocus class="form-control" rows="3" placeholder="What are you thinking?"></textarea>
                 </div>
               </div>
               <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
@@ -302,9 +302,9 @@
                 <div class="py-4"></div>
               </div>
             </div>
-            <div class="btn-toolbar justify-content-between">
-              <div class="btn-group">
-                  <button @click="savePost" type="submit" class="btn btn-primary">Share</button>
+            <div class="">
+              <div class="">
+                  <button @click="savePost" type="submit" class="btn btn-primary float-right">Share</button>
               </div>
             </div>
           </div>
@@ -356,7 +356,7 @@
                 <!-- <input v-else type="text" class="form-control" id="" v-model="post.description"/>  -->
              
                 <!-- <input type="text" class="form-control" id="" v-model="post.user_Id"/><br> -->
-                <a :href="'/posts/' + post.id"><button class="btn btn-primary"> Comment </button></a>
+                <a :href="'/posts/' + post.id"><button class="btn btn-primary float-right"> Comment </button></a>
               </div>
              
               </li>
