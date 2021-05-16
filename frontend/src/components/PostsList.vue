@@ -286,10 +286,16 @@
                 <div class="form-group">
                   <label class="sr-only" for="message">post</label>
                   <!-- <input v-show="!editing" type="text" class="form-control" id="" v-model="username"/>  -->
-                    <textarea 
-                    id="description"
+                         <textarea-autosize
+  
+  ref="myTextarea"
+ 
+  :min-height="75"
+  :max-height="350"
+  type="text"   class="form-control" id="description"
+                  
                     required
-                    v-model="post.description" autofocus class="form-control" rows="3" placeholder="What are you thinking?"></textarea>
+                    v-model="post.description" autofocus  placeholder="What are you thinking?"/>
                 </div>
               </div>
               <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">

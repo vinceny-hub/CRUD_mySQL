@@ -38,7 +38,7 @@
               <!-- </div> -->
        <div v-if="currentPost" class="card-body">
           <h4>Post</h4>
-            <div class="">
+            <div class="jk">
                 <div class="post-heading">
             
             <div   class="list-group">
@@ -56,8 +56,14 @@
                     </div>
                         </div>
         <!-- <label for="description">Description</label> -->
-       <div v-if="!editing"> <h5><strong>{{ currentPost.description }}</strong></h5> </div> 
-          <textarea v-else type="text"  rows='5' class="form-control" id="description" v-model="currentPost.description"/>
+       <div class="kl" v-if="!editing"> <h5 class="postCard"><strong>{{ currentPost.description }}</strong></h5> </div> 
+           <textarea-autosize
+  placeholder="Type something here..."
+  ref="myTextarea"
+ 
+  :min-height="30"
+  :max-height="350"
+   v-else type="text"   class="form-control" id="description" v-model="currentPost.description"/>
          </div>
          
     
@@ -80,15 +86,15 @@
       Publish
     </button> -->
      <!-- <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2" @click="deletePost(index)"> Delete </button> -->
-     
-    <a href="#commentArea"> <button v-show="!editing"  class="btn btn-primary float-right  marginRightButton "> Comment </button></a>
-    <button v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-success float-right marginBottomButton" @click="editPost(currentPost)"> {{editing? 'Update':'Edit'}} </button>
-     <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Cancel </button>
    
+    <a href="#commentArea"> <button v-show="!editing"  class="btn btn-primary float-right  marginLeftButton buttonCEC "> Comment </button></a>
+    <button v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-success float-right buttonCEC" @click="editPost(currentPost)"> {{editing? 'Update':'Edit'}} </button>
+     <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Cancel </button>
+     
     <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-secondary mr-2 float-right" @click="cancel()"> Cancel </button>
     <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
     
-
+     
      
 
 
@@ -110,13 +116,20 @@
     <a :href="'/comments/' + comment.id"><button v-if="dataUser.user_Id == comment.user_Id" class="btn btn-success float-right"> Edit </button></a></div></div>
     </div>
      
-      <div class="comment">   <textarea placeholder="What are you thinking?" id="commentArea" class="textBox" type="text" autofocus v-model="comments.description">  </textarea></div>
+      <div class="postCard" id="commentArea">        <textarea-autosize
+  placeholder="Type something here..."
+  ref="myTextarea"
+ 
+  :min-height="30"
+  :max-height="350"
+   type="text"   class="form-control" id="description" autofocus v-model="comments.description"/></div>
       
      <button  @click="saveComment" class="btn btn-primary float-right"> Share </button>
        <button class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Cancel </button>
                         </div>
                    </div></div></div>
     
+   
    
     
       <!-- <div v-if="currentPost.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} </div>   -->
@@ -401,12 +414,24 @@ li{
   margin-top: 15px;
    margin-bottom: 15px;
 }
-.marginBottomButton{
-  margin-bottom: 30px;
-   margin-right: 15px;
-}
-.marginRightButton{
+
+/* .marginRightButton{
  
+  margin-bottom: 30px;
+} */
+.marginLeftButton{
+  margin-left: 8px;
+}
+
+.postCard{
+  /* margin-top: 30px; */
+  margin-bottom: 30px;
+}
+.buttonCEC{
+  
+  margin-bottom: 30px;
+}
+#description{
   margin-bottom: 30px;
 }
 

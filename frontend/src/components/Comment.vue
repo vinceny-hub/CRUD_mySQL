@@ -1,10 +1,53 @@
 <template>
-  <div v-if="currentComment" class="edit-form">
+ <div class="container-fluid">
+    <div class="row h-100 justify-content-center align-items-center">
+    
+     
+      <div class="col-md-6 gedf-main card">
+
+ <div v-if="currentComment" class="card-body">
+          <h4>Post</h4>
+            <div class="">
+                <div class="post-heading">
+            
+            <div   class="list-group">
+      <!-- <div  v-if="currentPost" class="card-body">
+        <h4>Post</h4>
+         <div class="borderBox">
+           <div class="">
+         <div class="title h5"> -->
+                             <div class="float meta ">
+                        <div class="title h5">
+                            <a href="#"><b> {{ currentComment.username }} </b></a>
+                            made a post.
+                        </div>
+                        <h6 class="text-muted time">1 minute ago</h6>
+                    </div>
+                        </div>
+        <!-- <label for="description">Description</label> -->
+       <div v-if="!editing"> <h5><strong>{{ currentComment.description }}</strong></h5> </div> 
+          <textarea-autosize
+  placeholder="Type something here..."
+  ref="myTextarea"
+ 
+  :min-height="30"
+  :max-height="350"
+  
+ v-else type="text"  class="form-control" id="description" v-model="currentComment.description"/>
+         </div>
+             <!-- <a href="#commentArea"> <button v-show="!editing"  class="btn btn-primary float-right  marginRightButton "> Comment </button></a> -->
+    <button v-if="dataUser.user_Id == currentComment.user_Id" class="btn btn-success float-right" @click="editPost(currentComment)"> {{editing? 'Update':'Modify'}} </button>
+     <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="$router.go(-1)"> Cancel </button>
+   
+    <button v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id" class="btn btn-secondary mr-2 float-right" @click="$router.go(-1)"> Cancel </button>
+    <button v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id" class="badge badge-danger mr-2" @click="deleteComment"> Delete </button>
+
+
+  <!-- <div v-if="currentComment" class="edit-form">
     <h4>Post</h4>
-    <!-- <form> -->
+  
       
       <div class="form-group">
-        <!-- <label for="description">Description</label> -->
        <div v-if="!editing" class="form-group list-group-item"> {{ currentComment.description }} </div> 
           <input v-else type="text" class="form-control" id="description" v-model="currentComment.description"/>
       </div>
@@ -15,25 +58,6 @@
         />
       </div>
 
-      <!-- <div class="form-group">
-        <label><strong>Status:</strong></label>
-        {{ currentPost.published ? "Published" : "Pending" }}
-      </div>
-    </form> -->
-
-    <!-- <button class="badge badge-primary mr-2"
-      v-if="currentPost.published"
-      @click="updatePublished(false)"
-    >
-      UnPublish
-    </button>
-    <button v-else class="badge badge-primary mr-2"
-      @click="updatePublished(true)"
-    >
-      Publish
-    </button> -->
-
-     <!-- <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2" @click="deletePost(index)"> Delete </button> -->
 
 
     <button v-if="dataUser.user_Id == currentComment.user_Id" class="btn btn-success" @click="editPost(currentComment)"> {{editing? 'Update':'Modify'}} </button>
@@ -48,27 +72,25 @@
     
    
     
-     <div v-if="currentComment.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} {{ currentComment.id }} </div> 
+     <div v-if="currentComment.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} {{ currentComment.id }} </div>  -->
 
    
-    <!-- <button type="submit" class="badge badge-success"
-      @click="updatePost"
-    >
-      Update
-    </button> -->
-    <p>{{ message }}</p>
+  
   </div>
+ </div>
+      </div>
+    </div>
+ </div>
 
-  <div v-else>
-    <br />
-    <p>Please click on a Post...</p>
-  </div>
+  
 </template>
 
 <script>
 import PostCommentService from "../services/PostCommentService";
 // import PostDataService from "../services/PostDataService";
 import CommentPostService from "../services/CommentPostService";
+// import TextareaAutosize from 'vue-textarea-autosize'
+// Vue.use(TextareaAutosize)
 
 export default {
   name: "post",
@@ -202,6 +224,11 @@ export default {
        this.editing = this.editing == false
     },
 
+     cancelled(){
+       this.$router.push({ name: "posts" });
+
+    },
+
      editPost(){
     
     this.editing = this.editing == true?false:true
@@ -259,8 +286,68 @@ export default {
 </script>
 
 <style>
-.edit-form {
-  max-width: 300px;
-  margin: auto;
+.comment {
+    width: 80%;
+    overflow: hidden;
+    border: 0.1vw solid grey;
+     margin-bottom: 30px;
+      margin-left: 100px;
+    /* margin: 0 0 1em; */
+    /* *zoom: 1; */
+} 
+
+.aPost {
+    width: 100%;
+    min-height: px;
+    overflow: hidden;
+    border: 0.1vw solid white;
+     margin-bottom: 30px;
+      /* margin-left: 100px; */
+    /* margin: 0 0 1em; */
+    /* *zoom: 1; */
+} 
+
+.postBox {
+   
+    /* overflow: hidden; */
+    border: 0.1vw solid grey;
+     margin-bottom: 30px;
+      /* margin-left: 100px; */
+    /* margin: 0 0 1em; */
+    /* *zoom: 1; */
+} 
+.list-group{
+  border:white;
+}
+.list-group-item{
+    border:white;
+}
+li{
+   border:white
+
+}
+/* .borderBox{
+  border: 0.1vw solid grey;
+  border-radius: 1%;
+} */
+
+.textBox{
+   width: 100%;
+}
+.gedf-main{
+  margin-top: 15px;
+   margin-bottom: 15px;
+}
+.marginBottomButton{
+  margin-bottom: 30px;
+   margin-right: 15px;
+}
+.marginRightButton{
+ 
+  margin-bottom: 30px;
+}
+
+#description{
+  margin-bottom: 15px;
 }
 </style>

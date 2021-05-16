@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 // import router from './router';
+import TextareaAutosize from 'vue-textarea-autosize'
 import { router } from './router';
 import store from './store';
 import 'bootstrap';
@@ -22,6 +23,7 @@ Vue.config.productionTip = false;
 
 Vue.use(VeeValidate);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.use(TextareaAutosize)
 
 new Vue({
   router,
