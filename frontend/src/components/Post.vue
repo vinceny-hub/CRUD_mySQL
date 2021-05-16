@@ -87,11 +87,11 @@
     </button> -->
      <!-- <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2" @click="deletePost(index)"> Delete </button> -->
    
-    <a href="#commentArea"> <button v-show="!editing"  class="btn btn-primary float-right  marginLeftButton buttonCEC "> Comment </button></a>
+    <a href="#commentArea"> <button v-show="!editing"  class="btn btn-primary float-right buttonCEC"> Comment </button></a>
     <button v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-success float-right buttonCEC" @click="editPost(currentPost)"> {{editing? 'Update':'Edit'}} </button>
      <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Cancel </button>
      
-    <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-secondary mr-2 float-right" @click="cancel()"> Cancel </button>
+    <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id"  id="btnC" class="btn btn-secondary mr-2 float-right marginRightButton" @click="cancel()"> Cancel </button>
     <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
     
      
@@ -415,10 +415,10 @@ li{
    margin-bottom: 15px;
 }
 
-/* .marginRightButton{
+.marginRightButton{
  
-  margin-bottom: 30px;
-} */
+  margin-right: 30px;
+}
 .marginLeftButton{
   margin-left: 8px;
 }
@@ -433,6 +433,9 @@ li{
 }
 #description{
   margin-bottom: 30px;
+}
+#btnC{
+  margin-right: 50px;
 }
 
 </style>

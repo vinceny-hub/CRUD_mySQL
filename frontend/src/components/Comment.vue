@@ -37,9 +37,9 @@
          </div>
              <!-- <a href="#commentArea"> <button v-show="!editing"  class="btn btn-primary float-right  marginRightButton "> Comment </button></a> -->
     <button v-if="dataUser.user_Id == currentComment.user_Id" class="btn btn-success float-right" @click="editPost(currentComment)"> {{editing? 'Update':'Modify'}} </button>
-     <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="$router.go(-1)"> Cancel </button>
+     <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="$router.go(-1)"> Back </button>
    
-    <button v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id" class="btn btn-secondary mr-2 float-right" @click="$router.go(-1)"> Cancel </button>
+    <button v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id" class="btn btn-secondary mr-2 float-right" @click="cancel()"> Cancel </button>
     <button v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id" class="badge badge-danger mr-2" @click="deleteComment"> Delete </button>
 
 
