@@ -1,8 +1,6 @@
 const db = require("../models/");
 require('../middleware/auth')
-const fs = require('fs');
-
-// const { SELECT } = require("sequelize/types/lib/query-types");
+const fs = require('fs')
 
 const Post = db.posts;
 const Op = db.Sequelize.Op;
@@ -169,23 +167,8 @@ const Op = db.Sequelize.Op;
 
   exports.delete = (req, res) => {
     const id = req.params.id;
-    fs.unlink({
-      where: { id: id }(`images/${filename}`, (err) => {
-        if (err) console.log(err);
-        else {
-          console.log(`Deleted file: images/${filename}`);
-        }
-      })
-    // })}
-    // (`images}`)
-      
-      
-      
-    })
-   
     Post.destroy({
       where: { id: id }
-    
     })
       .then(num => {
         if (num == 1) {
