@@ -6,6 +6,7 @@ module.exports = (sequelize, Sequelize) => {
     username:{
       type: Sequelize.STRING
     },
+    imageUrl: { type: Sequelize.STRING },
     // post_id:{
     //   type: Sequelize.STRING
     // },
@@ -18,7 +19,18 @@ module.exports = (sequelize, Sequelize) => {
     },
     published: {
       type: Sequelize.BOOLEAN
-    }
+    },
+    createdAt: {
+      type: Sequelize.DATE
+    },
+    updatedAt: {
+      type: Sequelize.DATE
+    },
+
+    // createdAt: Sequelize.DATE,
+    //   updatedAt: Sequelize.DATE,
+
+    
   });
 
   // Post.associate = function (models) {

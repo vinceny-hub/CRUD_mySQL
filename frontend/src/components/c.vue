@@ -64,7 +64,7 @@
   :min-height="30"
   :max-height="350"
    v-else type="text"   class="form-control" id="description" v-model="currentPost.description"/>
-    <div v-show="editing" class="form-group">
+      <div class="form-group">
                     <div class="custom-file">
                         <input  type="file" ref="file" @change="onSelect" class="" id="">
                         <label class=""></label>
@@ -97,7 +97,7 @@
    
     <a href="#commentArea"> <button v-show="!editing"  class="btn btn-primary float-right buttonCEC"> Comment </button></a>
     <button v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-success float-right buttonCEC" @click="editPost(currentPost)"> {{editing? 'Update':'Edit'}} </button>
-    <button v-show="editing" class="btn btn-secondary mr-2 float-right" type="submit" @click="uploadImage()"> updateImage </button>
+     <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="uploadImage" type="submit"> updateImage </button>
      <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Back </button>
      
     <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id"  id="btnC" class="btn btn-secondary mr-2 float-right marginRightButton" @click="cancel()"> Cancel </button>
@@ -167,8 +167,7 @@
 <script>
 import PostCommentService from "../services/PostCommentService";
 import PostDataService from "../services/PostDataService";
-import UpLoadFilesService from "../services/UpLoadFilesService";
-
+import UpLoadFilesService from '../services/UpLoadFilesService';
 export default {
   name: "post",
   data() {
@@ -200,8 +199,22 @@ export default {
   },
   methods: {
 
+      uploadImage() {
+        // let dataUser = JSON.parse(localStorage.getItem("user"))
+      const formData = new FormData();
+      // if (this.image !== null || "") {
+        formData.append("file", this.currentPost.imageUrl, this.currentPost.imageUrl.name);
+        // formData.append("user_Id", dataUser.user_Id );
+        // formData.append("username", dataUser.username,);
+        // //    user_Id : dataUser.user_Id,
+        // // username : dataUser.username,
+        // formData.append("description", this.post.description);
+        UpLoadFilesService.update(this.currentPost.id, formData)
+   
+    //  }
+     },
 
-     onSelect(e){
+      onSelect(e){
 
        
       // const file = e.target.files[0];
@@ -214,52 +227,7 @@ export default {
         
     },
 
-     uploadImage() {
-     const formData = new FormData();
-     let id = this.currentPost.id
-     formData.append("file", this.currentPost.imageUrl, this.currentPost.imageUrl.name);
-     UpLoadFilesService.update(id, formData)
-        .then(response => {
-          console.log(response.data);
-          this.message = 'The post was updated successfully!';
-          this.$router.push({ name: "posts" });
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-
-    //  uploadImage() {
-    //     let dataUser = JSON.parse(localStorage.getItem("user"))
-    //   const formData = new FormData();
-    //   // if (this.image !== null || "") {
-    //     formData.append("file", this.currentPost.imageUrl, this.currentPost.imageUrl.name);
-    //     formData.append("user_Id", dataUser.user_Id );
-    //     formData.append("username", dataUser.username,);
-    //     //  formData.append("id",this.currentPost.id,);
-    //     //    user_Id : dataUser.user_Id,
-    //     // username : dataUser.username,
-    //     // formData.append("description", this.post.description);
-    //     // UpLoadFilesService.upload(formData)
-    //     UpLoadFilesService.update(formData)
-
-    //  },
-    //   uploadImage() {
-    //     let dataUser = JSON.parse(localStorage.getItem("user"))
-    //   const formData = new FormData();
-    //   // if (this.image !== null || "") {
-    //     formData.append("file", this.post.imageUrl, this.post.imageUrl.name);
-    //     formData.append("user_Id", dataUser.user_Id );
-    //     formData.append("username", dataUser.username,);
-    //     //    user_Id : dataUser.user_Id,
-    //     // username : dataUser.username,
-    //     // formData.append("description", this.post.description);
-    //     UpLoadFilesService.upload(formData)
-   
-    // //  }
-    //  },
-
-     saveComment() {
+    saveComment() {
       //  if (!this.comment.description) {
       //     // this.emptyError = this.emptyError == true?false:true
       //     this.emptyError = alert('Cannot be empty')
@@ -284,10 +252,11 @@ export default {
         
       
         
-      }
       // }
+      }
      
     
+
       PostCommentService.create(data)
         .then(response => {
           this.comment.id = response.data.id;
@@ -311,7 +280,9 @@ export default {
     
   //   console.log(this.comment)
     
+
   
+
   //   },
      getComment() {
       PostCommentService.getAll()
@@ -324,6 +295,7 @@ export default {
           console.log(e);
         });
     },
+
     getPost(id) {
       PostDataService.get(id)
         .then(response => {
@@ -334,6 +306,7 @@ export default {
           console.log(e);
         });
     },
+
     // updatePublished(status) {
     //   var data = {
     //     id: this.currentPost.id,
@@ -342,6 +315,7 @@ export default {
     //      user_Id: this.currentPost.user_Id,
     //     published: status
     //   };
+
     //   PostDataService.update(this.currentPost.id, data)
     //     .then(response => {
     //       this.currentPost.published = status;
@@ -351,24 +325,51 @@ export default {
     //       console.log(e);
     //     });
     // },
+
     cancel(){
+      //   if (this.comment.description) {
+      //     // this.emptyError = this.emptyError == true?false:true
+      //     this.emptyError = alert('Cannot be empty')
+      //     this.editPost()
+          
+      //  error => {
+           
+      //         this.message =
+      //           (error.response && error.response.data)
+           
+      // }}else{ 
        this.editing = this.editing == false
+      // }
     },
+
      editPost(){
     
     this.editing = this.editing == true?false:true
     
-    if(this.editing== false){
+    if(this.editing == true && this.comment.description){
     this.updatePost()
-    }  
+    } 
+    // else { 
+
+    //       this.emptyError = alert('Cannot be empty')
+          
+    //    error => {
+           
+    //           this.message =
+    //             (error.response && error.response.data)
     
-    console.log(this.editing)
+    // console.log(this.editing)
     
+      //  }
   
+    // }
     },
+
     cancelled(){
        this.$router.push({ name: "posts" });
+
     },
+
     updatePost() {
       PostDataService.update(this.currentPost.id, this.currentPost)
         .then(response => {
@@ -380,6 +381,32 @@ export default {
           console.log(e);
         });
     },
+
+    // updatePost() {
+    //   //    if (!this.comment.description) {
+    //   //     // this.emptyError = this.emptyError == true?false:true
+    //   //     this.emptyError = alert('Cannot be empty')
+    //   //     this.editPost()
+          
+    //   //  error => {
+           
+    //   //         this.message =
+    //   //           (error.response && error.response.data)
+           
+    //   // }}else{ 
+
+    //   PostDataService.update(this.currentPost.id, this.currentPost)
+    //     .then(response => {
+    //       console.log(response.data);
+    //       this.message = 'The post was updated successfully!';
+    //       this.$router.push({ name: "posts" });
+    //     })
+    //     .catch(e => {
+    //       console.log(e);
+    //     });
+    //   // }
+    // },
+
     deletePost() {
       PostCommentService.delete(this.currentPost.id)
       PostDataService.delete(this.currentPost.id)
@@ -407,7 +434,6 @@ export default {
    }
    },
 };
-
 
 
 </script>

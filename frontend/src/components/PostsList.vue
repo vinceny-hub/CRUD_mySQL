@@ -272,11 +272,12 @@
         <div class="card gedf-card d-flex " v-if="!submitted">
           <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Make a publication</a>
+              <li class="nav-item"
+               >
+                <a v-on:click="isHidden = true" class="nav-link active"    id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Make a publication</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images">Images</a>
+                  <a  v-on:click="isHidden = false" class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images"> Images </a>
               </li>
             </ul>
           </div>
@@ -285,14 +286,14 @@
               <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
                 <div class="form-group">
                   <label class="sr-only" for="message">post</label>
-                  <!-- <input v-show="!editing" type="text" class="form-control" id="" v-model="username"/>  -->
+            
                          <textarea-autosize
-  
-  ref="myTextarea"
- 
-  :min-height="75"
-  :max-height="350"
-  type="text"   class="form-control" id="description"
+                          
+                          ref="myTextarea"
+                        
+                          :min-height="75"
+                          :max-height="350"
+                          type="text"   class="form-control" id="description"
                   
                     required
                     v-model="post.description" autofocus  placeholder="What are you thinking?"/>
@@ -301,23 +302,80 @@
               <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
                 <div class="form-group">
                     <div class="custom-file">
-                        <input  type="file" class="custom-file-input" id="customFile">
-                        <label class="custom-file-label" for="customFile">Upload image</label>
-                    </div>
+                        <input  type="file" ref="file" @change="onSelect" class="" id="">
+                        <label class=""></label>
+                 
                 </div>
-                <div class="py-4"></div>
+                <div class="py-3"></div>
               </div>
             </div>
             <div class="">
               <div class="">
-                  <button @click="savePost" type="submit" class="btn btn-primary float-right">Share</button>
+                  <button @click="savePost" type="submit" class="btn btn-primary float-right" v-show="isHidden">Share</button>
+                  <button @click="uploadImage" type="submit" class="btn btn-success float-right" v-show="!isHidden">Upload</button> 
               </div>
             </div>
           </div>
           <div>
             <div v-if="!emptyError"></div>
           </div>
+        </div> 
         </div>
+
+      <!-- <form
+      @submit.prevent="submit"
+      enctype="multipart/form-data"
+      class="largeur80 my-5 shadow bordurePost bordureRond"
+    >
+ 
+     
+      <div class="form-group">
+        <label class="text-primary" for="description">Description</label>
+        <textarea
+          class="form-control"
+          name="description"
+          rows="3"
+          placeholder="Décrire le post..."
+          v-model="post.description"
+        ></textarea>
+      </div>
+     
+      <div class="form-group">
+        <label class="text-primary" for="image_link"
+          >Ajouter une image ou multimedia</label
+        >
+        <input type="file" ref="imageUrl" class="file-input" @change="upload" />
+      </div>
+      
+      <div
+        class="error"
+        v-if="!$v.image_link.required && submitStatus === 'ERROR'"
+      >
+        Field is required
+      </div>
+    
+      <div
+        class="form-group row d-flex align-item-center justify-content-center"
+      >
+        <div class="col-sm-10 ">
+          <button
+            type="submit"
+            class="bg-light btn btn-outline-primary"
+           
+          >
+            Publier !
+          </button>
+         
+        
+        
+        </div>
+      </div>
+    </form> -->
+
+
+
+
+
         <!-- <div class="container"> -->
     <!-- <div class="row"> -->
         <div class="">
@@ -344,7 +402,7 @@
                         <h6 class="text-muted time">1 minute ago</h6>
                     </div>
             
-              <div class="card aPost rounded card-white"> <h5><strong>{{ post.description }}</strong></h5></div> 
+              <div class="card aPost rounded card-white"> <h5><strong>{{ post.description }}</strong></h5><img :src="post.imageUrl"></div> 
               <div class="">
                 <div class="post-heading">
                    <div class="float meta">
@@ -405,6 +463,15 @@
         
     </div>
 </div> -->
+
+ <!-- <div id="">
+  <input type="file" @change="onFileChange" />
+ </div>
+  <div id="preview">
+    <img v-if="imageUrl" :src="url" />
+  </div>
+</div> -->
+   
   </div>
 
   
@@ -422,6 +489,7 @@
 <script>
 import PostDataService from "../services/PostDataService";
 import PostCommentService from "../services/PostCommentService";
+import UpLoadFilesService from '../services/UpLoadFilesService';
 
 export default {
   name: "post-list",
@@ -439,7 +507,8 @@ export default {
         description: "",
         user_Id: "",
         username: "",
-        published: false
+        published: false,
+        imageUrl: "",
       },
       currentComment:"",
       comments:[],
@@ -453,13 +522,15 @@ export default {
         username: "",
         published: false
       },
+
+      isHidden:true,
       //   id:null,
       //  content:"",
       //   user_Id:"",
         // username:""
 
       
-      
+      file:"",
 
       submitted: false,
       selectedIndex: null,
@@ -502,6 +573,44 @@ export default {
 
  
   methods: {
+
+    upload(e) {
+      // this.post.imageUrl = this.$refs.imageUrl.files[0];
+      this.post.imageUrl = e.target.files[0];
+      console.log(this.post.imageUrl);
+    },
+
+     uploadImage() {
+        let dataUser = JSON.parse(localStorage.getItem("user"))
+      const formData = new FormData();
+      // if (this.image !== null || "") {
+        formData.append("file", this.post.imageUrl, this.post.imageUrl.name);
+        formData.append("user_Id", dataUser.user_Id );
+        formData.append("username", dataUser.username,);
+        //    user_Id : dataUser.user_Id,
+        // username : dataUser.username,
+        // formData.append("description", this.post.description);
+        UpLoadFilesService.upload(formData)
+   
+    //  }
+     },
+    onSelect(e){
+
+       
+      // const file = e.target.files[0];
+      // this.post.imageUrl = URL.createObjectURL(file);
+     
+      const file = this.$refs.file.files[0];
+      this.post.imageUrl = file;
+      console.log(e)
+      console.log(this.post.imageUrl)
+        
+    },
+
+    // uploadImage(){
+    //     this.savePost()
+
+    // },
 
     cancel(){
        this.editing = this.editing == false
@@ -622,38 +731,42 @@ export default {
     },
    
     savePost() {
-       if (!this.post.description) {
-          // this.emptyError = this.emptyError == true?false:true
-          this.emptyError = alert('Cannot be empty')
+      //  if (!this.post.description) {
+      //     // this.emptyError = this.emptyError == true?false:true
+      //     this.emptyError = alert('Cannot be empty')
           
-       error => {
+      //  error => {
            
-              this.message =
-                (error.response && error.response.data)
-      }}else{ 
+      //         this.message =
+      //           (error.response && error.response.data)
+      // }}else{ 
      
       let dataUser = JSON.parse(localStorage.getItem("user"))
       console.log(dataUser)
-      // this.user = response.data1;
+      // // this.user = response.data1;
       var data = {
        
         // title: this.post.title,
         description: this.post.description,
         user_Id : dataUser.user_Id,
         username : dataUser.username,
+        // imageUrl : this.post.imageUrl
         
       
         
-      }}
+      // }
+      }
+      // UploadFilesService.upload(formData)
      
     
 
       PostDataService.create(data)
         .then(response => {
+        
           this.post.id = response.data.id;
           // this.user_Id = 
           this.username
-          console.log(response.data);
+          console.log(response);
           this.submitted = true;
           this.posts.push(data)
            this.retrievePosts();
@@ -833,5 +946,17 @@ export default {
 li{
    border:white
 
+}
+
+
+#preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#preview img {
+  max-width: 100%;
+  max-height: 500px;
 }
 </style>

@@ -4,12 +4,13 @@ export default axios.create({
   baseURL: "http://localhost:8080/api",
   headers: {
     'Authorization': 'Bearer ' + user.accessToken,
-    "Content-type": "application/json"
+    "Content-type": "application/json",
+    "Content-Type": "multipart/form-data"
   }
 });
 
 
-// export default() => {
+// export default() 
  
 //   let user = JSON.parse(localStorage.getItem('user'));
 //     // if (!token) {

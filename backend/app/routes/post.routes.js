@@ -6,11 +6,12 @@ const express = require('express');
 const router = express.Router();
 const auth = require("../middleware/auth");
 const posts = require("../controllers/post.controller");
+const multer = require('../middleware/multer-config')
 // const authRoutes = require("./auth.routes");
 // const router = require("express").Router();
 
   // Create a new Post
-  router.post("/", auth, posts.create);
+  router.post("/", auth, multer, posts.create);
 
   // Retrieve all Posts
   router.get("/", auth, posts.findAll);
@@ -22,7 +23,7 @@ const posts = require("../controllers/post.controller");
   router.get("/:id", auth, posts.findOne);
 
   // Update a Post with id
-  router.put("/:id", auth, posts.update);
+  router.put("/:id", auth, multer, posts.update);
 
   // Delete a Post with id
   router.delete("/:id", auth, posts.delete);

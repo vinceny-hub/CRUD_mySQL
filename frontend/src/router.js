@@ -101,5 +101,13 @@ export const router = new Router({
                         name: "comment",
                         component: () => import("./components/Comment.vue")
                       },
+                      // {
+
+                      
+                    //   path: "/upload",
+                    //   // alias: "posts",
+                    //   name: "upload-file",
+                    //   component: () => import("./components/UpLoadFiles.vue")
+                    // },
   ]
 });

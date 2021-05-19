@@ -86,14 +86,11 @@ app.use((req, res, next) => {
 //           }
 //   })
 // )
-// les requêtes POST sont transformées en objet JSON
-app.use(bodyParser.json())
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+
 // protection X-XSS -activate a script filter for (XSS) on websites-
 app.use(helmet())
 // charger les images depuis le dossier 'images'
-app.use('/images', express.static(path.join(__dirname,'images')))
+// app.use('./app/images', express.static(path.join(__dirname,'images')))
 //routes Url
 // app.use('/api/sauces', sauceRoutes)
 // app.use('/api/comment', commentRoutes)
@@ -103,16 +100,16 @@ app.use('/images', express.static(path.join(__dirname,'images')))
 //export vers server.js
 
 const db = require("./app/models/index");
-//  db.sequelize.sync();
+ db.sequelize.sync();
 
 // const dblogin = require("./app/modelsUser/index");
 const Role = db.role;
 
-db.sequelize.sync({force: true}).then(() => {
-  console.log('Drop and Resync Db');
-  initial();
-});
-// initial();
+// db.sequelize.sync({force: true}).then(() => {
+//   console.log('Drop and Resync Db');
+//   initial();
+// });
+initial();
 
 function initial() {
   Role.create({
@@ -131,24 +128,28 @@ function initial() {
   });
 }
 
+
+// les requêtes POST sont transformées en objet JSON
+app.use(bodyParser.json())
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // ****
 
 const postRoutes = require("./app/routes/post.routes");
 const commentRoutes = require("./app/routes/comment.routes")
 const commentPostRoutes = require("./app/routes/commentPost.routes")
 
-// simple route
-// app.get("/", (req, res) => {
-//   res.json({ message: "Welcome to bezkoder application." });
-// });
 
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 
 // require("./app/routes/post.routes")(app);
+app.use('/images', express.static(path.join(__dirname,'images')))
 app.use('/api/posts', postRoutes);
 app.use('/api/comment', commentRoutes);
 app.use('/api/comments', commentPostRoutes);
+
 // require("./app/routes/post.users")(app);
 module.exports = app
 
