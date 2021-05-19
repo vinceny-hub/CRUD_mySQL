@@ -21,6 +21,7 @@ const Op = db.Sequelize.Op;
 
         //répertoire images
         imageUrl: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : null,
+        
       
     })
     post.save()
@@ -81,8 +82,54 @@ const Op = db.Sequelize.Op;
         res.status(500).send({
           message: "Error updating Post with id=" + id
         });
-      });
+      })
+      .then(post => res.status(200).json({message:'sauce modifié !'}))
+      .catch(error => res.status(400).json({ error }))
+  
     }else{
+
+      Post.findByPk(id)
+      .then(data => {
+    res.send(data)
+  if(data.imageUrl){ 
+   const imageUrl = data.imageUrl.split('/images/')[1];
+   fs.unlink(`images/${imageUrl}`, (err) => {
+    // if (err) throw err;
+    console.log(`images/${imageUrl} was deleted`);
+  })
+ Post.update(
+     {
+       imageUrl: `${req.protocol}://${req.get("host")}/images/${
+          req.file.filename
+       }`
+    },
+    {
+       where: {
+
+        id : id
+          // userId: userId,
+          // message_id: req.params.id,
+       },
+    }
+ )
+    .then((message) => res.status(201).json({ message }))
+    .catch((error) => res.status(500).json(error));
+};
+    // })
+    // fs.link(`images/${imageUrl}`,{
+  // .then(fs.link(`images/${imageUrl}`
+  
+    // Post.update(req.body.imageUrl,{
+      
+    //   where: { id: id }
+    // })
+    // .then(fs.unlink(`images/${imageUrl}`, (err) => {
+    //     // if (err) throw err;
+    //     console.log(`images/${imageUrl} was deleted`);
+    //   }))
+    
+      
+      // )
     //   const postObject = {
 
     //     description: req.body.description,
@@ -105,39 +152,40 @@ const Op = db.Sequelize.Op;
 
       // }: {...req.body}
 
-      const post = new Post({
-        //     ...postObject,
+  //     const post = new Post({
+  //       //     ...postObject,
    
-        //     //répertoire images
-            // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` ,
-        //     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`           
+  //       //     //répertoire images
+  //           // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` ,
+  //       //     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`           
           
-         })
-         let imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-        console.log(imageUrl)
-      let newImageUrl =  `${req.protocol}://${req.get('host')}/images/${req.file.filename}` 
-      let id = req.params.id
-      console.log(id)
-      if (newImageUrl) {
-        const filename = imageUrl.split("/images")[1];
-        fs.unlink( {
-          where: { imageUrl : id }(`images/${filename}`, (err) => {
-          if (err) console.log(err);
-          else {
-            console.log(`Deleted file: images/${filename}`);
-          }
-        })
-      })}
+  //        })
+  //        let imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  //       console.log(imageUrl)
+  //     let newImageUrl =  `${req.protocol}://${req.get('host')}/images/${req.file.filename}` 
+  //     let id = req.params.id
+  //     console.log(id)
+  //     if (newImageUrl) {
+  //       const filename = imageUrl.split("/images")[1];
+  //       fs.unlink( {
+  //         where: { imageUrl : id }(`images/${filename}`, (err) => {
+  //         if (err) console.log(err);
+  //         else {
+  //           console.log(`Deleted file: images/${filename}`);
+  //         }
+  //       })
+  //     })}
   
-    Post.destroy({
-      where: { id: id }
-    })
+  //   Post.destroy({
+  //     where: { id: id }
+  //   })
+  
     
-      .then(post => res.status(200).json({message:'sauce modifié !'}))
-      .catch(error => res.status(400).json({ error }))
+  //     .then(post => res.status(200).json({message:'sauce modifié !'}))
+  //     .catch(error => res.status(400).json({ error }))
+})
+
   }
-
-
 
 
 
@@ -167,9 +215,31 @@ const Op = db.Sequelize.Op;
 
   exports.delete = (req, res) => {
     const id = req.params.id;
+    // const imageUrl = req.query.imageUrl
+    // Post.findByPk(id)
+    //   .then(data => {
+    //     const imageUrl = data.imageUrl
+    //     res.send(data);
+    
+    // }).then(fs.unlink(`images/${imageUrl}`, (err) => {
+    //   if (err) throw err;
+    //   console.log('path/file.txt was deleted');
+    // }));
+ 
+    
+    Post.findByPk(id)
+      .then(data => {
+    res.send(data)
+  if(data.imageUrl){ 
+   const imageUrl = data.imageUrl.split('/images/')[1];
     Post.destroy({
+      
       where: { id: id }
     })
+    .then(fs.unlink(`images/${imageUrl}`, (err) => {
+        // if (err) throw err;
+        console.log(`images/${imageUrl} was deleted`);
+      }))
       .then(num => {
         if (num == 1) {
           res.send({
@@ -180,12 +250,36 @@ const Op = db.Sequelize.Op;
             message: `Cannot delete Post with id=${id}. Maybe Post was not found!`
           });
         }
-      })
+      })}
+       else{
+        Post.destroy({
+      
+          where: { id: id }
+        })
+      
+          .then(num => {
+            if (num == 1) {
+              res.send({
+                message: "Post was deleted successfully!"
+              });
+            } else {
+              res.send({
+                message: `Cannot delete Post with id=${id}. Maybe Post was not found!`
+              });
+            }
+          })
+        
+
+      }
+
+    })
       .catch(err => {
         res.status(500).send({
           message: "Could not delete Post with id=" + id
         });
-      });
+       })
+     
+      
   };
 
   exports.deleteAll = (req, res) => {
