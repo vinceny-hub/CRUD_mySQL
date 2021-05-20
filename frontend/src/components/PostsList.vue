@@ -268,7 +268,7 @@
 <template>
   <div class="container-fluid">
     <div class="row h-100 justify-content-center align-items-center">
-      <div class="col-md-6 gedf-main">
+      <div class="col-md-8 gedf-main">
         <div class="card gedf-card d-flex " v-if="!submitted">
           <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
@@ -311,8 +311,10 @@
             </div>
             <div class="">
               <div class="">
+                 <div>   <img class="card-img-post" src="../img/icon-left-font-sized.png" alt="">
                   <button @click="savePost" type="submit" class="btn btn-primary float-right" v-show="isHidden">Share</button>
                   <button @click="uploadImage" type="submit" class="btn btn-success float-right" v-show="!isHidden">Upload</button> 
+                 </div>
               </div>
             </div>
           </div>
@@ -379,7 +381,8 @@
         <!-- <div class="container"> -->
     <!-- <div class="row"> -->
         <div class="">
-          <h4>Posts</h4>
+          
+          <div class="d-inline-flex p-2"> <img class="title-img" src="../img/icon.png" alt=""><h4 class="title-pos">Posts</h4></div>
             <div class="">
                 <div class="post-heading">
             
@@ -396,8 +399,8 @@
               <div class="card-body">
                   <div class="float meta ">
                         <div class="title h5">
-                            <a href="#"><b> {{ post.username }} </b></a>
-                            made a post.
+                            <a href="#"><b> {{ post.username }} </b></a> 
+                             made a post.
                         </div>
                         <h6 class="text-muted time">1 minute ago</h6>
                     </div>
@@ -407,20 +410,23 @@
                 <div class="post-heading">
                    <div class="float meta">
                         <div class="title h5">
-              <div  v-for="comment in comments" :key="comment.id"> <div class="comment card rounded card-white" v-if="post.id == comment.post_id"> 
+              <div  v-for="comment in comments" :key="comment.id"> <div class="comment float-right card rounded card-white" v-if="post.id == comment.post_id"> 
                         
                     
-                        <div class="list-group-item"> <a href="#"><b> {{ comment.username }} </b></a> <span> made a comment </span>  <h6 class="text-muted time">1 minute ago</h6> <div>{{ comment.description }} </div></div>    </div></div></div> 
+                        <div class="list-group-item">  <div class="title h5"> <a href="#"><b> {{ comment.username }} </b></a>  made a comment </div>  <h6 class="text-muted time">1 minute ago</h6> <div>{{ comment.description }} </div></div>    </div></div></div> 
 
                         </div>
               </div>
+             
               </div>
                 <!-- <div v-if="!editing"> {{ post.description }} </div>    -->
                  
                 <!-- <input v-else type="text" class="form-control" id="" v-model="post.description"/>  -->
              
                 <!-- <input type="text" class="form-control" id="" v-model="post.user_Id"/><br> -->
-                <a :href="'/posts/' + post.id"><button class="btn btn-primary float-right"> Comment </button></a>
+                <div>   <img class="card-img" src="../img/icon-left-font-sized.png" alt="">
+                <a :href="'/posts/' + post.id"><button class="btn btn-primary float-right float-bottom"> Comment </button></a>
+                </div>
               </div>
              
               </li>
@@ -900,12 +906,40 @@ export default {
 </script>
 
 <style>
+
+.title-pos{
+  margin-top: 10px;
+}
+
+.card-img{
+  width: 125px;
+}
+
+.card-img-post{
+  width: 125px;
+  margin-top: 10px;
+}
+
+
+/* .float-bottom{
+  margin-top: 15px;
+} */
+
+.title-img{
+  width: 50px;
+  /* margin-left: -20px; */
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
 /* .list {
   text-align: left;
   max-width: 750px;
   margin: auto;
 } */
-
+/* .gedf-main{
+  margin-top: 30px;
+   margin-bottom: 15px;
+} */
 
 .comment {
     width: 80%;

@@ -1,9 +1,10 @@
 <template>
  <div class="container-fluid">
+   <div class="footer-post-list">
     <div class="row h-100 justify-content-center align-items-center">
     
      
-      <div class="col-md-6 gedf-main card">
+      <div class="col-md-8 gedf-main card .post-comment">
      
     
     <!-- <form> -->
@@ -37,7 +38,9 @@
                 <!-- <a :href="'/posts/' + post.id"><button class="btn btn-primary"> Comment </button></a> -->
               <!-- </div> -->
        <div v-if="currentPost" class="card-body">
-          <h4>Post</h4>
+         <div class="">
+          <div class="d-inline-flex p-0"> <img class="title-img-comment" src="../img/icon1.png" alt=""><h4 class="title-pos">Post</h4></div>
+         </div>
             <div class="jk">
                 <div class="post-heading">
             
@@ -56,8 +59,8 @@
                     </div>
                         </div>
         <!-- <label for="description">Description</label> -->
-       <div class="kl" v-if="!editing"> <h5 class="postCard"><strong>{{ currentPost.description }}</strong></h5> </div> 
-           <textarea-autosize
+       <div class="kl card aPost rounded card-white" v-if="!editing"> <h5 class="postCard"><strong>{{ currentPost.description }}</strong></h5><img :src="currentPost.imageUrl"></div> 
+           <textarea-autosize v-show="dataUser.user_Id == currentPost.user_Id && currentPost.description"
   placeholder="Type something here..."
   ref="myTextarea"
  
@@ -66,7 +69,7 @@
    v-else type="text"   class="form-control" id="description" v-model="currentPost.description"/>
     <div v-show="editing" class="form-group">
                     <div class="custom-file">
-                        <input  type="file" ref="file" @change="onSelect" class="" id="">
+                        <input  v-show="dataUser.user_Id == currentPost.user_Id && currentPost.imageUrl" type="file" ref="file" @change="onSelect" class="" id="">
                         <label class=""></label>
                  
                 </div>
@@ -94,17 +97,22 @@
       Publish
     </button> -->
      <!-- <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2" @click="deletePost(index)"> Delete </button> -->
+     
+      
+
+    <img  v-if="dataUser.user_Id == currentPost.user_Id" class="card-ico" src="../img/icon1.png" alt="">
+    <img  v-else class="card-img" src="../img/icon-left-font-sized1.png" alt="">
    
     <a href="#commentArea"> <button v-show="!editing"  class="btn btn-primary float-right buttonCEC"> Comment </button></a>
     <button v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-success float-right buttonCEC" @click="editPost(currentPost)"> {{editing? 'Update':'Edit'}} </button>
-    <button v-show="editing" class="btn btn-secondary mr-2 float-right" type="submit" @click="uploadImage()"> updateImage </button>
+    <button v-show="editing" class="btn btn-success mr-2 float-right" type="submit" @click="uploadImage()"> Upload </button>
      <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Back </button>
      
     <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id"  id="btnC" class="btn btn-secondary mr-2 float-right marginRightButton" @click="cancel()"> Cancel </button>
     <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
-    
+   
      
-     
+  
 
 
        <div class="post-heading">
@@ -120,7 +128,7 @@
 
     
     <div v-for="comment in comments" :key="comment.id">  
-      <div v-if="currentPost.id == comment.post_id" class="comment card rounded card-white"> <div class="list-group-item">
+      <div v-if="currentPost.id == comment.post_id" class="comment float-right card rounded card-white"> <div class="list-group-item">
         <a href="#"><b> {{ comment.username }} </b></a> <span> made a comment </span>  <h6 class="text-muted time">1 minute ago</h6> <div>{{ comment.description }} </div>
     <a :href="'/comments/' + comment.id"><button v-if="dataUser.user_Id == comment.user_Id" class="btn btn-success float-right"> Edit </button></a></div></div>
     </div>
@@ -132,9 +140,13 @@
   :min-height="30"
   :max-height="350"
    type="text"   class="form-control" id="description" autofocus v-model="comments.description"/></div>
-      
+       <div class="d-flex justify-content-between float-right width-box">   <img class="card-img float-left" src="../img/icon-left-font-sized1.png" alt="">
+      <div  class="">
      <button  @click="saveComment" class="btn btn-primary float-right"> Share </button>
        <button class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Cancel </button>
+       </div>
+       </div>
+       
                         </div>
                    </div></div></div>
     
@@ -159,6 +171,7 @@
   </div>
   </div>
 </div>
+   </div>
  </div>
 
   
@@ -413,9 +426,32 @@ export default {
 </script>
 
 <style>
+
+.width-box{
+  width: 100%;
+  
+}
+
+
+.title-pos{
+  margin-top: 8px;
+}
+
+.title-img-comment{
+  width: 40px;
+  /* margin-left: -20px; */
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
 .edit-form {
   max-width: 300px;
   margin: auto;
+}
+
+.card-img{
+ 
+  width: 100px;
+  height: 20px;
 }
 
 .comment {
@@ -423,7 +459,7 @@ export default {
     overflow: hidden;
     border: 0.1vw solid grey;
      margin-bottom: 30px;
-      margin-left: 100px;
+    margin-left: 100px; 
     /* margin: 0 0 1em; */
     /* *zoom: 1; */
 } 
@@ -438,6 +474,11 @@ export default {
     /* margin: 0 0 1em; */
     /* *zoom: 1; */
 } 
+
+.card-ico{
+  margin-top: -4px;
+  width: 37px;
+}
 
 .postBox {
    
@@ -466,9 +507,9 @@ li{
 .textBox{
    width: 100%;
 }
-.gedf-main{
-  margin-top: 15px;
-   margin-bottom: 15px;
+.gedf-main .post-comment{
+  
+   margin-bottom: 30px;
 }
 
 .marginRightButton{
@@ -492,6 +533,20 @@ li{
 }
 #btnC{
   margin-right: 50px;
+}
+
+.footer-post-list{
+  
+  margin-bottom: 30px;
+ 
+
+/* position:absolute; */
+
+bottom:0;
+
+width:100%;
+
+
 }
 
 </style>

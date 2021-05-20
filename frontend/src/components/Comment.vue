@@ -335,8 +335,8 @@ li{
    width: 100%;
 }
 .gedf-main{
-  margin-top: 15px;
-   margin-bottom: 15px;
+  /* margin-top: 15px; */
+   margin-bottom: 30px;
 }
 .marginBottomButton{
   margin-bottom: 30px;
