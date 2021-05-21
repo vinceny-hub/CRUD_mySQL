@@ -270,6 +270,7 @@
     <div class="row h-100 justify-content-center align-items-center">
       <div class="col-md-8 gedf-main">
         <div class="card gedf-card d-flex " v-if="!submitted">
+          <div class="box-header-body-input">
           <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
               <li class="nav-item"
@@ -281,7 +282,7 @@
               </li>
             </ul>
           </div>
-          <div class="card-body">
+          <div class="card-body card-input">
             <div class="tab-content" id="myTabContent">
               <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
                 <div class="form-group">
@@ -322,6 +323,7 @@
             <div v-if="!emptyError"></div>
           </div>
         </div> 
+        </div>
         </div>
 
       <!-- <form
@@ -425,7 +427,7 @@
              
                 <!-- <input type="text" class="form-control" id="" v-model="post.user_Id"/><br> -->
                 <div>   <img class="card-img" src="../img/icon-left-font-sized.png" alt="">
-                <a :href="'/posts/' + post.id"><button class="btn btn-primary float-right float-bottom"> Comment </button></a>
+                <a :href="'/posts/' + post.id"><button  href="#top" class="btn btn-outline pink float-right float-bottom"> Comment </button></a>
                 </div>
               </div>
              
@@ -907,8 +909,14 @@ export default {
 
 <style>
 
+.card-header{
+   background-color:  #091f43;
+}
+
 .title-pos{
   margin-top: 10px;
+  color: #091f43;
+  font-weight: bold;
 }
 
 .card-img{
@@ -918,7 +926,37 @@ export default {
 .card-img-post{
   width: 125px;
   margin-top: 10px;
+  border-bottom: none;
 }
+
+#posts-tab{
+  border: 1px solid #e1e1e1;
+  border-bottom: none;
+ 
+}
+
+#images-tab{
+  border: 1px solid #e1e1e1;
+  border-bottom: none;
+ 
+}
+.nav-link{
+  color: white;
+  
+
+} 
+
+.box-header-body-input{
+  /* border: 1px solid #091f43; */
+  /* border-top: none; */
+  box-shadow: 10px 7px 10px black;
+}
+
+.card-body{
+   box-shadow: 10px 7px 10px black;
+}
+
+
 
 
 /* .float-bottom{
@@ -941,12 +979,17 @@ export default {
    margin-bottom: 15px;
 } */
 
+.gedf-main{
+  margin-bottom: 100px;
+}
+
 .comment {
     width: 80%;
     overflow: hidden;
-    border: 0.1vw solid grey;
+    border: 1px solid #091f43;
      margin-bottom: 30px;
       margin-left: 100px;
+        box-shadow: 5px 5px 5px black;
     /* margin: 0 0 1em; */
     /* *zoom: 1; */
 } 
@@ -965,7 +1008,7 @@ export default {
 .postBox {
    
     /* overflow: hidden; */
-    border: 0.1vw solid grey;
+    border: 1px solid #091f43;
      margin-bottom: 30px;
       /* margin-left: 100px; */
     /* margin: 0 0 1em; */
@@ -992,5 +1035,9 @@ li{
 #preview img {
   max-width: 100%;
   max-height: 500px;
+}
+.pink{
+  border: 1px solid  #091f43;
+  color:  #091f43;
 }
 </style>

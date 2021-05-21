@@ -126,7 +126,7 @@ export default {
       </div>
     </nav> -->
 <!-- ************************************************************************** -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom static-top">
+    <nav id="#top" class="navbar navbar-expand-lg navbar-light bg-white border-nav static-top">
   <div class="container">
     <a class="navbar-brand head-logo"  @click.prevent href="#">
           <img class="head-img" src="./img/icon-left-font-sized1.png" alt=""><h3 class="font-weight-bold"></h3>
@@ -194,8 +194,8 @@ export default {
     <div class="container"> 
        <router-view />
     </div>
-    <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
-    <div class="container text-center">
+    <footer id="sticky-footer" class="py-4  text-white-50">
+    <div  id="commentArea" class="container text-center">
       <small>Copyright  &copy;  <img class="foot-img" src="./img/icon-left-font-monochrome-white1.png" alt="">
          </small> 
     </div>
@@ -260,7 +260,7 @@ nav{
 }
 footer{
   
-  
+  background-color:#091f43;
  
 
 /* position:absolute; */
@@ -270,6 +270,10 @@ bottom:0;
 width:100%;
 
 
+}
+
+.border-nav{
+  border-bottom: 1px solid #091f43 ;
 }
 
 </style>

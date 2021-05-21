@@ -4,7 +4,7 @@
     <div class="row h-100 justify-content-center align-items-center">
     
      
-      <div class="col-md-8 gedf-main card .post-comment">
+      <div class="col-md-8 gedf-main card .post-comment card-shadow">
      
     
     <!-- <form> -->
@@ -103,8 +103,8 @@
     <img  v-if="dataUser.user_Id == currentPost.user_Id" class="card-ico" src="../img/icon1.png" alt="">
     <img  v-else class="card-img" src="../img/icon-left-font-sized1.png" alt="">
    
-    <a href="#commentArea"> <button v-show="!editing"  class="btn btn-primary float-right buttonCEC"> Comment </button></a>
-    <button v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-success float-right buttonCEC" @click="editPost(currentPost)"> {{editing? 'Update':'Edit'}} </button>
+    <a href="#top"> <button v-show="!editing"  class="btn btn-outline pink float-right buttonCEC"> Comment </button></a>
+    <button v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-success float-right buttonCEC" href="#top" @click="editPost(currentPost)"> {{editing? 'Update':'Edit'}} </button>
     <button v-show="editing" class="btn btn-success mr-2 float-right" type="submit" @click="uploadImage()"> Upload </button>
      <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Back </button>
      
@@ -133,7 +133,7 @@
     <a :href="'/comments/' + comment.id"><button v-if="dataUser.user_Id == comment.user_Id" class="btn btn-success float-right"> Edit </button></a></div></div>
     </div>
      
-      <div class="postCard" id="commentArea">        <textarea-autosize
+      <div class="postCard">        <textarea-autosize
   placeholder="Type something here..."
   ref="myTextarea"
  
@@ -435,6 +435,8 @@ export default {
 
 .title-pos{
   margin-top: 8px;
+  color:#091f43;
+  font-weight: bold;
 }
 
 .title-img-comment{
@@ -460,9 +462,15 @@ export default {
     border: 0.1vw solid grey;
      margin-bottom: 30px;
     margin-left: 100px; 
+      box-shadow: 5px 5px 5px black;
     /* margin: 0 0 1em; */
     /* *zoom: 1; */
 } 
+
+.pink{
+  border: 1px solid  #091f43;
+  color:  #091f43;
+}
 
 .aPost {
     width: 100%;
@@ -508,8 +516,16 @@ li{
    width: 100%;
 }
 .gedf-main .post-comment{
-  
+    
    margin-bottom: 30px;
+}
+
+ .card-shadow{
+     box-shadow: 10px 7px 10px black;
+ }
+
+ .gedf-main{
+  margin-bottom: 100px;
 }
 
 .marginRightButton{

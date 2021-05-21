@@ -1,5 +1,5 @@
 <template>
- <div class="container-fluid">
+ <div id="#top" class="container-fluid">
     <div class="row h-100 justify-content-center align-items-center">
     
      
@@ -40,7 +40,7 @@
      <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="$router.go(-1)"> Back </button>
    
     <button v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id" class="btn btn-secondary mr-2 float-right" @click="cancel()"> Cancel </button>
-    <button v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id" class="badge badge-danger mr-2" @click="deleteComment"> Delete </button>
+    <button  v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id" class="badge badge-danger mr-2" @click="deleteComment"> Delete </button>
 
 
   <!-- <div v-if="currentComment" class="edit-form">
@@ -326,6 +326,9 @@ li{
    border:white
 
 }
+
+
+
 /* .borderBox{
   border: 0.1vw solid grey;
   border-radius: 1%;
@@ -336,7 +339,10 @@ li{
 }
 .gedf-main{
   /* margin-top: 15px; */
-   margin-bottom: 30px;
+   margin-bottom: 200px;
+  
+   box-shadow: 10px 7px 10px black;
+
 }
 .marginBottomButton{
   margin-bottom: 30px;
@@ -350,4 +356,5 @@ li{
 #description{
   margin-bottom: 15px;
 }
+
 </style>
