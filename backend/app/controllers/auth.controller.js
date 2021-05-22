@@ -93,3 +93,28 @@ exports.signin = (req, res) => {
       res.status(500).send({ message: err.message });
     });
 };
+
+// exports.delete = (req, res) => {
+//   const id = req.body.id;
+//   // comment.findOne({ where: { post_id : req.params.id } })
+//   console.log(id)
+//   User.destroy({
+//     where: { id : id}
+//   })
+//     .then(num => {
+//       if (num == 1) {
+//         res.send({
+//           message: "Post was deleted successfully!"
+//         });
+//       } else {
+//         res.send({
+//           message: `Cannot delete Com with post=${user_Id}. Maybe Com was not found!`
+//         });
+//       }
+//     })
+//     .catch(err => {
+//       res.status(500).send({
+//         message: "Could not delete Com with id=" + user_Id
+//       });
+//     });
+// };

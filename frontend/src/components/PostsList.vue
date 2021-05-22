@@ -401,7 +401,7 @@
               <div class="card-body">
                   <div class="float meta ">
                         <div class="title h5">
-                            <a href="#"><b> {{ post.username }} </b></a> 
+                            <a  :href="'/profile/' + post.id"><b> {{ post.username }} </b></a> 
                              made a post.
                         </div>
                         <h6 class="text-muted time">1 minute ago</h6>
@@ -949,11 +949,11 @@ export default {
 .box-header-body-input{
   /* border: 1px solid #091f43; */
   /* border-top: none; */
-  box-shadow: 10px 7px 10px black;
+  box-shadow: 10px 7px 10px#091f43;
 }
 
 .card-body{
-   box-shadow: 10px 7px 10px black;
+   box-shadow: 10px 7px 10px #091f43;
 }
 
 
@@ -989,7 +989,7 @@ export default {
     border: 1px solid #091f43;
      margin-bottom: 30px;
       margin-left: 100px;
-        box-shadow: 5px 5px 5px black;
+        box-shadow: 5px 5px 5px #091f43;
     /* margin: 0 0 1em; */
     /* *zoom: 1; */
 } 

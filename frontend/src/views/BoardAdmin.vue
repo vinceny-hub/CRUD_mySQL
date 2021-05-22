@@ -1,510 +1,75 @@
 <template>
-<!-- eslint-disable no-mixed-spaces-and-tabs -->
+  
 
-   <!-- <div class="container-fluid gedf-wrapper">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="h5">@LeeCross</div>
-                        <div class="h7 text-muted">Fullname : Miracles Lee Cross</div>
-                        <div class="h7">Developer of web applications, JavaScript, PHP, Java, Python, Ruby, Java, Node.js,
-                            etc.
-                        </div>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <div class="h6 text-muted">Followers</div>
-                            <div class="h5">5.2342</div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="h6 text-muted">Following</div>
-                            <div class="h5">6758</div>
-                        </li>
-                        <li class="list-group-item">Vestibulum at eros</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-6 gedf-main">
-
-              
-                <div class="card gedf-card">
-                    <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Make
-                                    a publication</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images">Images</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-                                <div class="form-group">
-                                    <label class="sr-only" for="message">post</label>
-                                    <textarea class="form-control" id="message" rows="3" placeholder="What are you thinking?"></textarea>
-                                </div>
-
-                            </div>
-                            <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
-                                <div class="form-group">
-                                    <div class="custom-file">
-                                        <input  type="file" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Upload image</label>
-                                    </div>
-                                </div>
-                                <div class="py-4"></div>
-                            </div>
-                        </div>
-                        <div class="btn-toolbar justify-content-between">
-                            <div class="btn-group">
-                                <button type="submit" class="btn btn-primary">share</button>
-                            </div>
-                            <div class="btn-group">
-                                <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    <i class="fa fa-globe"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
-                                    <a class="dropdown-item" href="#"><i class="fa fa-globe"></i> Public</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-users"></i> Friends</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Just me</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-             
-                <div class="card gedf-card">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                                </div>
-                                <div class="ml-2">
-                                    <div class="h5 m-0">@LeeCross</div>
-                                    <div class="h7 text-muted">Miracles Lee Cross</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="dropdown">
-                                    <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-h"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
-                                        <div class="h6 dropdown-header">Configuration</div>
-                                        <a class="dropdown-item" href="#">Save</a>
-                                        <a class="dropdown-item" href="#">Hide</a>
-                                        <a class="dropdown-item" href="#">Report</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card-body">
-                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>10 min ago</div>
-                        <a class="card-link" href="#">
-                            <h5 class="card-title">Lorem ipsum dolor sit amet, consectetur adip.</h5>
-                        </a>
-
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium esse magnam nemo dolor
-                            sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
-                        <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
-                        <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-                    </div>
-                </div>
-        
-                <div class="card gedf-card">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                                </div>
-                                <div class="ml-2">
-                                    <div class="h5 m-0">@LeeCross</div>
-                                    <div class="h7 text-muted">Miracles Lee Cross</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="dropdown">
-                                    <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-h"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
-                                        <div class="h6 dropdown-header">Configuration</div>
-                                        <a class="dropdown-item" href="#">Save</a>
-                                        <a class="dropdown-item" href="#">Hide</a>
-                                        <a class="dropdown-item" href="#">Report</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card-body">
-                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> 10 min ago</div>
-                        <a class="card-link" href="#">
-                            <h5 class="card-title"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit consectetur
-                                deserunt illo esse distinctio.</h5>
-                        </a>
-
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam omnis nihil, aliquam est, voluptates officiis iure soluta
-                            alias vel odit, placeat reiciendis ut libero! Quas aliquid natus cumque quae repellendus. Lorem
-                            ipsum dolor sit amet consectetur adipisicing elit. Ipsa, excepturi. Doloremque, reprehenderit!
-                            Quos in maiores, soluta doloremque molestiae reiciendis libero expedita assumenda fuga quae.
-                            Consectetur id molestias itaque facere? Hic!
-                        </p>
-                        <div>
-                            <span class="badge badge-primary">JavaScript</span>
-                            <span class="badge badge-primary">Android</span>
-                            <span class="badge badge-primary">PHP</span>
-                            <span class="badge badge-primary">Node.js</span>
-                            <span class="badge badge-primary">Ruby</span>
-                            <span class="badge badge-primary">Paython</span>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
-                        <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
-                        <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-                    </div>
-                </div>
-             
-                <div class="card gedf-card">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                                </div>
-                                <div class="ml-2">
-                                    <div class="h5 m-0">@LeeCross</div>
-                                    <div class="h7 text-muted">Miracles Lee Cross</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="dropdown">
-                                    <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-h"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
-                                        <div class="h6 dropdown-header">Configuration</div>
-                                        <a class="dropdown-item" href="#">Save</a>
-                                        <a class="dropdown-item" href="#">Hide</a>
-                                        <a class="dropdown-item" href="#">Report</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card-body">
-                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> Hace 40 min</div>
-                        <a class="card-link" href="#">
-                            <h5 class="card-title">Totam non adipisci hic! Possimus ducimus amet, dolores illo ipsum quos
-                                cum.</h5>
-                        </a>
-
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam sunt fugit reprehenderit consectetur exercitationem odio,
-                            quam nobis? Officiis, similique, harum voluptate, facilis voluptas pariatur dolorum tempora sapiente
-                            eius maxime quaerat.
-                            <a href="https://mega.nz/#!1J01nRIb!lMZ4B_DR2UWi9SRQK5TTzU1PmQpDtbZkMZjAIbv97hU" target="_blank">https://mega.nz/#!1J01nRIb!lMZ4B_DR2UWi9SRQK5TTzU1PmQpDtbZkMZjAIbv97hU</a>
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
-                        <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
-                        <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-                    </div>
-                </div>
-       
-
-      
-
-
-
-            </div> 
-            <div class="col-md-3">
-                <div class="card gedf-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                            card's content.</p>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
-                    </div>
-                </div>
-                <div class="card gedf-card">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                                card's content.</p>
-                            <a href="#" class="card-link">Card link</a>
-                            <a href="#" class="card-link">Another link</a>
-                        </div>
-                    </div>
-            </div>
-        </div>
-    </div> -->
-
-
-      <!--- \\\\\\\Post-->
-      
-      <div class="container-fluid">
-        <div class="row h-100 justify-content-center align-items-center">
-           <div class="col-md-6 gedf-main">
-        
-                <div class="card gedf-card d-flex " v-if="!submitted">
-                    <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Make
-                                    a publication</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images">Images</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-                                <div class="form-group">
-                                    <label class="sr-only" for="message">post</label>
-                                    <textarea 
-                                    id="description"
-                                     required
-                                    v-model="post.description" class="form-control" rows="3" placeholder="What are you thinking?"></textarea>
-                                </div>
-
-                            </div>
-                            
-                            <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
-                                <div class="form-group">
-                                    <div class="custom-file">
-                                        <input  type="file" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Upload image</label>
-                                    </div>
-                                </div>
-                                <div class="py-4"></div>
-                            </div>
-                        </div>
-                        <div class="btn-toolbar justify-content-between">
-                            <div class="btn-group">
-                                <button @click="savePost" type="submit" class="btn btn-primary">Share</button>
-                            </div>
-    
-                            
-                            <!-- <div class="btn-group"> -->
-                              <!-- <button @click="savePost" type="submit" class="btn btn-primary">Comment</button> -->
-                                <!-- <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    <i class="fa fa-globe"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
-                                    <a class="dropdown-item" href="#"><i class="fa fa-globe"></i> Public</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-users"></i> Friends</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Just me</a>
-                                </div> -->
-                            <!-- </div> -->
-                        </div>
-                    </div>
-                         <div>
-                 <div
-            v-if="!emptyError"></div>
-                         <div v-else
-            class="alert alert-danger"
-            role="alert"
-          >cannot be empty!</div>
-        </div>
-                    
-                </div>
-           
-                 <!-- <div v-else>
-      <h4>You submitted successfully!</h4>
-      <button class="btn btn-success" @click="newPost">Add</button>
-    </div> -->
-                
-           <!-- </div>
-        </div>
-      </div> -->
-           
-            
-   <div class="list row">
-    <div class="col-md-8">
-      <div class="input-group mb-3">
-        <!-- <input type="text" class="form-control" placeholder="Search by title"
-          v-model="title"/> -->
-        <div class="input-group-append">
-          <!-- <button class="btn btn-outline-secondary" type="button"
-            @click="searchTitle"
-          >
-            Search
-          </button> -->
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <h4>Posts</h4>
-    
-       <ul class="list-group">
-        <li 
-        
-          v-for="(post, index) in posts.slice().reverse()"
-        
-          :key="index"
-        
-        
-           class="list-group-item"
+  <div class="">
           
-        >
+          <div class="d-inline-flex p-2"> <img class="title-img" src="../img/icon.png" alt=""><h4 class="title-pos">Posts</h4></div>
+            <div class="">
+                <div class="post-heading">
+            
+            <ul class="list-group">
+            
+              
+                <li class="card rounded card-white postBox"
+                @click="setActiveUser(user)"
+                :class="{ active: user == currentUser}"
+                v-for="(user, index) in users"
+                v-bind:key="user.id"
+               
+               
+              > 
+              <div class="card-body">
+                  <div class="float meta ">
+                        <div class="title h5">
+                            <!-- <a  :href="'/profile/' + post.id"><b> {{ user }} </b></a>  -->
+                              <a  :href="'/profile/' + post.id"><b> {{ user.username }} </b></a> 
+                                <a  :href="'/profile/' + post.id"><b> {{ user.email }} </b></a> 
+                                  <a  :href="'/profile/' + post.id"><b> {{ user.createdAt }} </b></a> 
+                                   <a  :href="'/profile/' + post.id"><b> {{ user.id }} </b></a> 
+                             made a post.
+                        </div>
+                        <h6 class="text-muted time">1 minute ago</h6>
+                    </div>
+            
+              <div class="card aPost rounded card-white"> <h5><strong>{{ post.description }}</strong></h5><img :src="post.imageUrl"></div> 
+              <div class="">
+                <div class="post-heading">
+                   <div class="float meta">
+                        <div class="title h5">
+              <!-- <div  v-for="comment in comments" :key="comment.id"> <div class="comment float-right card rounded card-white" v-if="post.id == comment.post_id"> 
+                        
+                    
+                        <div class="list-group-item">  <div class="title h5"> <a href="#"><b> {{ comment.username }} </b></a>  made a comment </div>  <h6 class="text-muted time">1 minute ago</h6> <div>{{ comment.description }} </div></div>    </div></div> -->
+                        </div> 
 
-           <!-- @click="setActivePost(post)" class="list-group-item"
-            :class="{ active: index== currentIndex }" -->
-
-      <div v-if="currentPost"></div>
-        <!-- :class="{ active: index == currentIndex }" -->
-      <div  v-if="!editing">         
-       
-           {{ post.description }} </div>
-     <!-- <div v-if="currentPost"> -->
-             <input v-else type="text" class="form-control" id=""
-          v-model="post.description"
-        /> 
-    
-            <!-- <div class="col-md-6" > -->
+                        </div>
+              </div>
              
-       <!-- <div v-if="currentPost"   :key="index">  -->
-         <input type="text" class="form-control" id=""
-          v-model="post.user_Id"
-        /> 
-       
-       
-
-               <button v-if="currentUser.id == post.user_Id"     class="badge badge-warning"  @click="editPost(index, post)"
-    >
-     {{editing?'Update':'Edit'}}
-    </button>
-     
-        <!-- <h4></h4> -->
-         <!-- <div> -->
-     
-              <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2"
-      @click="deletePost(index)"
-    >
-      Delete
-    </button>
-
-          <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-success mr-2"
-      @click="cancel(index)"
-    >
-      Cancel
-    </button>
-     <!-- <button v-if="currentUser.id == post.user_Id" class="badge badge-success mr-2"
-      @click="updatePost"
-    >
-      Update
-    </button> -->
-      <button class="badge badge-primary mr-2"
-      @click="updatePost"
-    >
-      Comment
-    </button>
- <!-- </div> -->
-     <!-- </div> -->
-            <!-- </div> -->
-  <!--    </div> -->
-        </li>
-       </ul>
-     
-      <!--    <label><strong>Title:</strong></label> {{ currentPost.title }}
-        </div> -->
-       <!-- <div >
-          <label><strong>Description:</strong></label> {{ post.description }}
-        </div>  -->
-      
-
-
-     <!-- <div>
-          <label><strong>Status:</strong></label> {{ currentPost.published ? "Published" : "Pending" }}
-        </div> -->
-<!-- 
-        <a class="badge badge-warning"
-          :href="'/posts/' + currentPost.id"
-        > 
-           Edit
-        </a> 
-         <button  v-if="dataUser.id == currentPost.user_Id" class="badge badge-danger mr-2"
-      @click="deletePost"
-    >
-      Delete
-    </button> -->
+              </div>
+                <!-- <div v-if="!editing"> {{ post.description }} </div>    -->
+                 
+                <!-- <input v-else type="text" class="form-control" id="" v-model="post.description"/>  -->
+             
+                <!-- <input type="text" class="form-control" id="" v-model="post.user_Id"/><br> -->
+                <div>   <img class="card-img" src="../img/icon-left-font-sized.png" alt="">
+                <a><button  href="#top" class=" btn btn-sm btn-danger float-right float-bottom" @click="deleteUser(user, index)"> Delete </button></a>
+                </div>
+              </div>
+             
+              </li>
+            </ul>
+                <!-- <a v-if="currentUser.id == post.user_Id" class="badge badge-warning" @click="editPost(index, post)"> {{editing?'Update':'Edit'}} </a> -->
+                <!-- <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2" @click="deletePost(index)"> Delete </button>
+                <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-success mr-2" @click="cancel(index)"> Cancel </button> -->
+               
+             
+          </div>
+        </div>
+        <button v-if="showAdminBoard" class="m-3 btn btn-sm btn-danger" @click="removeAllPosts"> Remove All </button> 
       </div>
-      <!-- <div v-else>
-        <br />
-        <p>Please click on a Post...</p>
-       </div> -->
-     </div> 
-  </div>  
-        <!-- </li>
-      </ul>  -->
-
-       <button  v-if="showAdminBoard" class="m-3 btn btn-sm btn-danger" @click="removeAllPosts">
-        Remove All
-      </button> 
-    </div>
-      <div class="col-md-6">
-      <div v-if="currentPost">
-        <h4>Post</h4>
-         <div>
-      <!--    <label><strong>Title:</strong></label> {{ currentPost.title }}
-        </div> -->
-       <!-- <div >
-          <label><strong>Description:</strong></label> {{ post.description }}
-        </div>  -->
-      
 
 
-     <!-- <div>
-          <label><strong>Status:</strong></label> {{ currentPost.published ? "Published" : "Pending" }}
-        </div> -->
-
-        <!-- <a class="badge badge-warning"
-          :href="'/posts/' + currentPost.id"
-        > 
-           Edit
-        </a> -->
-      </div>
-      <!-- <div v-else>
-        <br />
-        <p>Please click on a Post...</p>
-      </div> -->
-    </div> 
-  </div> 
-            </div>
-         <!-- </div> -->
-        
-      <!-- </div>
-      </div> --> 
-  <!-- eslint-enable no-mixed-spaces-and-tabs -->
-        
-     
-    
+  
 </template>
 
 <script>
@@ -528,8 +93,12 @@ export default {
       submitted: false,
       selectedIndex: null,
       editing: false,
-      emptyError:false
-    };
+      emptyError:false,
+        users:'',
+     index:'',
+      selectUser:""
+    }
+  
     
   },
   // props:{
@@ -597,6 +166,27 @@ export default {
         });
     },
 
+      deleteUser(user, index) {
+         this.selectUser = user;
+      this.currentIndex = index;
+      
+      console.log(user.id)
+      //  this.posts.splice(index,1)
+        // user = this.users.id
+      // PostCommentService.delete(this.user.id)
+      PostDataService.deleteUser(user.id)
+     
+      console.log(user.id)
+        .then(response => {
+          console.log(response.data);
+          // this.$router.push({ name: "posts" });
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    
+  },
+
       deletePost() {
      
     
@@ -615,9 +205,9 @@ export default {
     },
 
         retrievePosts() {
-      PostDataService.getAll()
+      PostDataService.getAllUsers()
         .then(response => {
-          this.posts = response.data;
+          this.users = response.data;
           console.log(response.data);
         })
         
@@ -632,11 +222,11 @@ export default {
       this.currentIndex = -1;
     },
 
-    setActivePost(post, index) {
-      this.currentPost = post;
+    setActiveUser(user, index) {
+      this.selectUser = user;
       this.currentIndex = index;
       
-      console.log(post.description)
+      console.log(user.id)
     },
 
         removeAllPosts() {
@@ -714,6 +304,7 @@ export default {
 
    retrievePosts() {
       PostDataService.getAll()
+      console.log(this.users)
         .then(response => {
           this.posts = response.data;
           console.log(response.data);
@@ -819,6 +410,138 @@ export default {
 </script>
 
 <style>
+
+.card-header{
+   background-color:  #091f43;
+}
+
+.title-pos{
+  margin-top: 10px;
+  color: #091f43;
+  font-weight: bold;
+}
+
+.card-img{
+  width: 125px;
+}
+
+.card-img-post{
+  width: 125px;
+  margin-top: 10px;
+  border-bottom: none;
+}
+
+#posts-tab{
+  border: 1px solid #e1e1e1;
+  border-bottom: none;
+ 
+}
+
+#images-tab{
+  border: 1px solid #e1e1e1;
+  border-bottom: none;
+ 
+}
+.nav-link{
+  color: white;
+  
+
+} 
+
+.box-header-body-input{
+  /* border: 1px solid #091f43; */
+  /* border-top: none; */
+  box-shadow: 10px 7px 10px#091f43;
+}
+
+.card-body{
+   box-shadow: 10px 7px 10px #091f43;
+}
+
+
+
+
+/* .float-bottom{
+  margin-top: 15px;
+} */
+
+.title-img{
+  width: 50px;
+  /* margin-left: -20px; */
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+/* .list {
+  text-align: left;
+  max-width: 750px;
+  margin: auto;
+} */
+/* .gedf-main{
+  margin-top: 30px;
+   margin-bottom: 15px;
+} */
+
+.gedf-main{
+  margin-bottom: 100px;
+}
+
+.comment {
+    width: 80%;
+    overflow: hidden;
+    border: 1px solid #091f43;
+     margin-bottom: 30px;
+      margin-left: 100px;
+        box-shadow: 5px 5px 5px #091f43;
+    /* margin: 0 0 1em; */
+    /* *zoom: 1; */
+} 
+
+.aPost {
+    width: 100%;
+    min-height: px;
+    overflow: hidden;
+    border: 0.1vw solid white;
+     margin-bottom: 30px;
+      /* margin-left: 100px; */
+    /* margin: 0 0 1em; */
+    /* *zoom: 1; */
+} 
+
+.postBox {
+   
+    /* overflow: hidden; */
+    border: 1px solid #091f43;
+     margin-bottom: 30px;
+      /* margin-left: 100px; */
+    /* margin: 0 0 1em; */
+    /* *zoom: 1; */
+} 
+.list-group{
+  border:white;
+}
+.list-group-item{
+    border:white;
+}
+li{
+   border:white
+
+}
+
+
+#preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#preview img {
+  max-width: 100%;
+  max-height: 500px;
+}
+.pink{
+  border: 1px solid  #091f43;
+  color:  #091f43;
+}
 /* .list {
   text-align: left;
   max-width: 750px;

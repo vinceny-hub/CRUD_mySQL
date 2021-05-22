@@ -139,6 +139,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const postRoutes = require("./app/routes/post.routes");
 const commentRoutes = require("./app/routes/comment.routes")
 const commentPostRoutes = require("./app/routes/commentPost.routes")
+const userDeleteRoutes = require("./app/routes/userDelete.routes")
 
 
 require('./app/routes/auth.routes')(app);
@@ -147,6 +148,7 @@ require('./app/routes/user.routes')(app);
 // require("./app/routes/post.routes")(app);
 app.use('/images', express.static(path.join(__dirname,'images')))
 app.use('/api/posts', postRoutes);
+app.use('/api/user', userDeleteRoutes);
 app.use('/api/comment', commentRoutes);
 app.use('/api/comments', commentPostRoutes);
 

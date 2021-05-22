@@ -1,5 +1,6 @@
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/user.controller");
+const userDeleteCtrl = require ('../controllers/userDeleteCtrl')
 
 module.exports = function(app) {
   // app.use(function(req, res, next) {
@@ -8,7 +9,7 @@ module.exports = function(app) {
   //     "x-access-token, Origin, Content-Type, Accept"
   //   );
   //   next();
-  // });
+  // })
 
   app.get("/api/test/all", controller.allAccess);
 
@@ -29,4 +30,9 @@ module.exports = function(app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
   );
+  // app.delete(
+  //   "/api/test/user",
+  //   [authJwt.verifyToken],
+  //  userDeleteCtrl
+  // );
 };

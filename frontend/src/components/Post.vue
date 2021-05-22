@@ -102,10 +102,11 @@
 
     <img  v-if="dataUser.user_Id == currentPost.user_Id" class="card-ico" src="../img/icon1.png" alt="">
     <img  v-else class="card-img" src="../img/icon-left-font-sized1.png" alt="">
-   
+   <!-- {{editing? 'Update':'Edit'}} -->
     <a href="#top"> <button v-show="!editing"  class="btn btn-outline pink float-right buttonCEC"> Comment </button></a>
-    <button v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-success float-right buttonCEC" href="#top" @click="editPost(currentPost)"> {{editing? 'Update':'Edit'}} </button>
-    <button v-show="editing" class="btn btn-success mr-2 float-right" type="submit" @click="uploadImage()"> Upload </button>
+    <button v-show="isDisplay" v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-success float-right buttonCEC" href="#top" @click="editPost(currentPost)"> Edit </button>
+     <button v-show="editing" v-if="currentPost.description" class="btn btn-success mr-2 float-right" type="submit" @click="editPost(currentPost)"> Update </button>
+    <button v-show="editing" v-if="currentPost.imageUrl" class="btn btn-success mr-2 float-right" type="submit" @click="uploadImage()"> Upload </button>
      <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Back </button>
      
     <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id"  id="btnC" class="btn btn-secondary mr-2 float-right marginRightButton" @click="cancel()"> Cancel </button>
@@ -204,7 +205,7 @@ export default {
       },
        
       
-    
+      isDisplay:true,
       currentPost: null,
     
       editing: false,
@@ -365,11 +366,25 @@ export default {
     //     });
     // },
     cancel(){
+        this.show()
        this.editing = this.editing == false
+      
     },
+
+    hide: function () {
+      this.isDisplay = false
+    },
+    show: function () {
+      this.isDisplay = true
+    },
+
      editPost(){
     
     this.editing = this.editing == true?false:true
+
+    
+    this.hide()
+    
     
     if(this.editing== false){
     this.updatePost()
@@ -380,6 +395,7 @@ export default {
   
     },
     cancelled(){
+       this.show()
        this.$router.push({ name: "posts" });
     },
     updatePost() {
@@ -462,7 +478,7 @@ export default {
     border: 0.1vw solid grey;
      margin-bottom: 30px;
     margin-left: 100px; 
-      box-shadow: 5px 5px 5px black;
+      box-shadow: 5px 5px 5px #091f43;
     /* margin: 0 0 1em; */
     /* *zoom: 1; */
 } 
@@ -521,7 +537,7 @@ li{
 }
 
  .card-shadow{
-     box-shadow: 10px 7px 10px black;
+     box-shadow: 10px 7px 10px #091f43;
  }
 
  .gedf-main{
