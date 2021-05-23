@@ -27,12 +27,21 @@ class PostDataService {
   deleteUser(id) {
     return http.delete(`/user/${id}`);
   }
-  getUser(id) {
-    return http.delete(`/user/${id}`);
+  // getUser(id) {
+  //   return http.delete(`/user/${id}`);
+  // }
+
+   getAnUser(id) {
+    return http.get(`/user/${id}`);
   }
+
+
   getAllUsers(){ 
   return http.get("/user/");
   }
+  updateUser(id, data){ 
+    return http.put(`/user/${id}`, data);
+    }
 
   findByTitle(description) {
     return http.get(`/posts?description=${description}`);

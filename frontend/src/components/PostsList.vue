@@ -401,7 +401,7 @@
               <div class="card-body">
                   <div class="float meta ">
                         <div class="title h5">
-                            <a  :href="'/profile/' + post.id"><b> {{ post.username }} </b></a> 
+                            <a  :href="'/profile/' + post.username"><b> {{ post.username }} </b></a> 
                              made a post.
                         </div>
                         <h6 class="text-muted time">1 minute ago</h6>
@@ -811,8 +811,11 @@ export default {
     },
     
     mounted() {
+
+      console.log( this.$route.params)
           this.message = '';
     this.getComment()
+  
     // (this.$route.params.id);
     this.retrievePosts();
   }

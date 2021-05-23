@@ -78,8 +78,8 @@ export const router = new Router({
       // lazy-loaded
       component: () => import('./views/BoardUser.vue')
     },
-
-    {
+    
+     {
             path: "/add",
             name: "add",
             component: () => import("./components/AddPost.vue")
@@ -101,6 +101,12 @@ export const router = new Router({
                         name: "comment",
                         component: () => import("./components/Comment.vue")
                       },
+
+                        {
+                      path: "/profile/:id",
+                      name: "ProfileOtherUser",
+                      component: () => import("./components/ProfileOtherUser.vue")
+                    },
                       // {
 
                       

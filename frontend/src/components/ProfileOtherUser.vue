@@ -1,5 +1,5 @@
 <template>
- <div class="container-fluid">
+ <!-- <div class="container-fluid">
     <div class="row h-100 justify-content-center align-items-center">
       <div class="col-md-8 gedf-main">
 
@@ -9,42 +9,21 @@
                <div class="card-body">
             <div class="">
                 <div class="post-heading">
-  <div class="container">
-    <header class="jumbotron">
-      <h3>
-        <strong>{{currentUser.username}}</strong> Profile   </h3>
+  <div class="container"> -->
+  
+     
+        <div> {{ $route.params.id }} {{ id.username }}  </div>
 
        
 
    
-    </header>
-
-     <button v-if="currentUser.id" class="badge badge-danger mr-2 btn-up float-right" @click="deleteUser"> Delete account </button>
-    <!-- <p>
-      <strong>Token:</strong>
-      {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-    </p> -->
-
-      <!-- <div class="kl card aPost rounded card-white" v-if="!editing"> <h5 class="postCard"><strong>{{ currentUser.Username }}</strong></h5><img></div> 
-           <textarea-autosize v-show="currentUser"
-  placeholder="Type something here..."
-  ref="myTextarea"
  
-  :min-height="30"
-  :max-height="350"
-   v-else type="text"   class="form-control" id="description" v-model="currentUser.username"/>
-    <div v-show="editing" class="form-group">
-      <div class="kl card aPost rounded card-white" v-if="!editing"> <h5 class="postCard"><strong></strong></h5><img ></div> 
-           <input
-  placeholder="Type something here..."
-  ref="myTextarea"
- 
-  :min-height="30"
-  :max-height="350"
-   v-else type="text"   class="form-control" id="description"/> -->
+
+     <!-- <button v-if="currentUser.id" class="badge badge-danger mr-2 btn-up float-right" @click="deleteUser"> Delete account </button>
+  
 
     
-      <p class="p-up" v-if="!editingUsername"><strong>Username : {{currentUser.username}} </strong></p>
+      <p class="p-up" v-if="!editingUsername"><strong>Username : {{currentUser.username}}  </strong></p>
         <input placeholder="Type something here..." ref="myTextarea" v-else type="text"  v-model="currentUser.username" class="form-control" id="description"/>
           <button v-show="editingUsername"   id="btnC" class="badge badge-secondary mr-2 btn-dwn " @click="cancelEditUsername()"> Cancel </button>
      <button class="badge badge-success btn-dwn  buttonCEC" href="#top" @click="editUserUsername(currentUser)">  {{editingUsername? 'Update':'Edit'}} </button>
@@ -52,44 +31,28 @@
         <input placeholder="Type something here..." ref="myTextarea" :min-height="30" :max-height="350" v-else type="text"  v-model="currentUser.email" class="form-control" id="description"/>
           <button v-show="editingEmail"   id="btnC" class="badge badge-secondary mr-2  btn-dwn " @click="cancelEditemail()"> Cancel </button>
      <button class="badge badge-success  btn-dwn  buttonCEC" href="#top" @click="editUserEmail(currentUser)">  {{editingEmail? 'Update':'Edit'}} </button>
-     <!-- <a v-if="currentUser.id" class="badge badge-warning" @click="editUser(index, user)"> {{editing?'Update':'Edit'}} </a> -->
-       <!-- <div class="kl card aPost rounded card-white" v-if="!editing"> <h5 class="postCard"><strong></strong></h5><img ></div> 
-           <input
-  placeholder="Type something here..."
-  ref="myTextarea"
- 
-  :min-height="30"
-  :max-height="350"
-   v-else type="text"   class="form-control" id="description"/>
-       <p>
-      <strong>Email :</strong>
-       {{currentUser.email}}   <button  v-if="currentUser.id" class="badge badge-success float-right buttonCEC" href="#top" @click="edituser(currentPost)"> Edit </button> -->
-    <!-- </p>
-       <button class="badge badge-success float-right buttonCEC" href="#top" @click="editUser(index, user)"> <a v-if="currentUser.id" class="badge badge-warning" @click="editUser(index, user)"></a> {{editing? 'Update':'Edit'}} </button> -->
-     <br><p class=""> 
+   <button class="badge badge-success float-right buttonCEC" href="#top" @click="editUser(index, user)"> <a v-if="currentUser.id" class="badge badge-warning" @click="editUser(index, user)"></a> {{editing? 'Update':'Edit'}} </button> -->
+     <!-- <br><p class=""> 
       <strong>Id :</strong>
       {{currentUser.id}}
     </p>
-      <!-- <p>
-      <strong>Token:</strong>
-      {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-    </p> -->
+    
     <strong>Authorities:</strong>
     <ul class="p-dwn">
       <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li> 
       
        
-    </ul>
+    </ul> -->
    
     
-  </div>
+  <!-- </div>
                 </div>
             </div>
   </div>
       </div>
     </div>
  </div>
- </div>
+ </div>  -->
 
  
 </template>
@@ -98,28 +61,93 @@
 // import UserService from "../services/user.service";
 import PostDataService from "../services/PostDataService";
 export default {
-  name: 'Profile',
+  name: "ProfileOtherUser",
 
    data() {
     return {
-      user_Id: "",
+  comments:[],
+        currentComment: null,
+        currentIndex: -1,         
+        message: '',
+      comment: {
+      
+        
+        id: null,
+        post_id: "",
+        // title: "",
+        description: "",
+        user_Id: "",
+        username: "",
+        published: false
+      },
+       
+      
+    
+      currentPost: null,
+    
+      editing: false,
+        id:"",
+
+currentUser: "",
+
+
+// user_Id: this.$route.params.user_Id,
+//    user_Id: this.$route,
+      currentUrl: "",
+    
       editingUsername: false,
       editingEmail: false,
       isDisplay:false,
    }},
-      
+
+   
   
   computed: {
-    currentUser() {
-      return this.$store.state.auth.user;
-    }
+    dataUser(){  return JSON.parse(localStorage.getItem("user"))
+
+    
+    },
+
+    // watch: {
+    //     $route(){},
+    // }
+
+    
+
+    // currentUser() {
+    //   return this.$store.state.auth.user;
+     
+    // },
+
+    //  user_Id(){
+    //     return this.$route.params.user_Id
+
+    //  },
+    //     showAdminBoard() {
+    //   if (this.currentUser && this.currentUser.roles) {
+    //     return this.currentUser.roles.includes('ROLE_ADMIN');
+    //   }
+
+    //   return false;
+    // },
+    // showModeratorBoard() {
+    //   if (this.currentUser && this.currentUser.roles) {
+    //     return this.currentUser.roles.includes('ROLE_MODERATOR');
+    //   }
+
+    //   return false;
+    // }
+  
   },
-  mounted() {
-    if (!this.currentUser) {
-      this.$router.push('/login');
-    }
-  },
+
+   
   methods: {
+
+    
+     
+    
+  
+      
    
     //  dataUser(){  return JSON.parse(localStorage.getItem("user"))
     // },
@@ -150,76 +178,190 @@ export default {
         
     },
 
-    editUserUsername(){
+getUrl(){
+     this.currentUrl =  this.$route.params.id
+     console.log(this.currentUrl)
+           
+},
 
+//  getCommentId(id) {
+//       PostCommentService.get(id)
+//         .then(response => {
+//           this.currentComment = response.data;
+//           console.log(response.data);
+//         })
+//         .catch(e => {
+//           console.log(e);
+//         });
+//     },
+
+
+//  retrievePosts() {
+//       PostDataService.getAll()
+//       console.log(this.users)
+//         .then(response => {
+//           this.posts = response.data;
+//           console.log(response.data);
+        
+//         })
+//         .catch(e => {
+//           console.log(e);
+//         });
+//     },
  
-    
-    this.editingUsername = this.editingUsername == true ? false : true
-    
-    if(this.editingUsername== false){
-    this.updateUser()
-    }  
-    
-    console.log(this.editingUsername)
-    
-
+  
   
 
-    },
 
-     editUserEmail(){
+retrievePosts() {
 
- 
-    
-    this.editingEmail = this.editingEmail == true ? false : true
-    
-    if(this.editingEmail== false){
-    this.updateUser()
-    }  
-    
-    console.log(this.editingEmail)
-    
 
-   
-
-    },
-
-    //  show: function () {
-    //   this.isDisplay = true
-    // },
-
-     cancelEditUsername(){
-        // this.show()
-       this.editingUsername = this.editingUsername == false
+   var data1 = {
+       
+        // title: this.post.title,
       
-      
-    },
-
-      cancelEditemail(){
-        // this.show()
-       this.editingEmail = this.editingEmail == false
-      
-      
-    },
-
-    updateUser(){
-
-    
-      PostDataService.updateUser(this.currentUser.id, this.currentUser)
-        .then(response => {
-           
-          console.log(response.data);
-          
+      currentUrl : this.$route.params.id
         
-          // this.posts.push(data)
-          // this.$router.push({ name: "posts" });
+      
+        
+      }
+      console.log(data1)
+      // this.id = this.$route.params.id
+      let id = this.$route.params.id
+      PostDataService.getAnUser(id)
+     
+        .then(response => {
+          this.id = response.data;
+          console.log(response.data);
         })
         .catch(e => {
           console.log(e);
         });
+    },
+    
+
+
+    // editUserUsername(){
+
+ 
+    
+    // this.editingUsername = this.editingUsername == true ? false : true
+    
+    // if(this.editingUsername== false){
+    // this.updateUser()
+    // }  
+    
+    // console.log(this.editingUsername)
+    
+
+  
+
+    // },
+
+//      getUser() {
+
+// //          var newURL = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname + window.location.search
+       
+
+      
+
+
+ 
+// //  console.log(newURL)
+//        var user_Id = this.$route.params.user_Id
+//       PostDataService.getAnUser(user_Id)
+//         .then(response => {
+//         this.user = response.data;
+//           console.log(response.data);
+//           console.log(user_Id)
+//         })
+//         .catch(e => {
+//           console.log(e);
+//         });
+//     },
+
+    //  editUserEmail(){
+
+ 
+    
+    // this.editingEmail = this.editingEmail == true ? false : true
+    
+    // if(this.editingEmail== false){
+    // this.updateUser()
+    // }  
+    
+    // console.log(this.editingEmail)
+    
+//  createUrl(){
+
+//         var currentUrl = window.location.pathname;
+
+//         console.log(currentUrl);
+      
+//      }
+
+//    ,
+
+    // },
+
+    // //  show: function () {
+    // //   this.isDisplay = true
+    // // },
+
+    //  cancelEditUsername(){
+    //     // this.show()
+    //    this.editingUsername = this.editingUsername == false
+      
+      
+    // },
+
+    //   cancelEditemail(){
+    //     // this.show()
+    //    this.editingEmail = this.editingEmail == false
+      
+      
+    // },
+
+    // updateUser(){
+
+    
+    //   PostDataService.updateUser(this.currentUser.id, this.currentUser)
+    //     .then(response => {
+           
+    //       console.log(response.data);
+          
+        
+    //       // this.posts.push(data)
+    //       // this.$router.push({ name: "posts" });
+    //     })
+    //     .catch(e => {
+    //       console.log(e);
+    //     });
       
      
-    },
+    // },
+
+      mounted() {
+
+          //  this.getUrl()
+           
+  this.getUrl()
+ 
+         console.log(this.currentUrl)
+    //   this.id = this.$route.params.id
+    //     //   this.message = '';
+    // this.getUser(this.id)
+        this.retrievePosts();
+      this.getUser(this.$route.params.id)
+    // this.$route.params.user_Id
+    // console.log(this.$route.params.user_Id)
+    // this.retrievePosts();
+
+  
+    // if (!this.currentUser) {
+    //   this.$router.push('/login');
+    // }
+  },
     
 
 //        deleteUser() {
