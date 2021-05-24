@@ -1,7 +1,10 @@
 <template>
   <div class="container">
-    <header class="jumbotron">
-      <h3>{{content}}</h3>
+    <header class="jumbotron home-logo-color">
+      <a class="navbar-brand head-logo"  @click.prevent href="#">
+          <img class="head-img" src="../img/icon-left-font-monochrome-white1.png" alt=""><h3 class="font-weight-bold"></h3>
+        </a>
+      <!-- <h3>{{content}}</h3> -->
     </header>
   </div>
 </template>
@@ -31,3 +34,20 @@ export default {
   }
 };
 </script>
+
+<style>
+.home-logo-color{
+ width: 100%;
+
+ text-align: center;
+ background-color:#091f43;
+ margin-bottom: 150px;
+}
+
+.home-logo-color img{
+ 
+ 
+ width: 50vw;
+ height: 10vw;
+}
+</style>

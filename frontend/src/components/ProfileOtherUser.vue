@@ -93,50 +93,34 @@ currentUser: "",
 
 // user_Id: this.$route.params.user_Id,
 //    user_Id: this.$route,
-      currentUrl: "",
+      // currentUrl: "",
     
       editingUsername: false,
       editingEmail: false,
       isDisplay:false,
    }},
 
-   
+    // created: function(){
+  //   var currentUrl = window.location.pathname;
+  //   console.log(currentUrl)
+  // },
+ created: function(){
+  var id = this.$route.params.id
+  console.log(id)
+
+ },
   
   computed: {
+
+    
     dataUser(){  return JSON.parse(localStorage.getItem("user"))
+
+    
 
     
     },
 
-    // watch: {
-    //     $route(){},
-    // }
-
-    
-
-    // currentUser() {
-    //   return this.$store.state.auth.user;
-     
-    // },
-
-    //  user_Id(){
-    //     return this.$route.params.user_Id
-
-    //  },
-    //     showAdminBoard() {
-    //   if (this.currentUser && this.currentUser.roles) {
-    //     return this.currentUser.roles.includes('ROLE_ADMIN');
-    //   }
-
-    //   return false;
-    // },
-    // showModeratorBoard() {
-    //   if (this.currentUser && this.currentUser.roles) {
-    //     return this.currentUser.roles.includes('ROLE_MODERATOR');
-    //   }
-
-    //   return false;
-    // }
+   
   
   },
 
@@ -146,7 +130,7 @@ currentUser: "",
     
      
     
-  
+ 
       
    
     //  dataUser(){  return JSON.parse(localStorage.getItem("user"))
@@ -178,11 +162,15 @@ currentUser: "",
         
     },
 
-getUrl(){
-     this.currentUrl =  this.$route.params.id
-     console.log(this.currentUrl)
-           
-},
+// getUrl(){
+
+  created(){
+  var id = this.$route.params.id
+  console.log(id)
+
+ },
+             
+// },
 
 //  getCommentId(id) {
 //       PostCommentService.get(id)
@@ -210,26 +198,9 @@ getUrl(){
 //     },
  
   
-  
-
-
-retrievePosts() {
-
-
-   var data1 = {
-       
-        // title: this.post.title,
-      
-      currentUrl : this.$route.params.id
-        
-      
-        
-      }
-      console.log(data1)
-      // this.id = this.$route.params.id
-      let id = this.$route.params.id
+    getUser(id) {
+      // let id = this.currentUrl
       PostDataService.getAnUser(id)
-     
         .then(response => {
           this.id = response.data;
           console.log(response.data);
@@ -238,6 +209,33 @@ retrievePosts() {
           console.log(e);
         });
     },
+
+
+// retrievePosts() {
+
+
+  //  var data1 = {
+       
+  //       // title: this.post.title,
+      
+  //     currentUrl : this.$route.params.id
+        
+      
+        
+  //     }
+  //     console.log(data1)
+  //     // this.id = this.$route.params.id
+  //     let id = this.$route.params.id
+  //     PostDataService.getAnUser(id)
+     
+  //       .then(response => {
+  //         this.id = response.data;
+  //         console.log(response.data);
+  //       })
+  //       .catch(e => {
+  //         console.log(e);
+  //       });
+  //   },
     
 
 
@@ -342,83 +340,22 @@ retrievePosts() {
     // },
 
       mounted() {
+        this.created()
 
           //  this.getUrl()
            
   this.getUrl()
- 
-         console.log(this.currentUrl)
+
     //   this.id = this.$route.params.id
     //     //   this.message = '';
     // this.getUser(this.id)
-        this.retrievePosts();
-      this.getUser(this.$route.params.id)
-    // this.$route.params.user_Id
-    // console.log(this.$route.params.user_Id)
-    // this.retrievePosts();
-
+      this.retrievePosts();
+      this.getUser(this.currentUrl)
   
-    // if (!this.currentUser) {
-    //   this.$router.push('/login');
-    // }
   },
     
 
-//        deleteUser() {
-//       //  if (!this.comment.description) {
-//       //     // this.emptyError = this.emptyError == true?false:true
-//       //     this.emptyError = alert('Cannot be empty')
-          
-//       //  error => {
-           
-//       //         this.message =
-//       //           (error.response && error.response.data)
-//       // }}else{ 
-     
-//       let dataUser = JSON.parse(localStorage.getItem("user"))
-//       console.log(dataUser)
-//       let data = localStorage.getItem("user")
-//       console.log(data)
-//       this.id = JSON.stringify(dataUser.id)
-//       console.log(this.id)
 
-//       // this.user = response.data1;
-//       // var data = {
-       
-//       //   // title: this.post.title,
-//       //   // description: this.comments.description,
-//       //   // user_Id : this.currentUser.id,
-//       //   // username : dataUser.username,
-//       //   // post_id : this.currentPost.id,
-//       //   id: this.dataUser.id,
-        
-      
-        
-//       // }
-//       // }
-     
-    
-//      PostDataService.deleteUser(this.currentUser)
-
-//         .then(response => {
-//           console.log(this.currentUser)
-//           this.user_Id = response.data.user_Id;
-//           // this.user_Id = 
-//           // this.username
-//           console.log(response.data.id);
-//           this.submitted = true;
-//           // this.comments.push(data)
-//           //  this.retrieveComments();
-//           // this.newComment()
-//           this.message = 'The post was updated successfully!';
-//           this.$router.push({ name: "posts" });
-//         })
-//         .catch(e => {
-//           console.log(e);
-//         });
-//     },
-
-// }
 }
 }
 

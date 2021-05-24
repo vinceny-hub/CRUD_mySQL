@@ -599,8 +599,12 @@ export default {
         // username : dataUser.username,
         // formData.append("description", this.post.description);
         UpLoadFilesService.upload(formData)
+         .then(response => {
+          console.log(response.data);
+          this.retrievePosts();
+         })
    
-    //  }
+     
      },
     onSelect(e){
 

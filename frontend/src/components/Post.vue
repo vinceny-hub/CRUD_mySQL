@@ -60,7 +60,7 @@
                         </div>
         <!-- <label for="description">Description</label> -->
        <div class="kl card aPost rounded card-white" v-if="!editing"> <h5 class="postCard"><strong>{{ currentPost.description }}</strong></h5><img :src="currentPost.imageUrl"></div> 
-           <textarea-autosize v-show="dataUser.user_Id == currentPost.user_Id && currentPost.description"
+           <textarea-autosize v-show="dataUser.user_Id == currentPost.user_Id && currentPost.description || showAdminBoard&& currentPost.description"
   placeholder="Type something here..."
   ref="myTextarea"
  
@@ -69,7 +69,7 @@
    v-else type="text"   class="form-control" id="description" v-model="currentPost.description"/>
     <div v-show="editing" class="form-group">
                     <div class="custom-file">
-                        <input  v-show="dataUser.user_Id == currentPost.user_Id && currentPost.imageUrl" type="file" ref="file" @change="onSelect" class="" id="">
+                        <input  v-show="dataUser.user_Id == currentPost.user_Id && currentPost.imageUrl || showAdminBoard && currentPost.imageUrl" type="file" ref="file" @change="onSelect" class="" id="">
                         <label class=""></label>
                  
                 </div>
@@ -100,17 +100,17 @@
      
       
 
-    <img  v-if="dataUser.user_Id == currentPost.user_Id" class="card-ico" src="../img/icon1.png" alt="">
+    <img  v-if="dataUser.user_Id == currentPost.user_Id || showAdminBoard" class="card-ico" src="../img/icon1.png" alt="">
     <img  v-else class="card-img" src="../img/icon-left-font-sized1.png" alt="">
    <!-- {{editing? 'Update':'Edit'}} -->
     <a href="#top"> <button v-show="!editing"  class="btn btn-outline pink float-right buttonCEC"> Comment </button></a>
-    <button v-show="isDisplay" v-if="dataUser.user_Id == currentPost.user_Id" class="btn btn-success float-right buttonCEC" href="#top" @click="editPost(currentPost)"> Edit </button>
+    <button v-show="isDisplay" v-if="dataUser.user_Id == currentPost.user_Id || showAdminBoard" class="btn btn-success float-right buttonCEC" href="#top" @click="editPost(currentPost)"> Edit </button>
      <button v-show="editing" v-if="currentPost.description" class="btn btn-success mr-2 float-right" type="submit" @click="editPost(currentPost)"> Update </button>
     <button v-show="editing" v-if="currentPost.imageUrl" class="btn btn-success mr-2 float-right" type="submit" @click="uploadImage()"> Upload </button>
      <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Back </button>
      
-    <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id"  id="btnC" class="btn btn-secondary mr-2 float-right marginRightButton" @click="cancel()"> Cancel </button>
-    <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
+    <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id  || showAdminBoard"  id="btnC" class="btn btn-secondary mr-2 float-right marginRightButton" @click="cancel()"> Cancel </button>
+    <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id  || showAdminBoard" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
    
      
   
@@ -131,7 +131,7 @@
     <div v-for="comment in comments" :key="comment.id">  
       <div v-if="currentPost.id == comment.post_id" class="comment float-right card rounded card-white"> <div class="list-group-item">
         <a href="#"><b> {{ comment.username }} </b></a> <span> made a comment </span>  <h6 class="text-muted time">1 minute ago</h6> <div>{{ comment.description }} </div>
-    <a :href="'/comments/' + comment.id"><button v-if="dataUser.user_Id == comment.user_Id" class="btn btn-success float-right"> Edit </button></a></div></div>
+    <a :href="'/comments/' + comment.id"><button v-if="dataUser.user_Id == comment.user_Id || showAdminBoard" class="btn btn-success float-right"> Edit </button></a></div></div>
     </div>
      
       <div class="postCard">        <textarea-autosize
@@ -212,6 +212,9 @@ export default {
       
     };
   },
+
+
+  
   methods: {
 
 
@@ -429,12 +432,35 @@ export default {
     this.getPost(this.$route.params.id);
     this.getComment();
   },
-   computed: {
+  computed: {
+
+  //     orderPost: function () {
+  //   return _.orderBy(this.post, 'date')
+  // },
+
     dataUser(){  return JSON.parse(localStorage.getItem("user"))
-    // currentUser() {
-    //   return this.$store.state.auth.user;
-   }
-   },
+    },
+
+    currentUser() {
+      return this.$store.state.auth.user;
+     
+    },
+        showAdminBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes('ROLE_ADMIN');
+      }
+
+      return false;
+    },
+    showModeratorBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes('ROLE_MODERATOR');
+      }
+
+      return false;
+    }
+  },
+
 };
 
 

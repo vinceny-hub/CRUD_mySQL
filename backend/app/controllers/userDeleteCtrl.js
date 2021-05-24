@@ -51,7 +51,7 @@ exports.delete = (req, res) => {
   };
 
   exports.updateUser = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
   
     User.update(req.body, {
       where: { id: id }
@@ -74,7 +74,7 @@ exports.delete = (req, res) => {
       });
   };
 
-
+    
 //   exports.findOne = (req, res) => {
 //     const user_Id = req.params.user_Id;
   
@@ -89,10 +89,11 @@ exports.delete = (req, res) => {
 //         });
 //       });
 //   };
+
 // exports.findAnUser = (req, res) => {
 // const username = req.params.id;
-// // var condition = user_Id ? { user_Id: { [Op.like]: `%${user_Id}%` } } : null;
-// console.log(username)
+
+
 // User.findOne({ where : { username : username, } })
 // console.log(username)
 //   .then(data => {
@@ -107,19 +108,44 @@ exports.delete = (req, res) => {
  
  
 
-// },
+//  }
 
 
 exports.findAnUser = (req, res) => {
-  const username = req.params.id;
+  const id = req.params.id;
 
-  User.findByPk(username)
-    .then(data => {
-      res.send(data);
+  User.update(req.body, {
+    where: { username : id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Post was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Comment with id=${id}. Maybe Comment was not found or req.body is empty!`
+        });
+      }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Post with id=" + id
+        message: "Error updating Post with id=" + id
       });
     });
 };
+
+
+// exports.findAnUser = (req, res) => {
+//   const username = req.params.id;
+
+//   User.findByPk(username)
+//     .then(data => {
+//       res.send(data);
+//     })
+//     .catch(err => {
+//       res.status(500).send({
+//         message: "Error retrieving Post with id=" + id
+//       });
+//     });
+// };

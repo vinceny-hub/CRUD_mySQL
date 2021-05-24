@@ -36,11 +36,11 @@
  v-else type="text"  class="form-control" id="description" v-model="currentComment.description"/>
          </div>
              <!-- <a href="#commentArea"> <button v-show="!editing"  class="btn btn-primary float-right  marginRightButton "> Comment </button></a> -->
-    <button v-if="dataUser.user_Id == currentComment.user_Id" class="btn btn-success float-right" @click="editPost(currentComment)"> {{editing? 'Update':'Modify'}} </button>
+    <button v-if="dataUser.user_Id == currentComment.user_Id || showAdminBoard" class="btn btn-success float-right" @click="editPost(currentComment)"> {{editing? 'Update':'Modify'}} </button>
      <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="$router.go(-1)"> Back </button>
    
-    <button v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id" class="btn btn-secondary mr-2 float-right" @click="cancel()"> Cancel </button>
-    <button  v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id" class="badge badge-danger mr-2" @click="deleteComment"> Delete </button>
+    <button v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id || showAdminBoard" class="btn btn-secondary mr-2 float-right" @click="cancel()"> Cancel </button>
+    <button  v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id || showAdminBoard" class="badge badge-danger mr-2" @click="deleteComment"> Delete </button>
 
 
   <!-- <div v-if="currentComment" class="edit-form">
@@ -276,12 +276,34 @@ export default {
     // this.getPost(this.$route.params.id);
     this.getCommentId(this.$route.params.id);
   },
-   computed: {
+  computed: {
+
+  //     orderPost: function () {
+  //   return _.orderBy(this.post, 'date')
+  // },
+
     dataUser(){  return JSON.parse(localStorage.getItem("user"))
-    // currentUser() {
-    //   return this.$store.state.auth.user;
-   }
-   },
+    },
+
+    currentUser() {
+      return this.$store.state.auth.user;
+     
+    },
+        showAdminBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes('ROLE_ADMIN');
+      }
+
+      return false;
+    },
+    showModeratorBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes('ROLE_MODERATOR');
+      }
+
+      return false;
+    }
+  },
 };
 </script>
 
