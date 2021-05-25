@@ -1,6 +1,10 @@
-import Vue from 'vue';
+import Vue from 'vue';               // import of diverses libraries needed and base configuration of vuejs
 import App from './App.vue';
 // import router from './router';
+
+import VueSimpleAlert from "vue-simple-alert";
+
+
 import TextareaAutosize from 'vue-textarea-autosize'
 import { router } from './router';
 import store from './store';
@@ -24,6 +28,7 @@ Vue.config.productionTip = false;
 Vue.use(VeeValidate);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(TextareaAutosize)
+Vue.use(VueSimpleAlert);
 
 new Vue({
   router,

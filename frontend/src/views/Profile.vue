@@ -1,114 +1,56 @@
 <template>
- <div class="container-fluid">
+  <div class="container-fluid">
     <div class="row h-100 justify-content-center align-items-center">
       <div class="col-md-8 gedf-main">
-
-  <div class="">
-          
+        <div class="">          
           <div class="d-inline-flex p-2"> <img class="title-img" src="../img/icon.png" alt=""><h4 class="title-pos">Posts</h4></div>
-               <div class="card-body">
+          <div class="card-body">
             <div class="">
-                <div class="post-heading">
-  <div class="container">
-    <header class="jumbotron">
-      <h3>
-        <strong>{{currentUser.username}}</strong> Profile   </h3>
-
-       
-
-   
-    </header>
-
-     <button v-if="currentUser.id" class="badge badge-danger mr-2 btn-up float-right" @click="deleteUser"> Delete account </button>
-    <!-- <p>
-      <strong>Token:</strong>
-      {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-    </p> -->
-
-      <!-- <div class="kl card aPost rounded card-white" v-if="!editing"> <h5 class="postCard"><strong>{{ currentUser.Username }}</strong></h5><img></div> 
-           <textarea-autosize v-show="currentUser"
-  placeholder="Type something here..."
-  ref="myTextarea"
- 
-  :min-height="30"
-  :max-height="350"
-   v-else type="text"   class="form-control" id="description" v-model="currentUser.username"/>
-    <div v-show="editing" class="form-group">
-      <div class="kl card aPost rounded card-white" v-if="!editing"> <h5 class="postCard"><strong></strong></h5><img ></div> 
-           <input
-  placeholder="Type something here..."
-  ref="myTextarea"
- 
-  :min-height="30"
-  :max-height="350"
-   v-else type="text"   class="form-control" id="description"/> -->
-
-    
-      <p class="p-up" v-if="!editingUsername"><strong>Username : {{currentUser.username}} </strong></p>
-        <input placeholder="Type something here..." ref="myTextarea" v-else type="text"  v-model="currentUser.username" class="form-control" id="description"/>
-          <button v-show="editingUsername"   id="btnC" class="badge badge-secondary mr-2 btn-dwn " @click="cancelEditUsername()"> Cancel </button>
-     <button class="badge badge-success btn-dwn  buttonCEC" href="#top" @click="editUserUsername(currentUser)">  {{editingUsername? 'Update':'Edit'}} </button>
-      <p  class="p-up" v-if="!editingEmail"><strong>Email : {{currentUser.email}}  </strong></p>
-        <input placeholder="Type something here..." ref="myTextarea" :min-height="30" :max-height="350" v-else type="text"  v-model="currentUser.email" class="form-control" id="description"/>
-          <button v-show="editingEmail"   id="btnC" class="badge badge-secondary mr-2  btn-dwn " @click="cancelEditemail()"> Cancel </button>
-     <button class="badge badge-success  btn-dwn  buttonCEC" href="#top" @click="editUserEmail(currentUser)">  {{editingEmail? 'Update':'Edit'}} </button>
-     <!-- <a v-if="currentUser.id" class="badge badge-warning" @click="editUser(index, user)"> {{editing?'Update':'Edit'}} </a> -->
-       <!-- <div class="kl card aPost rounded card-white" v-if="!editing"> <h5 class="postCard"><strong></strong></h5><img ></div> 
-           <input
-  placeholder="Type something here..."
-  ref="myTextarea"
- 
-  :min-height="30"
-  :max-height="350"
-   v-else type="text"   class="form-control" id="description"/>
-       <p>
-      <strong>Email :</strong>
-       {{currentUser.email}}   <button  v-if="currentUser.id" class="badge badge-success float-right buttonCEC" href="#top" @click="edituser(currentPost)"> Edit </button> -->
-    <!-- </p>
-       <button class="badge badge-success float-right buttonCEC" href="#top" @click="editUser(index, user)"> <a v-if="currentUser.id" class="badge badge-warning" @click="editUser(index, user)"></a> {{editing? 'Update':'Edit'}} </button> -->
-     <br><p class=""> 
-      <strong>Id :</strong>
-      {{currentUser.id}}
-    </p>
-      <!-- <p>
-      <strong>Token:</strong>
-      {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-    </p> -->
-    <strong>Authorities:</strong>
-    <ul class="p-dwn">
-      <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li> 
-      
-       
-    </ul>
-   
-    
-  </div>
+              <div class="post-heading">
+                <div class="container">
+                  <header class="jumbotron">
+                    <h3> <strong> {{currentUser.username}} </strong> Profile </h3>
+                  </header>
+                  <button v-if="currentUser.id" class="badge badge-danger mr-2 btn-up float-right" @click="deleteUser"> Delete account </button>  
+                  <p class="p-up" v-if="!editingEmail"><strong>Username : {{currentUser.username}} </strong></p>
+                  <input placeholder="Type something here..." ref="myTextarea" v-else type="text"  v-model="currentUser.username" class="form-control input-dwn" id="description"/>
+                  <!-- <button v-show="editingUsername"   id="btnC" class="badge badge-secondary mr-2 btn-dwn " @click="cancelEditUsername()"> Cancel </button>
+                  <button class="badge badge-success btn-dwn  buttonCEC" href="#top" @click="editUserUsername(currentUser)">  {{editingUsername? 'Update':'Edit'}} </button> -->
+                  <p class="p-up" v-if="!editingEmail"><strong>Email : {{currentUser.email}}  </strong></p>
+                  <input placeholder="Type something here..." ref="myTextarea" :min-height="30" :max-height="350" v-else type="text"  v-model="currentUser.email" class="form-control input-dwn" id="description"/>
+                  <button v-show="editingEmail"   id="btnC" class="badge badge-secondary mr-2  btn-dwn " @click="cancelEditemail()"> Cancel </button>
+                  <button class="badge badge-success  btn-dwn  buttonCEC" href="#top" @click="editUserEmail(currentUser)">  {{editingEmail? 'Update':'Edit'}} </button><p class="warning"> Warning ! You will be logged-out to perform changes. </p>
+                  <br>
+                  <p class=""> <strong>Id :</strong>  {{currentUser.id}}  </p>
+                  <strong>Authorities:</strong>
+                  <ul class="p-dwn">
+                    <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>      
+                  </ul>   
                 </div>
+              </div>
             </div>
-  </div>
+          </div>
+        </div>
       </div>
     </div>
- </div>
- </div>
-
- 
+  </div>
 </template>
 
+
+
 <script>
-// import UserService from "../services/user.service";
+
 import PostDataService from "../services/PostDataService";
+
 export default {
   name: 'Profile',
-
-   data() {
-    return {
-      user_Id: "",
-      editingUsername: false,
-      editingEmail: false,
-      isDisplay:false,
-   }},
-      
-  
+  data() {
+  return {
+    user_Id: "",
+    editingUsername: false,
+    editingEmail: false,
+    isDisplay:false,
+  }},  
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -120,317 +62,175 @@ export default {
     }
   },
   methods: {
-   
-    //  dataUser(){  return JSON.parse(localStorage.getItem("user"))
-    // },
+  logOut() {
+    this.$store.dispatch('auth/logout');
+    this.$router.push('/login');
+  },
 
-       logOut() {
-      this.$store.dispatch('auth/logout');
-      this.$router.push('/login');
-    },
-
-
-      deleteUser() {
-     let dataUser =  JSON.parse(localStorage.getItem("user"))
-      console.log(this.currentUser.id)
-      PostDataService.deleteUser(this.currentUser.id)
-      this.logOut()
+  deleteUser() {
+      let dataUser =  JSON.parse(localStorage.getItem("user"))
+      console.log(this.currentUser.id)    
+      this.$confirm("You account will be deleted this action is irreversible", 'Are you sure ?').then(() => {
+        PostDataService.deleteUser(this.currentUser.id)
+          this.logOut()
           console.log(dataUser)
-        .then(response => {
-          console.log(response.data);
-      
-          // this.retrievePosts();
-          // this.$router.push({ name: "posts" });
-        })
+           
+      })
+        // .then(response => {
+        // console.log(response.data)
         .catch(e => {
-          console.log(e);
-        });
-       
-        // this.posts.splice(index,1)
-        
-    },
-
-    editUserUsername(){
-
- 
-    
-    this.editingUsername = this.editingUsername == true ? false : true
-    
-    if(this.editingUsername== false){
-    this.updateUser()
-    }  
-    
-    console.log(this.editingUsername)
-    
-
+        console.log(e);
+      });       
+// });
   
+  
+  },
 
-    },
-
-     editUserEmail(){
-
- 
-    
-    this.editingEmail = this.editingEmail == true ? false : true
-    
-    if(this.editingEmail== false){
+  editUserUsername(){    
+    this.editingUsername = this.editingUsername == true ? false : true    
+    if(this.editingUsername == false){
     this.updateUser()
     }  
-    
-    console.log(this.editingEmail)
-    
-
-   
-
+    console.log(this.editingUsername)
     },
 
-    //  show: function () {
-    //   this.isDisplay = true
-    // },
-
-     cancelEditUsername(){
-        // this.show()
-       this.editingUsername = this.editingUsername == false
-      
-      
-    },
-
-      cancelEditemail(){
-        // this.show()
-       this.editingEmail = this.editingEmail == false
-      
-      
-    },
-
-    updateUser(){
-
-    
-      PostDataService.updateUser(this.currentUser.id, this.currentUser)
-        .then(response => {
-           
-          console.log(response.data);
-          
-        
-          // this.posts.push(data)
-          // this.$router.push({ name: "posts" });
-        })
-        .catch(e => {
-          console.log(e);
-        });
-      
-     
-    },
-    
-
-//        deleteUser() {
-//       //  if (!this.comment.description) {
-//       //     // this.emptyError = this.emptyError == true?false:true
-//       //     this.emptyError = alert('Cannot be empty')
-          
-//       //  error => {
-           
-//       //         this.message =
-//       //           (error.response && error.response.data)
-//       // }}else{ 
-     
-//       let dataUser = JSON.parse(localStorage.getItem("user"))
-//       console.log(dataUser)
-//       let data = localStorage.getItem("user")
-//       console.log(data)
-//       this.id = JSON.stringify(dataUser.id)
-//       console.log(this.id)
-
-//       // this.user = response.data1;
-//       // var data = {
+  editUserEmail(){    
+    this.editingEmail = this.editingEmail == true ? false : true    
+      if(this.editingEmail== false){
        
-//       //   // title: this.post.title,
-//       //   // description: this.comments.description,
-//       //   // user_Id : this.currentUser.id,
-//       //   // username : dataUser.username,
-//       //   // post_id : this.currentPost.id,
-//       //   id: this.dataUser.id,
-        
-      
-        
-//       // }
-//       // }
-     
-    
-//      PostDataService.deleteUser(this.currentUser)
+      this.updateUser()
+      }  
+       if(this.editingEmail== true){
+       
+    this.$alert("Warning ! You will be logged-out to perform changes.");
+      }          
+      console.log(this.editingEmail)
+  },
 
-//         .then(response => {
-//           console.log(this.currentUser)
-//           this.user_Id = response.data.user_Id;
-//           // this.user_Id = 
-//           // this.username
-//           console.log(response.data.id);
-//           this.submitted = true;
-//           // this.comments.push(data)
-//           //  this.retrieveComments();
-//           // this.newComment()
-//           this.message = 'The post was updated successfully!';
-//           this.$router.push({ name: "posts" });
-//         })
-//         .catch(e => {
-//           console.log(e);
-//         });
-//     },
+  cancelEditUsername(){
+    // this.show()
+    this.editingUsername = this.editingUsername == false      
+  },
 
-// }
-}
+  cancelEditemail(){
+    // this.show()
+    this.editingEmail = this.editingEmail == false
+  },
+
+  updateUser(){
+    PostDataService.updateUser(this.currentUser.id, this.currentUser)
+      .then(response => {           
+      console.log(response.data);
+       this.logOut()
+      // this.posts.push(data)
+      // this.$router.push({ name: "posts" });
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  },
+ }
 }
 
 </script>
-
 
 <style>
 
 .card-header{
    background-color:  #091f43;
 }
-
 .title-pos{
   margin-top: 10px;
   color: #091f43;
   font-weight: bold;
 }
-
 .card-img{
   width: 125px;
 }
-
 .card-img-post{
   width: 125px;
   margin-top: 10px;
   border-bottom: none;
 }
-
 #posts-tab{
   border: 1px solid #e1e1e1;
   border-bottom: none;
- 
-}
-
-.btn-up{
- 
+ }
+.btn-up{ 
   margin-bottom: 10px;
-
 }
-
+.input-dwn{
+  margin-bottom: 10px;
+}
 #images-tab{
   border: 1px solid #e1e1e1;
   border-bottom: none;
- 
 }
 .nav-link{
   color: white;
-  
-
 } 
 .p-dwn{
     margin-bottom: 2px;
 }
-
 .p-up{
-  margin-bottom: -2px;
+  margin-bottom: 5px;
 }
-
 .btn-dwn{
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
-
-
-      ul{
-        list-style-type: none;
-      }
-
-.box-header-body-input{
-  /* border: 1px solid #091f43; */
-  /* border-top: none; */
+.warning{
+  color: red;
+}
+ul{
+  list-style-type: none;
+}
+.box-header-body-input{  
   box-shadow: 10px 7px 10px#091f43;
 }
-
 .card-body{
    box-shadow: 10px 7px 10px #091f43;
 }
-
-
-
-
-
-/* .float-bottom{
-  margin-top: 15px;
-} */
-
 .title-img{
   width: 50px;
-  /* margin-left: -20px; */
   margin-top: 0px;
   margin-bottom: 0px;
 }
-/* .list {
-  text-align: left;
-  max-width: 750px;
-  margin: auto;
-} */
-/* .gedf-main{
-  margin-top: 30px;
-   margin-bottom: 15px;
-} */
-
 .gedf-main{
   margin-bottom: 100px;
 }
-
 .comment {
-    width: 80%;
-    overflow: hidden;
-    border: 1px solid #091f43;
-     margin-bottom: 30px;
-      margin-left: 100px;
-        box-shadow: 5px 5px 5px #091f43;
-    /* margin: 0 0 1em; */
-    /* *zoom: 1; */
+  width: 80%;
+  overflow: hidden;
+  border: 1px solid #091f43;
+  margin-bottom: 30px;
+  margin-left: 100px;
+  box-shadow: 5px 5px 5px #091f43;
 } 
-
 .aPost {
-    width: 100%;
-    min-height: px;
-    overflow: hidden;
-    border: 0.1vw solid white;
-     margin-bottom: 30px;
-      /* margin-left: 100px; */
-    /* margin: 0 0 1em; */
-    /* *zoom: 1; */
+  width: 100%;
+  min-height: px;
+  overflow: hidden;
+  border: 0.1vw solid white;
+  margin-bottom: 30px;
 } 
-
 .postBox {
-   
-    /* overflow: hidden; */
-    border: 1px solid #091f43;
-     margin-bottom: 30px;
-      /* margin-left: 100px; */
-    /* margin: 0 0 1em; */
-    /* *zoom: 1; */
+  border: 1px solid #091f43;
+  margin-bottom: 30px;
 } 
 .list-group{
   border:white;
 }
 .list-group-item{
-    border:white;
+  border:white;
 }
 li{
-   border:white
-
+  border:white
 }
-
-
 #preview {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 #preview img {
   max-width: 100%;
   max-height: 500px;
@@ -439,10 +239,5 @@ li{
   border: 1px solid  #091f43;
   color:  #091f43;
 }
-/* .list {
-  text-align: left;
-  max-width: 750px;
-  margin: auto;
-} */
 
 </style>

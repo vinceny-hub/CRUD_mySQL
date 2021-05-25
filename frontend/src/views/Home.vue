@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <header class="jumbotron home-logo-color">
+    <header class=" home-logo-color">
       <a class="navbar-brand head-logo"  @click.prevent href="#">
           <img class="head-img" src="../img/icon-left-font-monochrome-white1.png" alt=""><h3 class="font-weight-bold"></h3>
         </a>
@@ -37,17 +37,14 @@ export default {
 
 <style>
 .home-logo-color{
- width: 100%;
-
+ width: 100%; 
  text-align: center;
  background-color:#091f43;
- margin-bottom: 150px;
+ margin-bottom: 250px;
 }
-
 .home-logo-color img{
- 
- 
  width: 50vw;
  height: 10vw;
 }
+
 </style>

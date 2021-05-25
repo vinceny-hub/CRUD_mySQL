@@ -1,105 +1,28 @@
-// const express = require("express");
-// const bodyParser = require("body-parser");
-// const cors = require("cors");
 
-// const app = express();
+const express = require('express') // framework node.js
+const bodyParser = require('body-parser') //  JSON objects 
 
-// var corsOptions = {
-//   origin: "http://localhost:8081"
-// };
-
-// app.use(cors(corsOptions));
-
-// // parse requests of content-type - application/json
-// app.use(bodyParser.json());
-
-// // parse requests of content-type - application/x-www-form-urlencoded
-// app.use(bodyParser.urlencoded({ extended: true }));
-
-// const db = require("./app/models");
-// db.sequelize.sync();
-
-// // simple route
-// app.get("/", (req, res) => {
-//   res.json({ message: "Welcome to bezkoder application." });
-// });
-
-// require("./app/routes/post.routes")(app);
-// module.exports = app
- 
-// **************************************************************************************************
-
-// set port, listen for requests
-// const PORT = process.env.PORT || 8080;
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}.`);
-// });
+const path = require('path')   // path of files
+// const dotenv = require('dotenv').config() // module whom hides connexion datas 
+const helmet = require('helmet')   // helps to secure Express apps by setting various HTTP headers
 
 
-
-
-const express = require('express')// framework basé sur node.js
-const bodyParser = require('body-parser')// extraction des objets JSON
-// const mongoose = require('mongoose')// plugin mongoose
-const path = require('path')// chemin de fichier
-const dotenv = require('dotenv').config()// module servant à masquer les informations de connexion à la base de données
-const helmet = require('helmet')
-var session = require('express-session');
-// var session = require('cookie-session')
-// routes
-// const commentRoutes = require('./routes/comment')
-// const userRoutes = require('./routes/user')
-
-// mongoose.set('useNewUrlParser', true)
-// mongoose.set('useFindAndModify', false)
-// mongoose.set('useCreateIndex', true)
-// connection à MongoDB 
-// mongoose.connect(process.env.MONGODB_URI,
-//   { 
-//     dbName: process.env.DB_NAME,
-//     user: process.env.DB_USER,
-//     pass: process.env.DB_PASS,
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true })
-//   .then(() => console.log('Connexion à MongoDB réussie !'))
-//   .catch(() => console.log('Connexion à MongoDB échouée !'))
 
 const app = express()
 
-app.use((req, res, next) => {
+app.use((req, res, next) => {   // headers access informations
     res.setHeader('Access-Control-Allow-Origin', '*')
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization')
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
     next()
     })
-// expiration des cookies
-// var expiryDate = new Date( Date.now() + 60 * 60 * 1000 ) // 1 hour
-// app.use(session({
-//   name: 'session',
-//   secret: process.env.DB_PASS,
-//   // keys: ['key1', 'key2'],
-//   cookie: { secure: true,
-//             httpOnly: true,
-//             domain: 'http://localhost:8081',
-//             // path: 'foo/bar',
-//             expires: expiryDate
-//           }
-//   })
-// )
+
 
 // protection X-XSS -activate a script filter for (XSS) on websites-
 app.use(helmet())
-// charger les images depuis le dossier 'images'
-// app.use('./app/images', express.static(path.join(__dirname,'images')))
-//routes Url
-// app.use('/api/sauces', sauceRoutes)
-// app.use('/api/comment', commentRoutes)
 
-// app.use('/auth', userRoutes)
-// app.use('/', userRoutes)
-//export vers server.js
 
-const db = require("./app/models/index");
+const db = require("./app/models/index"); // get db from models and sequelize
  db.sequelize.sync();
 
 // const dblogin = require("./app/modelsUser/index");
@@ -111,7 +34,7 @@ const Role = db.role;
 // });
 initial();
 
-function initial() {
+function initial() {  // Roles indexes
   Role.create({
     id: 1,
     name: "user"
@@ -129,29 +52,29 @@ function initial() {
 }
 
 
-// les requêtes POST sont transformées en objet JSON
+//  POST request format to JSON
 app.use(bodyParser.json())
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // ****
 
-const postRoutes = require("./app/routes/post.routes");
-const commentRoutes = require("./app/routes/comment.routes")
-const commentPostRoutes = require("./app/routes/commentPost.routes")
-const userDeleteRoutes = require("./app/routes/userDelete.routes")
+const postRoutes = require("./app/routes/post.routes"); // get route post
+const commentRoutes = require("./app/routes/comment.routes") // get route comments
+const commentPostRoutes = require("./app/routes/commentPost.routes") // get route delete a comment of a post
+const userManageRoutes = require("./app/routes/userManage.routes")
 
 
-require('./app/routes/auth.routes')(app);
-require('./app/routes/user.routes')(app);
+require('./app/routes/auth.routes')(app);  // autjentification route
+require('./app/routes/user.routes')(app);  // user connxion route
 
-// require("./app/routes/post.routes")(app);
-app.use('/images', express.static(path.join(__dirname,'images')))
-app.use('/api/posts', postRoutes);
-app.use('/api/user', userDeleteRoutes);
-app.use('/api/comment', commentRoutes);
-app.use('/api/comments', commentPostRoutes);
 
-// require("./app/routes/post.users")(app);
+app.use('/images', express.static(path.join(__dirname,'images')))  // image path/ route path
+app.use('/api/posts', postRoutes); // post route path
+app.use('/api/user', userManageRoutes); // user modification route path
+app.use('/api/comment', commentRoutes); // comment route path
+app.use('/api/comments', commentPostRoutes); // route path to delete a comment of a post
+
+
 module.exports = app
 

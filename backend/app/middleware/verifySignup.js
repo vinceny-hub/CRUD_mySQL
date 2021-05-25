@@ -2,7 +2,7 @@ const db = require("../models/index");
 const ROLES = db.ROLES;
 const User = db.user;
 
-checkDuplicateUsernameOrEmail = (req, res, next) => {
+checkDuplicateUsernameOrEmail = (req, res, next) => {   // verify if username already exist in database
   // Username
   User.findOne({
     where: {
@@ -17,7 +17,7 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
     }
 
     // Email
-    User.findOne({
+    User.findOne({                               // verify if email is already used in database
       where: {
         email: req.body.email
       }
@@ -34,7 +34,7 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
   });
 };
 
-checkRolesExisted = (req, res, next) => {
+checkRolesExisted = (req, res, next) => {              // verify if a role of admin or moderator already exist
   if (req.body.roles) {
     for (let i = 0; i < req.body.roles.length; i++) {
       if (!ROLES.includes(req.body.roles[i])) {

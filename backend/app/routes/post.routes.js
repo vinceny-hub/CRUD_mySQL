@@ -1,14 +1,10 @@
-// const postsCtrl = require("../controllers/posts");
-// const auth = require("../middleware/auth");
-// const multer = require("../middleware/multer-config");
-// const express = require('express');
+
 const express = require('express');
 const router = express.Router();
 const auth = require("../middleware/auth");
 const posts = require("../controllers/post.controller");
 const multer = require('../middleware/multer-config')
-// const authRoutes = require("./auth.routes");
-// const router = require("express").Router();
+
 
   // Create a new Post
   router.post("/", auth, multer, posts.create);
@@ -31,7 +27,6 @@ const multer = require('../middleware/multer-config')
   // Delete all Posts
   router.delete("/", auth, posts.deleteAll);
 
-  // app.use('/api/posts', router);
-// };
+
 
 module.exports = router;

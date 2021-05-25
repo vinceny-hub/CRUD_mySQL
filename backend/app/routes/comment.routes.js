@@ -2,34 +2,28 @@ const express = require('express');
 const router = express.Router();
 const auth = require("../middleware/auth");
 const comments = require("../controllers/comment.controller");
-// const authRoutes = require("./auth.routes");
-// const router = require("express").Router();
 
-  // Create a new Post
+
+  // Create a new Comment
   router.post("/", auth, comments.create);
 
-  // Retrieve all Posts
+  // Retrieve all Comments
   router.get("/", auth, comments.findAll);
 
   // Retrieve all published Posts
   router.get("/published", auth, comments.findAllPublished);
 
-  // Retrieve a single Post with id
+  // Retrieve a single Comment with id
   router.get("/:id", auth, comments.findOne);
 
-  // Update a Post with id
+  // Update a Comment with id
   router.put("/:id", auth, comments.update);
 
-  // Delete a Post with id
+  // Delete a Comment with id
   router.delete("/:id", auth, comments.delete);
 
-  // Delete all Posts
+  // Delete all Comments
   router.delete("/", auth, comments.deleteAll);
 
-  // Delete all Posts
-  // router.delete("/:id", auth, comments.deletePostComment);
-
-  // app.use('/api/posts', router);
-// };
 
 module.exports = router;

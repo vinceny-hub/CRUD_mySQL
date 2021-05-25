@@ -1,184 +1,92 @@
 <template>
- <div class="container-fluid">
-   <div class="footer-post-list">
-    <div class="row h-100 justify-content-center align-items-center">
-    
-     
-      <div class="col-md-8 gedf-main card .post-comment card-shadow">
-     
-    
-    <!-- <form> -->
-      <!-- <div class="card-body">
-                  <div class="float meta ">
-                        <div class="title h5">
-                            <a href="#"><b> {{ post.username }} </b></a>
-                            made a post.
-                        </div>
-                        <h6 class="text-muted time">1 minute ago</h6>
-                    </div>
-            
-              <div class="card aPost rounded card-white"> <h5><strong>{{ post.description }}</strong></h5></div> 
-              <div class="">
-                <div class="post-heading">
-                   <div class="float meta">
-                        <div class="title h5">
-              <div  v-for="comment in comments" :key="comment.id"> <div class="comment card rounded card-white" v-if="post.id == comment.post_id"> 
-                        
-                    
-                        <div class="list-group-item"> <a href="#"><b> {{ comment.username }} </b></a> <span> made a comment </span>  <h6 class="text-muted time">1 minute ago</h6> <div>{{ comment.description }} </div></div>    </div></div></div> 
-
-                        </div>
+  <div class="container-fluid">
+    <div class="footer-post-list">
+      <div class="row h-100 justify-content-center align-items-center">    
+        <div class="col-md-8 gedf-main card .post-comment card-shadow">   
+          <div v-if="currentPost" class="card-body">
+            <div class="">
+              <div class="d-inline-flex p-0"> 
+                <img class="title-img-comment" src="../img/icon1.png" alt="">
+                <h4 class="title-pos">Post</h4>
               </div>
-              </div>
-                 <div v-if="!editing"> {{ post.description }} </div>    -->
-                 
-                <!-- <input v-else type="text" class="form-control" id="" v-model="post.description"/>  -->
-             
-                <!-- <input type="text" class="form-control" id="" v-model="post.user_Id"/><br> -->
-                <!-- <a :href="'/posts/' + post.id"><button class="btn btn-primary"> Comment </button></a> -->
-              <!-- </div> -->
-       <div v-if="currentPost" class="card-body">
-         <div class="">
-          <div class="d-inline-flex p-0"> <img class="title-img-comment" src="../img/icon1.png" alt=""><h4 class="title-pos">Post</h4></div>
-         </div>
+            </div>
             <div class="jk">
-                <div class="post-heading">
-            
-            <div   class="list-group">
-      <!-- <div  v-if="currentPost" class="card-body">
-        <h4>Post</h4>
-         <div class="borderBox">
-           <div class="">
-         <div class="title h5"> -->
-                             <div class="float meta ">
-                        <div class="title h5">
-                            <a href="#"><b> {{ currentPost.username }} </b></a>
-                            made a post.
-                        </div>
-                        <h6 class="text-muted time">1 minute ago</h6>
+                <div class="post-heading">            
+                  <div class="list-group">     
+                    <div class="float meta ">
+                      <div class="title h5">
+                        <a href="#"><b> {{ currentPost.username }} </b></a>
+                          made a post.
+                      </div>
+                      <h6 class="text-muted time">1 minute ago</h6>
                     </div>
-                        </div>
-        <!-- <label for="description">Description</label> -->
-       <div class="kl card aPost rounded card-white" v-if="!editing"> <h5 class="postCard"><strong>{{ currentPost.description }}</strong></h5><img :src="currentPost.imageUrl"></div> 
-           <textarea-autosize v-show="dataUser.user_Id == currentPost.user_Id && currentPost.description || showAdminBoard&& currentPost.description"
-  placeholder="Type something here..."
-  ref="myTextarea"
- 
-  :min-height="30"
-  :max-height="350"
-   v-else type="text"   class="form-control" id="description" v-model="currentPost.description"/>
-    <div v-show="editing" class="form-group">
+                  </div>
+                  <div class="kl card aPost rounded card-white" v-if="!editing"> 
+                    <h5 class="postCard"><strong>{{ currentPost.description }}</strong></h5>
+                    <img :src="currentPost.imageUrl">
+                  </div> 
+                  <textarea-autosize v-show="dataUser.user_Id == currentPost.user_Id && currentPost.description || showAdminBoard&& currentPost.description" placeholder="Type something here..." ref="myTextarea"  :min-height="30" :max-height="350" v-else type="text"   class="form-control" id="description" v-model="currentPost.description"/>
+                  <div v-show="editing" class="form-group">
                     <div class="custom-file">
-                        <input  v-show="dataUser.user_Id == currentPost.user_Id && currentPost.imageUrl || showAdminBoard && currentPost.imageUrl" type="file" ref="file" @change="onSelect" class="" id="">
-                        <label class=""></label>
-                 
+                      <input  v-show="dataUser.user_Id == currentPost.user_Id && currentPost.imageUrl || showAdminBoard && currentPost.imageUrl" type="file" ref="file" @change="onSelect" class="" id="">
+                      <label class=""></label>                 
+                    </div>
+                    <div class="py-3"></div>
+                  </div>
                 </div>
-                <div class="py-3"></div>
-              </div>
-         </div>
-         
-    
-
-      <!-- <div class="form-group">
-        <label><strong>Status:</strong></label>
-        {{ currentPost.published ? "Published" : "Pending" }}
-      </div>
-    </form> -->
-
-    <!-- <button class="badge badge-primary mr-2"
-      v-if="currentPost.published"
-      @click="updatePublished(false)"
-    >
-      UnPublish
-    </button>
-    <button v-else class="badge badge-primary mr-2"
-      @click="updatePublished(true)"
-    >
-      Publish
-    </button> -->
-     <!-- <button v-show="editing" v-if="currentUser.id == post.user_Id" class="badge badge-danger mr-2" @click="deletePost(index)"> Delete </button> -->
-     
-      
-
-    <img  v-if="dataUser.user_Id == currentPost.user_Id || showAdminBoard" class="card-ico" src="../img/icon1.png" alt="">
-    <img  v-else class="card-img" src="../img/icon-left-font-sized1.png" alt="">
-   <!-- {{editing? 'Update':'Edit'}} -->
-    <a href="#top"> <button v-show="!editing"  class="btn btn-outline pink float-right buttonCEC"> Comment </button></a>
-    <button v-show="isDisplay" v-if="dataUser.user_Id == currentPost.user_Id || showAdminBoard" class="btn btn-success float-right buttonCEC" href="#top" @click="editPost(currentPost)"> Edit </button>
-     <button v-show="editing" v-if="currentPost.description" class="btn btn-success mr-2 float-right" type="submit" @click="editPost(currentPost)"> Update </button>
-    <button v-show="editing" v-if="currentPost.imageUrl" class="btn btn-success mr-2 float-right" type="submit" @click="uploadImage()"> Upload </button>
-     <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Back </button>
-     
-    <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id  || showAdminBoard"  id="btnC" class="btn btn-secondary mr-2 float-right marginRightButton" @click="cancel()"> Cancel </button>
-    <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id  || showAdminBoard" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
-   
-     
-  
-
-
-       <div class="post-heading">
-                   <div class="float meta">
-                        <div class="title h5">
-     <div class="" v-show="!editing">
-
-
-
-    <!-- <a href="#"><b> {{ comment.username }} </b></a> <span> made a comment </span>  <h6 class="text-muted time">1 minute ago</h6> <div>{{ comment.description }} </div> -->
-    
-
-
-    
-    <div v-for="comment in comments" :key="comment.id">  
-      <div v-if="currentPost.id == comment.post_id" class="comment float-right card rounded card-white"> <div class="list-group-item">
-        <a href="#"><b> {{ comment.username }} </b></a> <span> made a comment </span>  <h6 class="text-muted time">1 minute ago</h6> <div>{{ comment.description }} </div>
-    <a :href="'/comments/' + comment.id"><button v-if="dataUser.user_Id == comment.user_Id || showAdminBoard" class="btn btn-success float-right"> Edit </button></a></div></div>
-    </div>
-     
-      <div class="postCard">        <textarea-autosize
-  placeholder="Type something here..."
-  ref="myTextarea"
- 
-  :min-height="30"
-  :max-height="350"
-   type="text"   class="form-control" id="description" autofocus v-model="comments.description"/></div>
-       <div class="d-flex justify-content-between float-right width-box">   <img class="card-img float-left" src="../img/icon-left-font-sized1.png" alt="">
-      <div  class="">
-     <button  @click="saveComment" class="btn btn-primary float-right"> Share </button>
-       <button class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Cancel </button>
-       </div>
-       </div>
-       
+                <img  v-if="dataUser.user_Id == currentPost.user_Id || showAdminBoard" class="card-ico" src="../img/icon1.png" alt="">
+                <img  v-else class="card-img" src="../img/icon-left-font-sized1.png" alt="">
+                <a href="#top"> <button v-show="!editing"  class="btn btn-outline pink float-right buttonCEC"> Comment </button></a>
+                <button v-show="isDisplay" v-if="dataUser.user_Id == currentPost.user_Id || showAdminBoard" class="btn btn-success float-right buttonCEC" href="#top" @click="editPost(currentPost)"> Edit </button>
+                <button v-show="editing" v-if="currentPost.description" class="btn btn-success mr-2 float-right" type="submit" @click="editPost(currentPost)"> Update </button>
+                <button v-show="editing" v-if="currentPost.imageUrl" class="btn btn-success mr-2 float-right" type="submit" @click="uploadImage()"> Upload </button>
+                <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Back </button>     
+                <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id  || showAdminBoard"  id="btnC" class="btn btn-secondary mr-2 float-right marginRightButton" @click="cancel()"> Cancel </button>
+                <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id  || showAdminBoard" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
+                <div class="post-heading">
+                  <div class="float meta">
+                    <div class="title h5">
+                      <div class="" v-show="!editing">    
+                        <div v-for="comment in comments" :key="comment.id">  
+                          <div v-if="currentPost.id == comment.post_id" class="comment float-right card rounded card-white"> 
+                            <div class="list-group-item">
+                              <a href="#"><b> {{ comment.username }} </b></a> 
+                              <span> made a comment </span>  
+                              <h6 class="text-muted time">1 minute ago</h6> 
+                              <div>{{ comment.description }} </div>
+                              <a :href="'/comments/' + comment.id"><button v-if="dataUser.user_Id == comment.user_Id || showAdminBoard" class="btn btn-success float-right"> Edit </button></a>
+                            </div>
+                          </div>
                         </div>
-                   </div></div></div>
-    
-   
-   
-    
-      <!-- <div v-if="currentPost.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} </div>   -->
-
-   
-    <!-- <button type="submit" class="badge badge-success"
-      @click="updatePost"
-    >
-      Update
-    </button> -->
-    <p>{{ message }}</p>
-         </div>
+                        <div class="postCard">        
+                          <textarea-autosize placeholder="Type something here..." ref="myTextarea" :min-height="30" :max-height="350" type="text"   class="form-control" id="description" autofocus v-model="comments.description"/>
+                        </div>
+                        <div class="d-flex justify-content-between float-right width-box">   <img class="card-img float-left" src="../img/icon-left-font-sized1.png" alt="">
+                          <div  class="">
+                            <button  @click="saveComment" class="btn btn-primary float-right"> Share </button>
+                            <button class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Cancel </button>
+                          </div>
+                        </div>       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p>{{ message }}</p>
+            </div>
+          </div>
+          <div v-else>
+          <br />
+          <p>Please click on a Post...</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div v-else>
-    <br />
-    <p>Please click on a Post...</p>
-  </div>
-  </div>
-</div>
-   </div>
- </div>
-
-  
 </template>
 
+
 <script>
+
 import PostCommentService from "../services/PostCommentService";
 import PostDataService from "../services/PostDataService";
 import UpLoadFilesService from "../services/UpLoadFilesService";
@@ -188,47 +96,34 @@ export default {
   data() {
     return {
 
-         comments:[],
+        comments:[],
         currentComment: null,
         currentIndex: -1,         
         message: '',
-      comment: {
-      
-        
-        id: null,
-        post_id: "",
-        // title: "",
-        description: "",
-        user_Id: "",
-        username: "",
-        published: false
+
+        comment: {      
+          id: null,
+          post_id: "",
+          // title: "",
+          description: "",
+          user_Id: "",
+          username: "",
+          published: false
       },
-       
-      
+             
       isDisplay:true,
       currentPost: null,
-    
-      editing: false,
-      
+      editing: false,      
     };
   },
 
-
-  
   methods: {
 
-
-     onSelect(e){
-
-       
-      // const file = e.target.files[0];
-      // this.post.imageUrl = URL.createObjectURL(file);
-     
+     onSelect(e){     
       const file = this.$refs.file.files[0];
-      this.currentPost.imageUrl = file;
-      console.log(e)
-      console.log(this.currentPost.imageUrl)
-        
+        this.currentPost.imageUrl = file;
+        console.log(e)
+        console.log(this.currentPost.imageUrl)        
     },
 
      uploadImage() {
@@ -246,75 +141,24 @@ export default {
         });
     },
 
-    //  uploadImage() {
-    //     let dataUser = JSON.parse(localStorage.getItem("user"))
-    //   const formData = new FormData();
-    //   // if (this.image !== null || "") {
-    //     formData.append("file", this.currentPost.imageUrl, this.currentPost.imageUrl.name);
-    //     formData.append("user_Id", dataUser.user_Id );
-    //     formData.append("username", dataUser.username,);
-    //     //  formData.append("id",this.currentPost.id,);
-    //     //    user_Id : dataUser.user_Id,
-    //     // username : dataUser.username,
-    //     // formData.append("description", this.post.description);
-    //     // UpLoadFilesService.upload(formData)
-    //     UpLoadFilesService.update(formData)
-
-    //  },
-    //   uploadImage() {
-    //     let dataUser = JSON.parse(localStorage.getItem("user"))
-    //   const formData = new FormData();
-    //   // if (this.image !== null || "") {
-    //     formData.append("file", this.post.imageUrl, this.post.imageUrl.name);
-    //     formData.append("user_Id", dataUser.user_Id );
-    //     formData.append("username", dataUser.username,);
-    //     //    user_Id : dataUser.user_Id,
-    //     // username : dataUser.username,
-    //     // formData.append("description", this.post.description);
-    //     UpLoadFilesService.upload(formData)
-   
-    // //  }
-    //  },
-
-     saveComment() {
-      //  if (!this.comment.description) {
-      //     // this.emptyError = this.emptyError == true?false:true
-      //     this.emptyError = alert('Cannot be empty')
-          
-      //  error => {
-           
-      //         this.message =
-      //           (error.response && error.response.data)
-      // }}else{ 
-     
+     saveComment() {       
       let dataUser = JSON.parse(localStorage.getItem("user"))
-      console.log(dataUser)
-      // this.user = response.data1;
+      console.log(dataUser)     
       var data = {
-       
-        // title: this.post.title,
+        
         description: this.comments.description,
         user_Id : dataUser.user_Id,
         username : dataUser.username,
         post_id : this.currentPost.id,
         id: this.comments.id,
-        
-      
-        
-      }
-      // }
-     
+                
+      }   
     
       PostCommentService.create(data)
         .then(response => {
-          this.comment.id = response.data.id;
-          // this.user_Id = 
-          // this.username
+          this.comment.id = response.data.id;      
           console.log(response.data);
-          this.submitted = true;
-          // this.comments.push(data)
-          //  this.retrieveComments();
-          // this.newComment()
+          this.submitted = true;    
           this.message = 'The post was updated successfully!';
           this.$router.push({ name: "posts" });
         })
@@ -322,85 +166,57 @@ export default {
           console.log(e);
         });
     },
-  //       content(){
-    
-  // this.comment = this.comment == true?false:true
-    
-  //   console.log(this.comment)
-    
-  
-  //   },
+ 
      getComment() {
       PostCommentService.getAll()
         .then(response => {
           this.comments = response.data;
-          console.log(response.data);
-        
+          console.log(response.data);        
         })
         .catch(e => {
           console.log(e);
         });
     },
+
     getPost(id) {
       PostDataService.get(id)
         .then(response => {
           this.currentPost = response.data;
           console.log(response.data);
+          console.log(id)
         })
         .catch(e => {
           console.log(e);
         });
     },
-    // updatePublished(status) {
-    //   var data = {
-    //     id: this.currentPost.id,
-    //     title: this.currentPost.title,
-    //     description: this.currentPost.description,
-    //      user_Id: this.currentPost.user_Id,
-    //     published: status
-    //   };
-    //   PostDataService.update(this.currentPost.id, data)
-    //     .then(response => {
-    //       this.currentPost.published = status;
-    //       console.log(response.data);
-    //     })
-    //     .catch(e => {
-    //       console.log(e);
-    //     });
-    // },
+   
     cancel(){
-        this.show()
-       this.editing = this.editing == false
-      
+      this.show()
+      this.editing = this.editing == false      
     },
 
     hide: function () {
       this.isDisplay = false
     },
+
     show: function () {
       this.isDisplay = true
     },
 
-     editPost(){
-    
-    this.editing = this.editing == true?false:true
-
-    
-    this.hide()
-    
-    
-    if(this.editing== false){
-    this.updatePost()
-    }  
-    
-    console.log(this.editing)
-    
-  
+    editPost(){    
+      this.editing = this.editing == true?false:true    
+      this.hide()
+        if(this.editing== false){
+        this.updatePost()
+    }      
+    console.log(this.editing)  
     },
+
     cancelled(){
        this.show()
        this.$router.push({ name: "posts" });
     },
+
     updatePost() {
       PostDataService.update(this.currentPost.id, this.currentPost)
         .then(response => {
@@ -412,11 +228,10 @@ export default {
           console.log(e);
         });
     },
+
     deletePost() {
       PostCommentService.delete(this.currentPost.id)
-      PostDataService.delete(this.currentPost.id)
-     
-      
+      PostDataService.delete(this.currentPost.id)      
         .then(response => {
           console.log(response.data);
           this.$router.push({ name: "posts" });
@@ -432,11 +247,8 @@ export default {
     this.getPost(this.$route.params.id);
     this.getComment();
   },
-  computed: {
 
-  //     orderPost: function () {
-  //   return _.orderBy(this.post, 'date')
-  // },
+  computed: {
 
     dataUser(){  return JSON.parse(localStorage.getItem("user"))
     },
@@ -445,45 +257,37 @@ export default {
       return this.$store.state.auth.user;
      
     },
-        showAdminBoard() {
+    showAdminBoard() {
       if (this.currentUser && this.currentUser.roles) {
         return this.currentUser.roles.includes('ROLE_ADMIN');
       }
-
       return false;
     },
+
     showModeratorBoard() {
       if (this.currentUser && this.currentUser.roles) {
         return this.currentUser.roles.includes('ROLE_MODERATOR');
       }
-
       return false;
     }
   },
 
 };
 
-
-
 </script>
 
 <style>
 
 .width-box{
-  width: 100%;
-  
+  width: 100%;  
 }
-
-
 .title-pos{
   margin-top: 8px;
   color:#091f43;
   font-weight: bold;
 }
-
 .title-img-comment{
   width: 40px;
-  /* margin-left: -20px; */
   margin-top: 0px;
   margin-bottom: 0px;
 }
@@ -491,53 +295,36 @@ export default {
   max-width: 300px;
   margin: auto;
 }
-
-.card-img{
- 
+.card-img{ 
   width: 100px;
   height: 20px;
 }
-
 .comment {
     width: 80%;
     overflow: hidden;
     border: 0.1vw solid grey;
-     margin-bottom: 30px;
+    margin-bottom: 30px;
     margin-left: 100px; 
-      box-shadow: 5px 5px 5px #091f43;
-    /* margin: 0 0 1em; */
-    /* *zoom: 1; */
+    box-shadow: 5px 5px 5px #091f43;
 } 
-
 .pink{
   border: 1px solid  #091f43;
   color:  #091f43;
 }
-
 .aPost {
-    width: 100%;
-    min-height: px;
-    overflow: hidden;
-    border: 0.1vw solid white;
-     margin-bottom: 30px;
-      /* margin-left: 100px; */
-    /* margin: 0 0 1em; */
-    /* *zoom: 1; */
+  width: 100%;
+  min-height: px;
+  overflow: hidden;
+  border: 0.1vw solid white;
+  margin-bottom: 30px;
 } 
-
 .card-ico{
   margin-top: -4px;
   width: 37px;
 }
-
-.postBox {
-   
-    /* overflow: hidden; */
-    border: 0.1vw solid grey;
-     margin-bottom: 30px;
-      /* margin-left: 100px; */
-    /* margin: 0 0 1em; */
-    /* *zoom: 1; */
+.postBox {   
+  border: 0.1vw solid grey;
+  margin-bottom: 30px;
 } 
 .list-group{
   border:white;
@@ -546,40 +333,27 @@ export default {
     border:white;
 }
 li{
-   border:white
-
+  border:white
 }
-/* .borderBox{
-  border: 0.1vw solid grey;
-  border-radius: 1%;
-} */
-
 .textBox{
    width: 100%;
 }
-.gedf-main .post-comment{
-    
+.gedf-main .post-comment{    
    margin-bottom: 30px;
 }
-
  .card-shadow{
-     box-shadow: 10px 7px 10px #091f43;
+    box-shadow: 10px 7px 10px #091f43;
  }
-
  .gedf-main{
   margin-bottom: 100px;
 }
-
-.marginRightButton{
- 
+.marginRightButton{ 
   margin-right: 30px;
 }
 .marginLeftButton{
   margin-left: 8px;
 }
-
-.postCard{
-  /* margin-top: 30px; */
+.postCard{ 
   margin-bottom: 30px;
 }
 .buttonCEC{
@@ -592,19 +366,10 @@ li{
 #btnC{
   margin-right: 50px;
 }
-
-.footer-post-list{
-  
+.footer-post-list{  
   margin-bottom: 30px;
- 
-
-/* position:absolute; */
-
-bottom:0;
-
-width:100%;
-
-
+  bottom:0;
+  width:100%;
 }
 
 </style>

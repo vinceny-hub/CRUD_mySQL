@@ -1,189 +1,89 @@
 <template>
- <div id="#top" class="container-fluid">
+  <div id="#top" class="container-fluid">
     <div class="row h-100 justify-content-center align-items-center">
-    
-     
       <div class="col-md-6 gedf-main card">
-
- <div v-if="currentComment" class="card-body">
+        <div v-if="currentComment" class="card-body">
           <h4>Post</h4>
-            <div class="">
-                <div class="post-heading">
-            
-            <div   class="list-group">
-      <!-- <div  v-if="currentPost" class="card-body">
-        <h4>Post</h4>
-         <div class="borderBox">
-           <div class="">
-         <div class="title h5"> -->
-                             <div class="float meta ">
-                        <div class="title h5">
-                            <a href="#"><b> {{ currentComment.username }} </b></a>
-                            made a post.
-                        </div>
-                        <h6 class="text-muted time">1 minute ago</h6>
-                    </div>
-                        </div>
-        <!-- <label for="description">Description</label> -->
-       <div v-if="!editing"> <h5><strong>{{ currentComment.description }}</strong></h5> </div> 
-          <textarea-autosize
-  placeholder="Type something here..."
-  ref="myTextarea"
- 
-  :min-height="30"
-  :max-height="350"
-  
- v-else type="text"  class="form-control" id="description" v-model="currentComment.description"/>
-         </div>
-             <!-- <a href="#commentArea"> <button v-show="!editing"  class="btn btn-primary float-right  marginRightButton "> Comment </button></a> -->
-    <button v-if="dataUser.user_Id == currentComment.user_Id || showAdminBoard" class="btn btn-success float-right" @click="editPost(currentComment)"> {{editing? 'Update':'Modify'}} </button>
-     <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="$router.go(-1)"> Back </button>
-   
-    <button v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id || showAdminBoard" class="btn btn-secondary mr-2 float-right" @click="cancel()"> Cancel </button>
-    <button  v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id || showAdminBoard" class="badge badge-danger mr-2" @click="deleteComment"> Delete </button>
-
-
-  <!-- <div v-if="currentComment" class="edit-form">
-    <h4>Post</h4>
-  
-      
-      <div class="form-group">
-       <div v-if="!editing" class="form-group list-group-item"> {{ currentComment.description }} </div> 
-          <input v-else type="text" class="form-control" id="description" v-model="currentComment.description"/>
-      </div>
-      <div class="form-group">
-        <label for="">ID</label>
-        <input type="text" class="form-control" id=""
-          v-model="currentComment.user_Id"
-        />
-      </div>
-
-
-
-    <button v-if="dataUser.user_Id == currentComment.user_Id" class="btn btn-success" @click="editPost(currentComment)"> {{editing? 'Update':'Modify'}} </button>
-    <button v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id" class="btn btn-secondary mr-2" @click="cancel()"> Cancel </button>
-    <button v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id" class="badge badge-danger mr-2" @click="deleteComment"> Delete </button>
-     <div>   <input  type="text" v-model="comments.description"> {{comments.description}} </div>
-     <button  @click="saveComment" class="btn btn-primary"> Comment </button>
-
-
-
-    <div v-for="comment in comments" :key="comment.id">  <div v-if="currentComment.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} </div> </div>
-    
-   
-    
-     <div v-if="currentComment.id == comment.post_id" class="form-group list-group-item"> {{ comment.description }} {{ currentComment.id }} </div>  -->
-
-   
-  
-  </div>
- </div>
+          <div class="">
+            <div class="post-heading">            
+              <div   class="list-group">
+                <div class="float meta ">
+                  <div class="title h5">
+                    <a href="#"><b> {{ currentComment.username }} </b></a>
+                      made a post.
+                  </div>
+                  <h6 class="text-muted time">1 minute ago</h6>
+                </div>
+              </div>     
+              <div v-if="!editing"> <h5><strong>{{ currentComment.description }}</strong></h5></div> 
+              <textarea-autosize placeholder="Type something here..." ref="myTextarea" :min-height="30" :max-height="350" v-else type="text"  class="form-control" id="description" v-model="currentComment.description"/>
+            </div>         
+            <img v-if="dataUser.user_Id == currentComment.user_Id || showAdminBoard" class="card-ico" src="../img/icon1.png" alt="">
+            <button v-if="dataUser.user_Id == currentComment.user_Id || showAdminBoard" class="btn btn-success float-right" @click="editPost(currentComment)"> {{editing? 'Update':'Modify'}} </button>
+            <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="$router.go(-1)"> Back </button>   
+            <button v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id || showAdminBoard" class="btn btn-secondary mr-2 float-right" @click="cancel()"> Cancel </button>
+            <button  v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id || showAdminBoard" class="badge badge-danger mr-2" @click="deleteComment"> Delete </button>     
+          </div>
+        </div>
       </div>
     </div>
- </div>
-
-  
+  </div>
 </template>
 
 <script>
 import PostCommentService from "../services/PostCommentService";
-// import PostDataService from "../services/PostDataService";
 import CommentPostService from "../services/CommentPostService";
-// import TextareaAutosize from 'vue-textarea-autosize'
-// Vue.use(TextareaAutosize)
 
 export default {
   name: "post",
   data() {
     return {
-
-         comments:[],
+        comments:[],
         currentComment: null,
         currentIndex: -1,         
         message: '',
-      comment: {
-      
-        
-        id: null,
-        post_id: "",
-        // title: "",
-        description: "",
-        user_Id: "",
-        username: "",
-        published: false
+        comment: {
+          id: null,
+          post_id: "",      
+          description: "",
+          user_Id: "",
+          username: "",
+          published: false
       },
-       
-      
-    
-      currentPost: null,
-    
-      editing: false,
-      
+        currentPost: null,      
+        editing: false,      
     };
   },
+
   methods: {
 
-    saveComment() {
-      //  if (!this.comment.description) {
-      //     // this.emptyError = this.emptyError == true?false:true
-      //     this.emptyError = alert('Cannot be empty')
-          
-      //  error => {
-           
-      //         this.message =
-      //           (error.response && error.response.data)
-      // }}else{ 
-     
+    saveComment() {     
       let dataUser = JSON.parse(localStorage.getItem("user"))
-      console.log(dataUser)
-      // this.user = response.data1;
-      var data = {
-       
-        // title: this.post.title,
+      console.log(dataUser)  
+      var data = {     
         description: this.comments.description,
         user_Id : dataUser.user_Id,
         username : dataUser.username,
         post_id : this.currentPost.id,
-        id: this.comments.id,
-        
-      
-        
+        id: this.comments.id,        
       }
-      // }
-     
     
-
-      PostCommentService.create(data)
+    PostCommentService.create(data)
         .then(response => {
-          this.comment.id = response.data.id;
-          // this.user_Id = 
-          // this.username
+          this.comment.id = response.data.id;        
           console.log(response.data);
-          this.submitted = true;
-          // this.comments.push(data)
-          //  this.retrieveComments();
-          // this.newComment()
+          this.submitted = true;       
         })
         .catch(e => {
           console.log(e);
         });
     },
-  //       content(){
-    
-  // this.comment = this.comment == true?false:true
-    
-  //   console.log(this.comment)
-    
-
-  
-
-  //   },
-     getComment() {
+ 
+    getComment() {
       PostCommentService.getAll()
         .then(response => {
           this.comments = response.data;
-          console.log(response.data);
-        
+          console.log(response.data);        
         })
         .catch(e => {
           console.log(e);
@@ -201,47 +101,21 @@ export default {
         });
     },
 
-    // updatePublished(status) {
-    //   var data = {
-    //     id: this.currentPost.id,
-    //     title: this.currentPost.title,
-    //     description: this.currentPost.description,
-    //      user_Id: this.currentPost.user_Id,
-    //     published: status
-    //   };
-
-    //   PostDataService.update(this.currentPost.id, data)
-    //     .then(response => {
-    //       this.currentPost.published = status;
-    //       console.log(response.data);
-    //     })
-    //     .catch(e => {
-    //       console.log(e);
-    //     });
-    // },
-
     cancel(){
-       this.editing = this.editing == false
+      this.editing = this.editing == false
     },
 
-     cancelled(){
-       this.$router.push({ name: "posts" });
+    cancelled(){
+      this.$router.push({ name: "posts" });
 
     },
 
-     editPost(){
-    
-    this.editing = this.editing == true?false:true
-    
-    if(this.editing== false){
-    this.updateComment()
-    }  
-    
-    console.log(this.editing)
-    
-
-  
-
+    editPost(){    
+      this.editing = this.editing == true?false:true    
+        if(this.editing== false){
+        this.updateComment()
+        }      
+      console.log(this.editing)
     },
 
     updateComment() {
@@ -257,11 +131,7 @@ export default {
     },
 
     deleteComment() {
-      CommentPostService.deletePostComment(this.currentComment.id)
-
-    //   PostDataService.delete(this.currentComment.id)
-     
-      
+      CommentPostService.deletePostComment(this.currentComment.id)      
         .then(response => {
           console.log(response.data);
           this.$router.push({ name: "posts" });
@@ -271,40 +141,36 @@ export default {
         });
     }
   },
+
   mounted() {
-    this.message = '';
-    // this.getPost(this.$route.params.id);
+    this.message = '';    
     this.getCommentId(this.$route.params.id);
   },
   computed: {
-
-  //     orderPost: function () {
-  //   return _.orderBy(this.post, 'date')
-  // },
 
     dataUser(){  return JSON.parse(localStorage.getItem("user"))
     },
 
     currentUser() {
-      return this.$store.state.auth.user;
-     
+      return this.$store.state.auth.user;     
     },
-        showAdminBoard() {
+
+    showAdminBoard() {
       if (this.currentUser && this.currentUser.roles) {
         return this.currentUser.roles.includes('ROLE_ADMIN');
       }
-
       return false;
     },
+
     showModeratorBoard() {
       if (this.currentUser && this.currentUser.roles) {
         return this.currentUser.roles.includes('ROLE_MODERATOR');
       }
-
       return false;
     }
   },
 };
+
 </script>
 
 <style>
@@ -312,10 +178,8 @@ export default {
     width: 80%;
     overflow: hidden;
     border: 0.1vw solid grey;
-     margin-bottom: 30px;
-      margin-left: 100px;
-    /* margin: 0 0 1em; */
-    /* *zoom: 1; */
+    margin-bottom: 30px;
+    margin-left: 100px;
 } 
 
 .aPost {
@@ -323,20 +187,11 @@ export default {
     min-height: px;
     overflow: hidden;
     border: 0.1vw solid white;
-     margin-bottom: 30px;
-      /* margin-left: 100px; */
-    /* margin: 0 0 1em; */
-    /* *zoom: 1; */
+     margin-bottom: 30px;  
 } 
-
-.postBox {
-   
-    /* overflow: hidden; */
+.postBox {   
     border: 0.1vw solid grey;
-     margin-bottom: 30px;
-      /* margin-left: 100px; */
-    /* margin: 0 0 1em; */
-    /* *zoom: 1; */
+    margin-bottom: 30px;    
 } 
 .list-group{
   border:white;
@@ -346,32 +201,23 @@ export default {
 }
 li{
    border:white
-
 }
-
-
-
-/* .borderBox{
-  border: 0.1vw solid grey;
-  border-radius: 1%;
-} */
-
+.card-ico{
+  margin-top: -4px;
+  width: 37px;
+}
 .textBox{
    width: 100%;
 }
-.gedf-main{
-  /* margin-top: 15px; */
-   margin-bottom: 200px;
-  
+.gedf-main{  
+   margin-bottom: 200px;  
    box-shadow: 10px 7px 10px #091f43;
-
 }
 .marginBottomButton{
   margin-bottom: 30px;
-   margin-right: 15px;
+  margin-right: 15px;
 }
-.marginRightButton{
- 
+.marginRightButton{ 
   margin-bottom: 30px;
 }
 

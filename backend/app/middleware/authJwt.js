@@ -2,29 +2,28 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
 const db = require("../models/user.model");
 const User = db.user;
-
+        // Verify token
 verifyToken = (req, res, next) => {
-  let token = req.headers["x-access-token"];
-  // let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjIwMTMxMTc3LCJleHAiOjE2MjAyMTc1Nzd9.gI4FPkbx5nwOiT_S-zpI2H-tHuHSfUPfb6mZECFEd88"
-
+  let token = req.headers["x-access-token"]; // token from x-acces-token headers
+  
   if (!token) {
     return res.status(403).send({
       message: "No token provided!"
     });
   }
 
-  jwt.verify(token, config.secret, (err, decoded) => {
+  jwt.verify(token, config.secret, (err, decoded) => {  // verify and decode token 
     if (err) {
       return res.status(401).send({
         message: "Unauthorized!"
       });
     }
-    req.userId = decoded.id;
+    req.userId = decoded.id;    // if matching id matching next step 
     next();
   });
 };
 
-isAdmin = (req, res, next) => {
+isAdmin = (req, res, next) => {           // verify if logged-in is admin
   User.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {
       for (let i = 0; i < roles.length; i++) {
@@ -42,7 +41,7 @@ isAdmin = (req, res, next) => {
   });
 };
 
-isModerator = (req, res, next) => {
+isModerator = (req, res, next) => {    // verify if logged-in is moderator
   User.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {
       for (let i = 0; i < roles.length; i++) {
@@ -59,7 +58,7 @@ isModerator = (req, res, next) => {
   });
 };
 
-isModeratorOrAdmin = (req, res, next) => {
+isModeratorOrAdmin = (req, res, next) => {   // verify if logged-in is moderator or admin
   User.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {
       for (let i = 0; i < roles.length; i++) {
@@ -82,33 +81,11 @@ isModeratorOrAdmin = (req, res, next) => {
 };
 
 
-// isLoggedIn = (req, res, next) => {
-//   try {
-
-//     const USERID = req.userId
-//     if (USERID = USERID ){ 
-//     // const token = req.headers.authorization.split(' ')[1];
-//     // const decoded = jwt.verify(
-//     //   token,
-//     //   'SECRET_KEY'
-//     // );
-//     // req.userData = decoded;
-    
-//     next();
-//     }
-//   } catch (err) {
-//     return res.status(401).send({
-//       msg: 'Your session is not valid!'
-//     });
-//   }
-// }
-// }
-
-const authJwt = {
+const authJwt = {   // model authentification
   verifyToken: verifyToken,
   isAdmin: isAdmin,
   isModerator: isModerator,
   isModeratorOrAdmin: isModeratorOrAdmin,
-  // isLoggedIn: isLoggedIn
+ 
 };
 module.exports = authJwt;
