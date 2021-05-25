@@ -57,6 +57,7 @@ exports.delete = (req, res) => {
         if (num == 1) {
           res.send({
             message: "User was updated successfully."
+            
           });
         } else {
           res.send({

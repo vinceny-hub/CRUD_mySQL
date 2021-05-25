@@ -20,21 +20,22 @@
                 <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
                   <div class="form-group">
                     <label class="sr-only" for="message">post</label>
-                      <textarea-autosize ref="myTextarea" :min-height="75" :max-height="350" type="text"   class="form-control" id="description" required v-model="post.description" autofocus  placeholder="What are you thinking?"/>
+                      <textarea-autosize ref="myTextarea" :min-height="75" :max-height="350" type="text" class="form-control" id="description" required v-model="post.description" autofocus  placeholder="What are you thinking?"/>
                   </div>
                 </div>
                 <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
                   <div class="form-group">
                     <div class="custom-file">
-                        <input  type="file" ref="file" @change="onSelect" class="" id="">
-                          <label class=""></label>                 
+                      <input  type="file" ref="file" @change="onSelect" class="" id="">
+                        <label class=""></label>                 
                     </div>
                     <div class="py-3"></div>
                   </div>
                 </div>
                 <div class="">
                   <div class="">
-                    <div>   <img class="card-img-post" src="../img/icon-left-font-sized.png" alt="">
+                    <div>                                       <!-- Share and upload button -->
+                      <img class="card-img-post" src="../img/icon-left-font-sized.png" alt="logo Groupomania text">
                       <button @click="savePost" type="submit" class="btn btn-primary float-right" v-show="isHidden">Share</button>
                       <button @click="uploadImage" type="submit" class="btn btn-success float-right" v-show="!isHidden">Upload</button> 
                     </div>
@@ -48,24 +49,24 @@
         </div>
       </div>
       <div class="">          
-        <div class="d-inline-flex p-2"> <img class="title-img" src="../img/icon.png" alt=""><h4 class="title-pos">Posts</h4></div>
+        <div class="d-inline-flex p-2"> <img class="title-img" src="../img/icon.png" alt="logo Groupomania"><h4 class="title-pos">Posts</h4></div>
           <div class="">
             <div class="post-heading">            
-              <ul class="list-group">        
+              <ul class="list-group">                                     <!-- list of posts reversed -->
                 <li class="card rounded card-white postBox" @dblclick="editPost(index, post)" v-for="(post, index) in posts.slice().reverse()" :key="post.id"> 
                 <div class="card-body">
-                  <div class="float meta ">
-                    <div class="title h5">
+                  <div class="float meta ">                     
+                    <div class="title h5">                         <!-- Link to profile page  -->
                         <a  :href="'/profile/' + post.username"><b> {{ post.username }} </b></a> 
                           made a post.
                     </div>
                     <h6 class="text-muted time">1 minute ago</h6>
-                  </div>            
+                  </div>                                                          <!-- posted image -->
                   <div class="card aPost rounded card-white"> <h5><strong>{{ post.description }}</strong></h5><img :src="post.imageUrl"></div> 
                   <div class="">
                     <div class="post-heading">
                       <div class="float meta">
-                        <div class="title h5">
+                        <div class="title h5">                                   <!-- comments in post -->
                           <div  v-for="comment in comments" :key="comment.id"> <div class="comment float-right card rounded card-white" v-if="post.id == comment.post_id">                    
                             <div class="list-group-item">  
                               <div class="title h5"> <a href="#"><b> {{ comment.username }} </b></a>  made a comment </div>  
@@ -79,7 +80,7 @@
                   </div>             
                 </div>      
               <div>   
-              <img class="card-img" src="../img/icon-left-font-sized.png" alt="">
+              <img class="card-img" src="../img/icon-left-font-sized.png" alt="Goupomania image">     <!-- create a comment for this post -->
               <a :href="'/posts/' + post.id"><button  href="#top" class="btn btn-outline pink float-right float-bottom"> Comment </button></a>
               </div>
             </div>             
@@ -87,7 +88,7 @@
             </ul>            
           </div>
         </div>
-        <button v-if="showAdminBoard" class="m-3 btn btn-sm btn-danger" @click="removeAllPosts"> Remove All </button> 
+        <!-- <button v-if="showAdminBoard" class="m-3 btn btn-sm btn-danger" @click="removeAllPosts"> Remove All </button>  -->
         </div>
       </div>
     </div>
@@ -160,12 +161,12 @@ export default {
 
  
   methods: {
-
+    // get image selected
     upload(e) {   
       this.post.imageUrl = e.target.files[0];
       console.log(this.post.imageUrl);
     },
-
+     // upload image to folder image in backend and send url to database
      uploadImage() {
       let dataUser = JSON.parse(localStorage.getItem("user"))
       const formData = new FormData();
@@ -180,7 +181,7 @@ export default {
           this.retrievePosts();
          })
    
-     
+     //selected file
      },
     onSelect(e){     
       const file = this.$refs.file.files[0];
@@ -189,13 +190,11 @@ export default {
       console.log(this.post.imageUrl)
         
     },
-
-  
-
+    // cancel button
     cancel(){
        this.editing = this.editing == false
     },
-
+    // edit a post
     editPost(){    
     this.editing = this.editing == true?false:true    
     if(this.editing== false){
@@ -203,19 +202,19 @@ export default {
     }      
     console.log(this.editing)
     },
-
-      getComment() {
-      PostCommentService.getAll()
-        .then(response => {          
-          this.comments = response.data;
-          console.log(response.data);
-          console.log(this.comments);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },     
-
+    // get all comments
+    getComment() {
+    PostCommentService.getAll()
+      .then(response => {          
+        this.comments = response.data;
+        console.log(response.data);
+        console.log(this.comments);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  },     
+      // update a post
       updatePost() {
       PostDataService.update(this.currentPost.id, this.currentPost)
         .then(response => {           
@@ -225,7 +224,7 @@ export default {
           console.log(e);
         });     
     },
-
+      // delete a post
       deletePost() {    
       PostDataService.delete(this.currentPost.id)
         .then(response => {
@@ -236,7 +235,7 @@ export default {
           console.log(e);
         });
     },
-
+      // get all posts
       retrievePosts() {
       PostDataService.getAll()
         .then(response => {
@@ -248,19 +247,19 @@ export default {
           console.log(e);
         });
     },
-
+      //refresing posts list
       refreshList() {
       this.retrievePosts();
       this.currentPost = null;
       this.currentIndex = -1;
     },
-
+    // post selected
     setActivePost(post, index) {   
       this.currentPost = post;
       this.currentIndex = index;      
       console.log(post.id)      
     },
-
+    // remove all posts (admin option)
     removeAllPosts() {
       PostDataService.deleteAll()
         .then(response => {
@@ -271,7 +270,7 @@ export default {
           console.log(e);
         });
     },
-    
+    // serach by title ... in progress
     searchTitle() {
       PostDataService.findByTitle(this.title)
         .then(response => {
@@ -282,7 +281,7 @@ export default {
           console.log(e);
         });
     },
-   
+    // save post in db
     savePost() {     
       let dataUser = JSON.parse(localStorage.getItem("user"))
       console.log(dataUser)  
@@ -307,18 +306,18 @@ export default {
           console.log(e);
         });
     },
-    
+    // post submitted ?
     newPost() {
       this.submitted = false;
       this.post = {};
     },
-
+      // logout
       logOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
     }
   },
-
+    // get all posts
     retrievePosts() {
         PostDataService.getAll()
           .then(response => {

@@ -6,7 +6,7 @@
           <div v-if="currentPost" class="card-body">
             <div class="">
               <div class="d-inline-flex p-0"> 
-                <img class="title-img-comment" src="../img/icon1.png" alt="">
+                <img class="title-img-comment" src="../img/icon1.png" alt="icon logo groupomania">
                 <h4 class="title-pos">Post</h4>
               </div>
             </div>
@@ -14,28 +14,33 @@
                 <div class="post-heading">            
                   <div class="list-group">     
                     <div class="float meta ">
-                      <div class="title h5">
+                      <div class="title h5">    <!-- post username  -->
                         <a href="#"><b> {{ currentPost.username }} </b></a>
                           made a post.
                       </div>
                       <h6 class="text-muted time">1 minute ago</h6>
                     </div>
-                  </div>
+                  </div>                                          <!-- shown if not editing -->
                   <div class="kl card aPost rounded card-white" v-if="!editing"> 
+                                                                   <!-- get post selected -->
                     <h5 class="postCard"><strong>{{ currentPost.description }}</strong></h5>
                     <img :src="currentPost.imageUrl">
-                  </div> 
+                  </div>   
+                    <!-- shown if editing -->                                                   
                   <textarea-autosize v-show="dataUser.user_Id == currentPost.user_Id && currentPost.description || showAdminBoard&& currentPost.description" placeholder="Type something here..." ref="myTextarea"  :min-height="30" :max-height="350" v-else type="text"   class="form-control" id="description" v-model="currentPost.description"/>
+                  
                   <div v-show="editing" class="form-group">
                     <div class="custom-file">
+                                                            <!-- shown if editing -->   
                       <input  v-show="dataUser.user_Id == currentPost.user_Id && currentPost.imageUrl || showAdminBoard && currentPost.imageUrl" type="file" ref="file" @change="onSelect" class="" id="">
                       <label class=""></label>                 
                     </div>
                     <div class="py-3"></div>
                   </div>
                 </div>
-                <img  v-if="dataUser.user_Id == currentPost.user_Id || showAdminBoard" class="card-ico" src="../img/icon1.png" alt="">
-                <img  v-else class="card-img" src="../img/icon-left-font-sized1.png" alt="">
+                <img  v-if="dataUser.user_Id == currentPost.user_Id || showAdminBoard" class="card-ico" src="../img/icon1.png" alt="icon logo groupomania">
+                <img  v-else class="card-img" src="../img/icon-left-font-sized1.png" alt="logo groupomania">
+                                     <!-- Buttons accesssibles if current user is user whom made post or administrator-->   
                 <a href="#top"> <button v-show="!editing"  class="btn btn-outline pink float-right buttonCEC"> Comment </button></a>
                 <button v-show="isDisplay" v-if="dataUser.user_Id == currentPost.user_Id || showAdminBoard" class="btn btn-success float-right buttonCEC" href="#top" @click="editPost(currentPost)"> Edit </button>
                 <button v-show="editing" v-if="currentPost.description" class="btn btn-success mr-2 float-right" type="submit" @click="editPost(currentPost)"> Update </button>
@@ -46,14 +51,15 @@
                 <div class="post-heading">
                   <div class="float meta">
                     <div class="title h5">
-                      <div class="" v-show="!editing">    
+                      <div class="" v-show="!editing">      <!-- get all comments of a post-->   
                         <div v-for="comment in comments" :key="comment.id">  
                           <div v-if="currentPost.id == comment.post_id" class="comment float-right card rounded card-white"> 
                             <div class="list-group-item">
                               <a href="#"><b> {{ comment.username }} </b></a> 
                               <span> made a comment </span>  
                               <h6 class="text-muted time">1 minute ago</h6> 
-                              <div>{{ comment.description }} </div>
+                              <div>{{ comment.description }} </div>    
+                                             <!-- Edit button is accesssible if current user is user whom made comment of the post or administrator-->  
                               <a :href="'/comments/' + comment.id"><button v-if="dataUser.user_Id == comment.user_Id || showAdminBoard" class="btn btn-success float-right"> Edit </button></a>
                             </div>
                           </div>
@@ -61,7 +67,7 @@
                         <div class="postCard">        
                           <textarea-autosize placeholder="Type something here..." ref="myTextarea" :min-height="30" :max-height="350" type="text"   class="form-control" id="description" autofocus v-model="comments.description"/>
                         </div>
-                        <div class="d-flex justify-content-between float-right width-box">   <img class="card-img float-left" src="../img/icon-left-font-sized1.png" alt="">
+                        <div class="d-flex justify-content-between float-right width-box">   <img class="card-img float-left" src="../img/icon-left-font-sized1.png" alt="logo groupomania">
                           <div  class="">
                             <button  @click="saveComment" class="btn btn-primary float-right"> Share </button>
                             <button class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Cancel </button>
@@ -118,14 +124,14 @@ export default {
   },
 
   methods: {
-
+    // selected image file
      onSelect(e){     
       const file = this.$refs.file.files[0];
         this.currentPost.imageUrl = file;
         console.log(e)
         console.log(this.currentPost.imageUrl)        
     },
-
+    // upload image
      uploadImage() {
      const formData = new FormData();
      let id = this.currentPost.id
@@ -140,7 +146,7 @@ export default {
           console.log(e);
         });
     },
-
+    // save comment
      saveComment() {       
       let dataUser = JSON.parse(localStorage.getItem("user"))
       console.log(dataUser)     
@@ -166,7 +172,7 @@ export default {
           console.log(e);
         });
     },
- 
+    // get all comment of a post
      getComment() {
       PostCommentService.getAll()
         .then(response => {
@@ -177,7 +183,7 @@ export default {
           console.log(e);
         });
     },
-
+    // get a post 
     getPost(id) {
       PostDataService.get(id)
         .then(response => {
@@ -189,7 +195,7 @@ export default {
           console.log(e);
         });
     },
-   
+    // cancel button
     cancel(){
       this.show()
       this.editing = this.editing == false      
@@ -202,7 +208,7 @@ export default {
     show: function () {
       this.isDisplay = true
     },
-
+    //edit a post
     editPost(){    
       this.editing = this.editing == true?false:true    
       this.hide()
@@ -211,12 +217,12 @@ export default {
     }      
     console.log(this.editing)  
     },
-
+    // cancelled 
     cancelled(){
        this.show()
        this.$router.push({ name: "posts" });
     },
-
+    // updating post
     updatePost() {
       PostDataService.update(this.currentPost.id, this.currentPost)
         .then(response => {
@@ -228,7 +234,7 @@ export default {
           console.log(e);
         });
     },
-
+    // delete post
     deletePost() {
       PostCommentService.delete(this.currentPost.id)
       PostDataService.delete(this.currentPost.id)      

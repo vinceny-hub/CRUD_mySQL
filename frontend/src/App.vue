@@ -3,7 +3,7 @@
     <nav id="#top" class="navbar navbar-expand-lg navbar-light bg-white border-nav static-top">
       <div class="container">
         <a class="navbar-brand head-logo"  @click.prevent href="#">
-          <img class="head-img" src="./img/icon-left-font-sized1.png" alt=""><h3 class="font-weight-bold"></h3>
+          <img class="head-img" src="./img/icon-left-font-sized1.png" alt="logo groupomania"><h3 class="font-weight-bold"></h3>
         </a>
         <button class="navbar-toggler border" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -55,7 +55,7 @@
     </div>
     <footer id="sticky-footer" class="py-4  text-white-50">
       <div  id="commentArea" class="container text-center">
-        <small>Copyright  &copy;  <img class="foot-img" src="./img/icon-left-font-monochrome-white1.png" alt=""></small> 
+        <small>Copyright  &copy;  <img class="foot-img" src="./img/icon-left-font-monochrome-white1.png" alt="footer logo groupomania"></small> 
       </div>
     </footer>
   </div>   

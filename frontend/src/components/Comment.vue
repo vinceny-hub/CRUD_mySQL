@@ -8,17 +8,17 @@
             <div class="post-heading">            
               <div   class="list-group">
                 <div class="float meta ">
-                  <div class="title h5">
+                  <div class="title h5">                <!-- comment username -->
                     <a href="#"><b> {{ currentComment.username }} </b></a>
                       made a post.
                   </div>
                   <h6 class="text-muted time">1 minute ago</h6>
-                </div>
-              </div>     
+                </div>                            
+              </div>                                                 <!-- get comment if editing -->
               <div v-if="!editing"> <h5><strong>{{ currentComment.description }}</strong></h5></div> 
               <textarea-autosize placeholder="Type something here..." ref="myTextarea" :min-height="30" :max-height="350" v-else type="text"  class="form-control" id="description" v-model="currentComment.description"/>
-            </div>         
-            <img v-if="dataUser.user_Id == currentComment.user_Id || showAdminBoard" class="card-ico" src="../img/icon1.png" alt="">
+            </div>                                              <!-- edit, cancel and upload button. This is accesssible if current user is user whom made post or administrator-->
+            <img v-if="dataUser.user_Id == currentComment.user_Id || showAdminBoard" class="card-ico" src="../img/icon1.png" alt="icon groupomania">
             <button v-if="dataUser.user_Id == currentComment.user_Id || showAdminBoard" class="btn btn-success float-right" @click="editPost(currentComment)"> {{editing? 'Update':'Modify'}} </button>
             <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="$router.go(-1)"> Back </button>   
             <button v-show="editing" v-if="dataUser.user_Id == currentComment.user_Id || showAdminBoard" class="btn btn-secondary mr-2 float-right" @click="cancel()"> Cancel </button>
@@ -56,7 +56,7 @@ export default {
   },
 
   methods: {
-
+    // save a comment
     saveComment() {     
       let dataUser = JSON.parse(localStorage.getItem("user"))
       console.log(dataUser)  
@@ -78,7 +78,7 @@ export default {
           console.log(e);
         });
     },
- 
+    // get all comment
     getComment() {
       PostCommentService.getAll()
         .then(response => {
@@ -89,7 +89,7 @@ export default {
           console.log(e);
         });
     },
-
+    // get a comment
     getCommentId(id) {
       PostCommentService.get(id)
         .then(response => {
@@ -100,16 +100,16 @@ export default {
           console.log(e);
         });
     },
-
+    // cancel button
     cancel(){
       this.editing = this.editing == false
     },
-
+    // cancelled 
     cancelled(){
       this.$router.push({ name: "posts" });
 
     },
-
+    // edit a post
     editPost(){    
       this.editing = this.editing == true?false:true    
         if(this.editing== false){
@@ -117,7 +117,7 @@ export default {
         }      
       console.log(this.editing)
     },
-
+    // update a comment
     updateComment() {
       PostCommentService.update(this.currentComment.id, this.currentComment)
         .then(response => {
@@ -129,7 +129,7 @@ export default {
           console.log(e);
         });
     },
-
+    // delete a comment
     deleteComment() {
       CommentPostService.deletePostComment(this.currentComment.id)      
         .then(response => {
@@ -146,6 +146,7 @@ export default {
     this.message = '';    
     this.getCommentId(this.$route.params.id);
   },
+
   computed: {
 
     dataUser(){  return JSON.parse(localStorage.getItem("user"))

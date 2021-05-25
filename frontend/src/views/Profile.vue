@@ -3,7 +3,7 @@
     <div class="row h-100 justify-content-center align-items-center">
       <div class="col-md-8 gedf-main">
         <div class="">          
-          <div class="d-inline-flex p-2"> <img class="title-img" src="../img/icon.png" alt=""><h4 class="title-pos">Posts</h4></div>
+          <div class="d-inline-flex p-2"> <img class="title-img" src="../img/icon.png" alt="icon logo groupomania"><h4 class="title-pos">Posts</h4></div>
           <div class="card-body">
             <div class="">
               <div class="post-heading">
@@ -19,7 +19,7 @@
                   <p class="p-up" v-if="!editingEmail"><strong>Email : {{currentUser.email}}  </strong></p>
                   <input placeholder="Type something here..." ref="myTextarea" :min-height="30" :max-height="350" v-else type="text"  v-model="currentUser.email" class="form-control input-dwn" id="description"/>
                   <button v-show="editingEmail"   id="btnC" class="badge badge-secondary mr-2  btn-dwn " @click="cancelEditemail()"> Cancel </button>
-                  <button class="badge badge-success  btn-dwn  buttonCEC" href="#top" @click="editUserEmail(currentUser)">  {{editingEmail? 'Update':'Edit'}} </button><p class="warning"> Warning ! You will be logged-out to perform changes. </p>
+                  <button class="badge badge-success  btn-dwn  buttonCEC" href="#top" @click="editUserEmail(currentUser)">  {{editingEmail? 'Update':'Edit'}} </button><p  v-show="editingEmail" class="warning"> Warning ! You will be logged-out to perform changes </p>
                   <br>
                   <p class=""> <strong>Id :</strong>  {{currentUser.id}}  </p>
                   <strong>Authorities:</strong>
@@ -68,22 +68,13 @@ export default {
   },
 
   deleteUser() {
-      let dataUser =  JSON.parse(localStorage.getItem("user"))
-      console.log(this.currentUser.id)    
-      this.$confirm("You account will be deleted this action is irreversible", 'Are you sure ?').then(() => {
-        PostDataService.deleteUser(this.currentUser.id)
-          this.logOut()
-          console.log(dataUser)
-           
+    PostDataService.deleteUser(this.currentUser.id)     
+      .then(()=> {
+         this.logOut()
       })
-        // .then(response => {
-        // console.log(response.data)
-        .catch(e => {
-        console.log(e);
+      .catch(e => {
+      console.log(e);
       });       
-// });
-  
-  
   },
 
   editUserUsername(){    
@@ -95,15 +86,14 @@ export default {
     },
 
   editUserEmail(){    
-    this.editingEmail = this.editingEmail == true ? false : true    
+    this.editingEmail = this.editingEmail == true ? false : true 
+      if(this.editingEmail== true){
+       this.$alert("Warning ! After changing you will be logged-out to perform.")}
       if(this.editingEmail== false){
-       
-      this.updateUser()
-      }  
-       if(this.editingEmail== true){
-       
-    this.$alert("Warning ! You will be logged-out to perform changes.");
-      }          
+        this.$alert("Profile Updated !")
+        this.updateUser()
+    
+      }      
       console.log(this.editingEmail)
   },
 
@@ -119,9 +109,9 @@ export default {
 
   updateUser(){
     PostDataService.updateUser(this.currentUser.id, this.currentUser)
-      .then(response => {           
+      .then(response => {   
+      this.logOut()       
       console.log(response.data);
-       this.logOut()
       // this.posts.push(data)
       // this.$router.push({ name: "posts" });
       })

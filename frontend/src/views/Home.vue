@@ -2,7 +2,7 @@
   <div class="container">
     <header class=" home-logo-color">
       <a class="navbar-brand head-logo"  @click.prevent href="#">
-          <img class="head-img" src="../img/icon-left-font-monochrome-white1.png" alt=""><h3 class="font-weight-bold"></h3>
+          <img class="head-img" src="../img/icon-left-font-monochrome-white1.png" alt="header logo groupomania "><h3 class="font-weight-bold"></h3>
         </a>
       <!-- <h3>{{content}}</h3> -->
     </header>

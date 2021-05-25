@@ -3,15 +3,15 @@
     <div class="row h-100 justify-content-center align-items-center">
       <div class="col-md-8 gedf-main">
         <div class="">          
-          <div class="d-inline-flex p-2"> <img class="title-img" src="../img/icon.png" alt=""><h4 class="title-pos">Posts</h4></div>
+          <div class="d-inline-flex p-2"> <img class="title-img" src="../img/icon.png" alt="icon logo groupomania"><h4 class="title-pos">Posts</h4></div>
           <div class="">
             <div class="post-heading">            
-              <ul class="list-group">             
+              <ul class="list-group">                             <!-- set active user -->
                 <li class="card rounded card-white postBox" @click="setActiveUser(user)" :class="{ active: user == currentUser}" v-for="(user, index) in users" v-bind:key="user.id"> 
                   <div class="card-body">
                     <div class="float meta ">
                       <div class="title h5">
-                        <ul>
+                        <ul>                              <!-- list of users -->
                           <li><b> Username : {{ user.username }} </b></li> 
                           <li  :href="'/profile/' + post.id"><b> email : {{ user.email }} </b></li> 
                           <li  :href="'/profile/' + post.id"><b> date d'inscription : {{ user.createdAt }} </b></li> 
@@ -26,16 +26,16 @@
                         </div>
                       </div>
                     </div>              
-                    <div>   
-                      <img class="card-img" src="../img/icon-left-font-sized.png" alt="">
+                    <div>                                               <!-- part to delete an user -->
+                      <img class="card-img" src="../img/icon-left-font-sized.png" alt="logo Groupomania">
                       <a><button  href="#top" class=" btn btn-sm btn-danger float-right float-bottom" @click="deleteUser(user, index)"> Delete </button></a>
                     </div>
                   </div>             
                 </li>
               </ul>            
-            </div>
+            </div>                                          <!-- Option to remove all users in progress -->
           </div>
-          <button v-if="showAdminBoard" class="m-3 btn btn-sm btn-danger" @click="removeAllPosts"> Remove All </button> 
+          <!-- <button v-if="showAdminBoard" class="m-3 btn btn-sm btn-danger" @click="removeAllUsers"> Remove All </button>  -->
         </div>
       </div>
     </div>
@@ -93,10 +93,11 @@ export default {
   },
  
   methods: {   
+    // cancel button
     cancel(){
        this.editing = this.editing == false
     },
-
+    // edit a post
     editPost(){    
     this.editing = this.editing == true?false:true
     if(this.editing== false){
@@ -104,7 +105,7 @@ export default {
     }        
     console.log(this.editing)
     },
-
+    // update a post
     updatePost() {
       PostDataService.update(this.currentPost.id, this.currentPost)
         .then(response => {
@@ -114,14 +115,14 @@ export default {
           console.log(e);
         });
     },
-
+    // delete an user
     deleteUser(user, index) {
       this.selectUser = user;
       this.currentIndex = index;    
         console.log(user.id)  
       this.$confirm("Account will be deleted this action is irreversible", 'Are you sure ?').then(() => {
-      PostDataService.deleteUser(user.id) 
-       this.$router.push('/posts');  
+      PostDataService.deleteUser(user.id)    
+      this.users.splice(index,1)
         console.log(user.id)
       })
         .then(response => {
@@ -131,7 +132,7 @@ export default {
         console.log(e);
         });    
     },
-
+    // delete a post
     deletePost() {    
       PostDataService.delete(this.currentPost.id)
         .then(response => {
@@ -142,7 +143,7 @@ export default {
           console.log(e);
         });       
     },
-
+    // get all posts
     retrievePosts() {
       PostDataService.getAllUsers()
         .then(response => {
@@ -153,20 +154,20 @@ export default {
           console.log(e);
         });
     },
-
+    // refreshing list
     refreshList() {
       this.retrievePosts();
       this.currentPost = null;
       this.currentIndex = -1;
     },
-
+    // activate part
     setActiveUser(user, index) {
       this.selectUser = user;
       this.currentIndex = index;
       
       console.log(user.id)
     },
-
+    // removing all posts
     removeAllPosts() {
       PostDataService.deleteAll()
         .then(response => {
@@ -177,7 +178,7 @@ export default {
           console.log(e);
         });
     },
-    
+    // search by title ... in progress
     searchTitle() {
       PostDataService.findByTitle(this.title)
         .then(response => {
@@ -188,7 +189,7 @@ export default {
           console.log(e);
         });
     },
-   
+    // save a post
     savePost() {
       if (!this.post.description) {
       this.emptyError = this.emptyError == true?false:true
@@ -218,18 +219,18 @@ export default {
           console.log(e);
         });
     },  
-    
+    // submit post
     newPost() {
       this.submitted = false;
       this.post = {};
     },
-
+    // to logout
     logOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
     }
 },
-
+    // get all posts
     retrievePosts() {
       PostDataService.getAll()
       console.log(this.users)
@@ -241,7 +242,7 @@ export default {
         console.log(e);
         });
     },
-      
+    
     mounted() {
       this.retrievePosts();
   } 
