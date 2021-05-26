@@ -26,7 +26,7 @@
                 <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
                   <div class="form-group">
                     <div class="custom-file">
-                      <input  type="file" ref="file" @change="onSelect" class="" id="">
+                      <input  type="file" ref="file" v-bind="post.imageUrl" @change="onSelect" class="" id="">
                         <label class=""></label>                 
                     </div>
                     <div class="py-3"></div>
@@ -36,8 +36,8 @@
                   <div class="">
                     <div>                                       <!-- Share and upload button -->
                       <img class="card-img-post" src="../img/icon-left-font-sized.png" alt="logo Groupomania text">
-                      <button @click="savePost" type="submit" class="btn btn-primary float-right" v-show="isHidden">Share</button>
-                      <button @click="uploadImage" type="submit" class="btn btn-success float-right" v-show="!isHidden">Upload</button> 
+                      <button @click="savePost" :disabled="!post.description" type="submit" class="btn btn-primary float-right" v-show="isHidden">Share</button>
+                      <button @click="uploadImage" :disabled="!post.imageUrl" type="submit" class="btn btn-success float-right" v-show="!isHidden">Upload</button> 
                     </div>
                   </div>
                 </div>
@@ -162,7 +162,7 @@ export default {
  
   methods: {
     // get image selected
-    upload(e) {   
+    upload(e) {
       this.post.imageUrl = e.target.files[0];
       console.log(this.post.imageUrl);
     },
@@ -177,8 +177,11 @@ export default {
     
         UpLoadFilesService.upload(formData)
          .then(response => {
+          
           console.log(response.data);
+       
           this.retrievePosts();
+      
          })
    
      //selected file
