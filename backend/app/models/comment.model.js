@@ -12,9 +12,9 @@ module.exports = (sequelize, Sequelize) => {
       description: {
         type: Sequelize.STRING
       },
-      content_Id: {
-        type: Sequelize.STRING
-      },
+      // content_Id: {
+      //   type: Sequelize.STRING
+      // },
  
     });
 

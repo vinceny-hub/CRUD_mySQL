@@ -291,15 +291,13 @@ export default {
         username : dataUser.username,
       }
       PostDataService.create(data)
-        .then(response => {
-        
+        .then(response => {        
           this.post.id = response.data.id;
-       
           this.username
           console.log(response);
           this.submitted = true;
           this.posts.push(data)
-           this.retrievePosts();
+          this.retrievePosts();
           this.newPost()
         })
         .catch(e => {

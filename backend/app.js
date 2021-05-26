@@ -23,16 +23,16 @@ app.use(helmet())
 
 
 const db = require("./app/models/index"); // get db from models and sequelize
-//  db.sequelize.sync();
+ db.sequelize.sync();
 
 // const dblogin = require("./app/modelsUser/index");
 const Role = db.role;
 
-db.sequelize.sync({force: true}).then(() => {
-  console.log('Drop and Resync Db');
-  initial();
-});
-// initial();
+// db.sequelize.sync({force: true}).then(() => {
+//   console.log('Drop and Resync Db');
+//   initial();
+// });
+initial();
 
 function initial() {  // Roles indexes
   Role.create({

@@ -27,7 +27,7 @@
                     <img :src="currentPost.imageUrl">
                   </div>   
                     <!-- shown if editing -->                                                   
-                  <textarea-autosize v-show="dataUser.user_Id == currentPost.user_Id && currentPost.description || showAdminBoard&& currentPost.description" placeholder="Type something here..." ref="myTextarea"  :min-height="30" :max-height="350" v-else type="text"   class="form-control" id="description" v-model="currentPost.description"/>
+                  <textarea-autosize v-show="dataUser.user_Id == currentPost.user_Id  && !currentPost.imageUrl || showAdminBoard && currentPost.description" placeholder="Type something here..." ref="myTextarea"  :min-height="30" :max-height="350" v-else type="text"   class="form-control" id="description" v-model="currentPost.description"/>
                   
                   <div v-show="editing" class="form-group">
                     <div class="custom-file">
@@ -44,10 +44,10 @@
                 <a href="#top"> <button v-show="!editing"  class="btn btn-outline pink float-right buttonCEC"> Comment </button></a>
                 <button v-show="isDisplay" v-if="dataUser.user_Id == currentPost.user_Id || showAdminBoard" class="btn btn-success float-right buttonCEC" href="#top" @click="editPost(currentPost)"> Edit </button>
                 <button v-show="editing" v-if="currentPost.description" class="btn btn-success mr-2 float-right" type="submit" @click="editPost(currentPost)"> Update </button>
-                <button v-show="editing" v-if="currentPost.imageUrl" class="btn btn-success mr-2 float-right" type="submit" @click="uploadImage()"> Upload </button>
+                <button v-show="editing" v-if="currentPost.imageUrl" class="btn btn-success mr-2 float-right" type="submit" @click="uploadImage(currentPost)"> Upload </button>
                 <button v-show="!editing" class="btn btn-secondary mr-2 float-right" @click="cancelled()"> Back </button>     
                 <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id  || showAdminBoard"  id="btnC" class="btn btn-secondary mr-2 float-right marginRightButton" @click="cancel()"> Cancel </button>
-                <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id  || showAdminBoard" class="badge badge-danger mr-2" @click="deletePost"> Delete </button>
+                <button v-show="editing" v-if="dataUser.user_Id == currentPost.user_Id  || showAdminBoard" class="badge badge-danger mr-2" @click="deletePost()"> Delete </button>
                 <div class="post-heading">
                   <div class="float meta">
                     <div class="title h5">
@@ -141,6 +141,7 @@ export default {
           console.log(response.data);
           this.message = 'The post was updated successfully!';
           this.$router.push({ name: "posts" });
+             
         })
         .catch(e => {
           console.log(e);
@@ -236,11 +237,15 @@ export default {
     },
     // delete post
     deletePost() {
-      PostCommentService.delete(this.currentPost.id)
-      PostDataService.delete(this.currentPost.id)      
+       PostDataService.delete(this.currentPost.id)
+      
         .then(response => {
+         
+           PostCommentService.delete(this.currentPost.id)   
           console.log(response.data);
+       
           this.$router.push({ name: "posts" });
+         
         })
         .catch(e => {
           console.log(e);

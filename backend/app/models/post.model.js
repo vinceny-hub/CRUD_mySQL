@@ -11,9 +11,9 @@ module.exports = (sequelize, Sequelize) => {
     description: {
       type: Sequelize.STRING
     },
-    published: {
-      type: Sequelize.BOOLEAN
-    },
+    // published: {
+    //   type: Sequelize.BOOLEAN
+    // },
     createdAt: {
       type: Sequelize.DATE
     },
