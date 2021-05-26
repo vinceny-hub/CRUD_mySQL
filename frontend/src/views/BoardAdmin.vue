@@ -125,9 +125,9 @@ export default {
       this.users.splice(index,1)
         console.log(user.id)
       })
-        .then(response => {
-        console.log(response.data);    
-        })
+        // .then(response => {
+        // console.log(response.data);    
+        // })
        .catch(e => {
         console.log(e);
         });    
