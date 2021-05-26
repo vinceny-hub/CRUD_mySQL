@@ -293,10 +293,6 @@ export default {
       PostDataService.create(data)
         .then(response => {        
           this.post.id = response.data.id;
-          this.username
-          console.log(response);
-          this.submitted = true;
-          this.posts.push(data)
           this.retrievePosts();
           this.newPost()
         })
@@ -335,6 +331,11 @@ export default {
       this.retrievePosts();
   }
   
+          // few possibles usefull for savePost()
+          // this.username
+          // console.log(response);
+          // this.submitted = true;
+          // this.posts.push(data)
   
 }
 
