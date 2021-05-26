@@ -13,7 +13,7 @@ exports.signup = (req, res) => {
     username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
-                                      // Décodage du token
+                                      // password hashed 8 times
     user_Id: bcrypt.hashSync(req.body.username,1),
   }) 
                                       // Find Roles  

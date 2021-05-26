@@ -26,7 +26,7 @@ exports.create = (req, res, next) => {
   })
       // Save in database
   post.save()
-  .then(() => res.status(201).json({message: 'sauce enregistrée !'}))
+  .then(() => res.status(201).json({message: 'Post enregistré !'}))
   .catch(error => res.status(400).json({error}))
 }
       // Find all posts
