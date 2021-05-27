@@ -241,10 +241,13 @@ export default {
       
         .then(response => {
          
-           PostCommentService.delete(this.currentPost.id)   
+          PostCommentService.delete(this.currentPost.id)   
           console.log(response.data);
-       
-          this.$router.push({ name: "posts" });
+         
+          this.$router.push({ name: "posts" })
+          .then(() => {
+          location.reload()
+          })
          
         })
         .catch(e => {

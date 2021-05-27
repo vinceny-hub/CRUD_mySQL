@@ -11,7 +11,7 @@
                   <a v-on:click="isHidden = true" class="nav-link active"    id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Make a publication</a>
                 </li>
                 <li class="nav-item">
-                  <a  v-on:click="isHidden = false" class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images"> Images </a>
+                  <a  v-on:click="isHidden = false" class="nav-link" v-bind="noImage" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images"> Images </a>
                 </li>
               </ul>
             </div>
@@ -26,7 +26,7 @@
                 <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
                   <div class="form-group">
                     <div class="custom-file">
-                      <input  type="file" ref="file" v-bind="post.imageUrl" @change="onSelect" class="" id="">
+                      <input  type="file" ref="file" @change="onSelect" class="" id="">
                         <label class=""></label>                 
                     </div>
                     <div class="py-3"></div>
@@ -37,7 +37,7 @@
                     <div>                                       <!-- Share and upload button -->
                       <img class="card-img-post" src="../img/icon-left-font-sized.png" alt="logo Groupomania text">
                       <button @click="savePost" :disabled="!post.description" type="submit" class="btn btn-primary float-right" v-show="isHidden">Share</button>
-                      <button @click="uploadImage" :disabled="!post.imageUrl" type="submit" class="btn btn-success float-right" v-show="!isHidden">Upload</button> 
+                      <button @click="uploadImage"  :disabled="!noImage" type="submit" class="btn btn-success float-right" v-show="!isHidden">Upload</button> 
                     </div>
                   </div>
                 </div>
@@ -132,7 +132,8 @@ export default {
       submitted: false,
       selectedIndex: null,
       editing: false,
-      emptyError: false
+      emptyError: false,
+      noImage:false,
     };
     
   },
@@ -162,7 +163,7 @@ export default {
  
   methods: {
     // get image selected
-    upload(e) {
+    upload(e) {   
       this.post.imageUrl = e.target.files[0];
       console.log(this.post.imageUrl);
     },
@@ -189,6 +190,9 @@ export default {
     onSelect(e){     
       const file = this.$refs.file.files[0];
       this.post.imageUrl = file;
+      if(this.post.imageUrl){
+        this.noImage = true
+      }
       console.log(e)
       console.log(this.post.imageUrl)
         
@@ -217,6 +221,9 @@ export default {
         console.log(e);
       });
   },     
+  load(){
+      location.reload()
+  }, 
       // update a post
       updatePost() {
       PostDataService.update(this.currentPost.id, this.currentPost)
@@ -242,6 +249,7 @@ export default {
       retrievePosts() {
       PostDataService.getAll()
         .then(response => {
+        
           this.posts = response.data;
           console.log(response.data);
         })
@@ -250,6 +258,8 @@ export default {
           console.log(e);
         });
     },
+
+   
       //refresing posts list
       refreshList() {
       this.retrievePosts();
@@ -332,6 +342,7 @@ export default {
       this.message = '';
       this.getComment()
       this.retrievePosts();
+
   }
   
           // few possibles usefull for savePost()
